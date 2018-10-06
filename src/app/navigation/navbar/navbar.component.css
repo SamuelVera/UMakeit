@@ -1,0 +1,33 @@
+ul{
+    padding:0;
+    margin:0;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+li{
+    list-style:none;
+    display:inline;
+    background: black;
+    padding-top:1.25%;
+    padding-bottom: 1.25%;
+    margin:0;
+    width:100%;
+    width: 20%;
+    display:inline-block;
+}
+
+li a{
+    width:100%;
+    text-align: center;
+    text-decoration-line: none;
+    color:white;
+    font-size: 1.5rem;
+}
+
+li a:hover{
+    box-shadow:midnightblue 0 10px;
+}
+
+li a:click{
+
+}
