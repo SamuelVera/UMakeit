@@ -1,0 +1,23 @@
+h1{
+    text-align: center;
+    width:20%;
+    margin-left:40%;
+    padding:0;
+    margin-bottom:0;
+}
+
+label{
+    margin-left:20%;
+}
+
+form{
+    background: gray;
+    border-bottom-left-radius: 10%;
+    border-bottom-right-radius: 10%;
+    width:20%;
+    margin-left:40%;
+}
+
+input{
+    margin-left:20%;
+}
