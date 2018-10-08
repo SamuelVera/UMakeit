@@ -1,0 +1,52 @@
+h1{
+    text-align: center;
+    width:20%;
+    margin-left:43%;
+    padding:0;
+    margin-bottom:0;
+    font-family:'Lucida Sans Unicode';
+    ;
+}
+
+label{
+    margin-left:5%;
+    font-family:'Lucida Sans Unicode';
+}
+
+form{
+    background: rgb(235, 165, 26);
+    border-bottom-left-radius: 10%;
+    border-bottom-right-radius: 10%;
+    width:20%;
+    margin-left:40%;
+    padding: 4% 4% 1% 0;
+    border: 2px dotted #2f49da;
+    font-family:'Lucida Sans Unicode';
+}
+a{
+    text-decoration: none;
+    margin-left:12%;
+    color: rgb(0, 0, 0);
+    padding: 1% 1%;
+    background: rgb(18, 147, 233);
+    border-radius: 20%;
+    font-family:'Lucida Sans Unicode';
+}
+a:link{
+    color:black;
+}
+a:hover{
+    background: #ffa90a;
+}
+input{
+    width: 100%;
+    margin-left:5%;
+    margin-bottom: 0%;
+    padding: 2%;
+    font-family:'Lucida Sans Unicode';
+    
+}
+input:focus{
+    border: 1px solid #2f49da;
+}
+
