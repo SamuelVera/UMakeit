@@ -1,0 +1,34 @@
+.container{
+    width: 100%;
+    background:rgb(204, 204, 204);
+}
+
+p{
+    color:white;
+}
+
+nav{
+    padding:0;
+}
+
+ul{
+    background:rgb(204, 204, 204);
+    width:100%;
+}
+
+li{
+    margin-left: 8%;
+}
+
+a:hover{
+    box-shadow: 0 2px orange;
+}
+
+a{
+    color:rgb(255, 94, 0);
+}
+
+img{
+    background:rgb(204, 204, 204);
+    margin-left:10%;
+}
