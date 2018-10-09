@@ -8,6 +8,12 @@ h1{
     ;
 }
 
+img{
+    border-style: solid;
+    border-width: 2px;
+    border-color: orangered;
+}
+
 label{
     margin-left:5%;
     font-family:'Lucida Sans Unicode';
@@ -30,6 +36,7 @@ form{
     padding: 4% 4% 1% 0;
     font-family:'Lucida Sans Unicode';
 }
+
 a{
     text-decoration: none;
     margin-left:12%;
