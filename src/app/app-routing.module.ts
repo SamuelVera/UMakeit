@@ -8,6 +8,7 @@ import { FormComponent } from './form/form.component';
 import { MenuComponent } from './home/menu/menu.component'
 import { CarritoComponent } from './home/carrito/carrito.component'
 import { HelpComponent } from './home/help/help.component'
+
 const routes: Routes = [
 {
     path: '',

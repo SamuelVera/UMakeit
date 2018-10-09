@@ -1,22 +1,13 @@
-*{
-    margin:0;
-    padding:0;
+.carousel {
+    margin-top:2%;
+    margin-left:30%;
+    width:40%;
+    height:auto;
+}
+h3, p{
+    color:rgb(54, 54, 54);
 }
 
-header, main, footer{
-    background: orange;
-    width:90%;
-    margin:40px auto;
-    max-width:1000px;
-}
-.main .articles{
-    width:68.5%;
-    margin-right:1.5%;
-    float:left;
-    background:#ffff;
-}
-aside{
-    width:30%;
-    background-color: lightsalmon;
-    float:left;
+img{
+    width:100%;
 }
