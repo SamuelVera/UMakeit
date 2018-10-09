@@ -1,56 +1,61 @@
 h1{
     text-align: center;
-    width:20%;
-    margin-left:41%;
-    padding:0;
-    margin-bottom:0;
+    width:34%;
+    margin-left:37%;
+    margin-bottom:5%;
     font-family:'Lucida Sans Unicode';
+    border-bottom:solid orangered 2px;
     ;
 }
+
 label{
     margin-left:5%;
     font-family:'Lucida Sans Unicode';
 }
 
-form{
-    background: rgb(235, 165, 26);
-    border-bottom-left-radius: 10%;
-    border-bottom-right-radius: 10%;
-    width:20%;
-    margin-left:40%;
-    padding: 40px 50px 10px 0px;
-    border: 2px dotted #2f49da;
-    font-family:'Lucida Sans Unicode';
+input{
+    border-radius: 20px;
+    width: 50%;
+    display: flex;
+    flex-direction:column;
+    border: none;
+    background: white;
 }
 
+form{
+    background:#f1f1f1;
+    border-radius: 10%;
+    width:30%;
+    margin-left:40%;
+    padding: 4% 4% 1% 0;
+    font-family:'Lucida Sans Unicode';
+}
 a{
     text-decoration: none;
-    margin: 20px 30px 40px 95px;
+    margin-left:40%;
     color: rgb(0, 0, 0);
-    padding: 5px 5px;
+    padding: 2% 6%;
     background: rgb(18, 147, 233);
-    border-radius: 20%;
+    border-radius: 20px;
     font-family:'Lucida Sans Unicode';
+    font-size: small;
+    text-align: center;
 }
-
 a:link{
     color:black;
 }
-
 a:hover{
-    background: #ffa90a;
+    background: #0a1aff;
 }
-
 input{
     width: 100%;
     margin-left:5%;
-    margin-bottom: 5%;
-    padding: 10px;
+    margin-bottom: 0%;
+    padding: 2%;
     font-family:'Lucida Sans Unicode';
-    border-radius: 30%;
-}
-
-input:focus{
     
+}
+input:focus{
     border: 1px solid #2f49da;
 }
+
