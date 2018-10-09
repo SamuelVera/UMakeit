@@ -8,6 +8,12 @@ h1{
     ;
 }
 
+img{
+    border-style: solid;
+    border-width: 2px;
+    border-color: orangered;
+}
+
 label{
     margin-left:5%;
     font-family:'Lucida Sans Unicode';
@@ -25,35 +31,39 @@ input{
 form{
     background:#f1f1f1;
     border-radius: 10%;
-    width:20%;
-    margin-left:40%;
+    width:30%;
+    margin-left:35%;
     padding: 4% 4% 1% 0;
     font-family:'Lucida Sans Unicode';
 }
+
 a{
     text-decoration: none;
-    margin-left:12%;
-    color: rgb(0, 0, 0);
+    margin-left:22%;
+    color: whitesmoke;
     padding: 2% 2%;
     background: rgb(18, 147, 233);
     border-radius: 20px;
     font-family:'Lucida Sans Unicode';
-    font-size: small;
+    font-size: 100%;
 }
+
 a:link{
     color:black;
 }
+
 a:hover{
     background: #0a1aff;
 }
+
 input{
     width: 100%;
     margin-left:5%;
     margin-bottom: 0%;
     padding: 2%;
-    font-family:'Lucida Sans Unicode';
-    
+    font-family:'Lucida Sans Unicode';    
 }
+
 input:focus{
     border: 1px solid #2f49da;
 }

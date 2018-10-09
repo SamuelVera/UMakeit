@@ -1,5 +1,10 @@
+
+.row{
+    margin-top:2%;
+}
+
 .card{
-    width: 50%;
+    width: 100%;
 }
 .card-header{
     display: flex;
