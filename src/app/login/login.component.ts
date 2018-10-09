@@ -1,24 +1,10 @@
-<<<<<<< HEAD
-import { Component, OnInit } from '@angular/core';
-=======
 import { Component, OnInit} from '@angular/core';
->>>>>>> origin/master
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-<<<<<<< HEAD
-export class LoginComponent implements OnInit {
-
-  constructor() { }
-
-  enviarForm(evt){
-    
-  }
-
-=======
 
 export class LoginComponent implements OnInit {
 
@@ -42,7 +28,6 @@ export class LoginComponent implements OnInit {
     }
   }*/
 
->>>>>>> origin/master
   ngOnInit() {
   }
 
