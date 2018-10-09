@@ -5,9 +5,13 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { NavbarLoginComponent } from './navigation/navbar-login/navbar-login.component';
 import { FormComponent } from './form/form.component';
-import { MenuComponent } from './home/menu/menu.component'
-import { CarritoComponent } from './home/carrito/carrito.component'
-import { HelpComponent } from './home/help/help.component'
+import { MenuComponent } from './home/menu/menu.component';
+import { CuentaComponent } from './home/cuenta/cuenta.component';
+import { HelpComponent } from './home/help/help.component';
+import { NavbarAdminComponent } from './navigation/navbar-admin/navbar-admin.component';
+import { MenuAdminComponent } from './admin/menu-admin/menu-admin.component';
+import { HomeAdminComponent } from './admin/home-admin/home-admin.component';
+import { EnviosComponent } from './admin/envios/envios.component';
 
 const routes: Routes = [
 {
@@ -22,7 +26,7 @@ const routes: Routes = [
 {
   path: '',
   children: [
-    { path: 'form', redirectTo: '/form', pathMatch: 'full'},
+    { path:'form', redirectTo: '/form', pathMatch: 'full'},
     { path:'form', component: FormComponent},
   ],
   component: NavbarLoginComponent
@@ -58,10 +62,37 @@ const routes: Routes = [
 {
   path: '',
   children: [
-    { path: 'historial', redirectTo: '/historial', pathMatch: 'full'},
-    { path: 'historial', component: CarritoComponent},
+    { path: 'user', redirectTo: '/user', pathMatch: 'full'},
+    { path: 'user', component: CuentaComponent},
   ],
   component: NavbarComponent,
+},
+
+{
+  path: '',
+  children: [
+    { path: 'menu-admin', redirectTo: '/menu-admin', pathMatch: 'full'},
+    { path: 'menu-admin', component: MenuAdminComponent},
+  ],
+  component: NavbarAdminComponent,
+},
+
+{
+  path: '',
+  children: [
+    { path: 'home-admin', redirectTo: '/home-admin', pathMatch: 'full'},
+    { path: 'home-admin', component: HomeAdminComponent},
+  ],
+  component: NavbarAdminComponent,
+},
+
+{
+  path: '',
+  children: [
+    { path: 'envios', redirectTo: '/envios', pathMatch: 'full'},
+    { path: 'envios', component: EnviosComponent},
+  ],
+  component: NavbarAdminComponent,
 }
 ]
 
