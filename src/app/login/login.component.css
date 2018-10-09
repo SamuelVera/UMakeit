@@ -1,19 +1,6 @@
 h1{
     text-align: center;
     width:20%;
-<<<<<<< HEAD
-    margin-left:40%;
-    padding:0;
-    margin-bottom:0;
-}
-
-label{
-    margin-left:20%;
-}
-
-form{
-    background: gray;
-=======
     margin-left:43%;
     padding:0;
     margin-bottom:0;
@@ -28,18 +15,10 @@ label{
 
 form{
     background: rgb(235, 165, 26);
->>>>>>> origin/master
     border-bottom-left-radius: 10%;
     border-bottom-right-radius: 10%;
     width:20%;
     margin-left:40%;
-<<<<<<< HEAD
-}
-
-input{
-    margin-left:20%;
-}
-=======
     padding: 4% 4% 1% 0;
     border: 2px dotted #2f49da;
     font-family:'Lucida Sans Unicode';
@@ -71,4 +50,3 @@ input:focus{
     border: 1px solid #2f49da;
 }
 
->>>>>>> origin/master

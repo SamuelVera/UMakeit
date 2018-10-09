@@ -4,14 +4,10 @@ import { NavbarComponent } from './navigation/navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { NavbarLoginComponent } from './navigation/navbar-login/navbar-login.component';
-<<<<<<< HEAD
-
-=======
 import { FormComponent } from './form/form.component';
 import { MenuComponent } from './home/menu/menu.component'
 import { CarritoComponent } from './home/carrito/carrito.component'
 import { HelpComponent } from './home/help/help.component'
->>>>>>> origin/master
 const routes: Routes = [
 {
     path: '',
@@ -22,19 +18,6 @@ const routes: Routes = [
     component: NavbarLoginComponent
 },
 
-<<<<<<< HEAD
-  
-{
-  path: 'home',
-  children: [
-    { path: 'home', redirectTo: '/home', pathMatch: 'full'},
-    { path: 'home', component: HomeComponent}
-  ],
-  component: NavbarComponent,
-}
-
-];
-=======
 {
   path: '',
   children: [
@@ -80,7 +63,6 @@ const routes: Routes = [
   component: NavbarComponent,
 }
 ]
->>>>>>> origin/master
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
