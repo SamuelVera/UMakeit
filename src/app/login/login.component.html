@@ -2,14 +2,14 @@
   <img class="rounded-circle mx-auto d-block" width=150 src="../../assets/logo.jpg">
 </div>
 <br>
+<app-navbar *ngIf=false [user]="user"></app-navbar>
 <h1>Inicio de Sesión</h1>
 <form>
   <label>Nombre de Usuario</label>
-  <input type="text" placeholder="Nombre de Usuario" maxlength="20"><br><br>
+  <input type="text" [(ngModel)]="user.username" [ngModelOptions]="{standalone: true}" placeholder="Nombre de Usuario" maxlength="20"><br><br>
   <label>Contraseña</label>
-  <input type="password" placeholder="Contraseña" maxlength="20"><br><br>
-  <a href="../home/" role="button">Entrar</a>
-  <a href="../form/" role="button">Registrate</a><br><br>
-  <a href="../home-admin/" role="button">Entrar (Admin)</a>
+  <input type="password" [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}" placeholder="Contraseña" maxlength="20"><br><br>
+  <button type="button" class="btn btn-primary bt" (mouseover) = "logear($event)" routerLink="/{{path}}" role="button">Entrar</button>
+  <button type="button" class="btn btn-primary bt" routerLink="/form" role="button">Registrarse</button>
 </form>
 
