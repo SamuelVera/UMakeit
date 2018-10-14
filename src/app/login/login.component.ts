@@ -6,27 +6,28 @@ import { Component, OnInit} from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent implements OnInit {
 
-  admin:boolean;
+export class LoginComponent implements OnInit{
+
+  user = {
+    username: '',
+    password: ''
+  }
+
+  path: String;
 
   constructor() { }
-  
-  iniUser(evt){
-    this.admin = false;
-  }
 
-  iniAdmin(evt){
-    this.admin = true;
-  }
-
-  /*valIni(evt, input){
-    if(input="admin"){
-      this.admin = true;
-    }else{
-      this.admin = false;
+  logear(e){
+      //Acceso del admin
+    if(this.user.username === "admin" && this.user.password === "admin123"){
+      this.path = "/home-admin";
+    }else{  //Rutina de acceso de otro usuario
+      this.path = "home";
     }
-  }*/
+    console.log(this.path);
+  }
+
 
   ngOnInit() {
   }
