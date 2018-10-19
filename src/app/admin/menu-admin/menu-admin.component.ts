@@ -9,6 +9,8 @@ export class MenuAdminComponent implements OnInit {
 
   constructor() { }
 
+  public menu = [];
+
   ngOnInit() {
   }
 
