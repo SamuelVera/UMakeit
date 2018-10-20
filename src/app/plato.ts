@@ -1,5 +1,6 @@
 export class Plato{
     nombre: String;
+    id: number;
     precio: number;
     personal: boolean;
     activo: boolean;
