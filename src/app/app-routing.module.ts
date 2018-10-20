@@ -96,7 +96,7 @@ const routes: Routes = [
       { path: 'envios', component: EnviosComponent},
     ],
     component: NavbarAdminComponent,
-  }
+  },
 
   {
     path: '',
