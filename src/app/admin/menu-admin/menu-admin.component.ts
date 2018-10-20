@@ -1,3 +1,5 @@
+import { PlatoService } from './../../plato.service';
+import { Plato } from './../../plato';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,43 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuAdminComponent implements OnInit {
 
-  constructor() { }
+  todo: boolean = true;
+  filtro: boolean = false;
+  public platos = [];
+  public filtrado: Plato;
+  campo: String = '';
+
+  constructor(private platoService: PlatoService) { }
 
   ngOnInit() {
+    this.getPlatos();
+  }
+
+  private getPlatos(){
+    this.platoService.getPlatos()
+    .subscribe(data => {this.platos = data;})
+  }
+
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    else{
+      var aux = new Plato();
+      aux.nombre = name;
+      this.platoService.addPlato(aux)
+        .subscribe(plato => {
+          this.platos.push(plato);
+        });
+    }
+  }
+
+  delete(plato: Plato): void{
+    this.platos = this.platos.filter(p => p !== plato);
+    this.platoService.deletePlato(plato).subscribe();
+  }
+
+  buscar(e){
+    
   }
 
 }

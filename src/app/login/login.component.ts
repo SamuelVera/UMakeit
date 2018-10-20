@@ -1,3 +1,4 @@
+import { Cliente } from './../cliente';
 import { Component, OnInit} from '@angular/core';
 
 @Component({
@@ -9,11 +10,7 @@ import { Component, OnInit} from '@angular/core';
 
 export class LoginComponent implements OnInit{
 
-  user = {
-    username: '',
-    password: ''
-  }
-
+  user: Cliente = new Cliente();
   path: String;
 
   constructor() { }
@@ -27,7 +24,6 @@ export class LoginComponent implements OnInit{
     }
     console.log(this.path);
   }
-
 
   ngOnInit() {
   }

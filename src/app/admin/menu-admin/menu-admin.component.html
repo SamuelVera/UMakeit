@@ -1,39 +1,27 @@
 <router-outlet></router-outlet>
 
-<table class="table table-bordered">
-    <thead >
+<table *ngIf=todo class="table table-bordered">
+    <thead>
         <tr>
             <th>Imágen</th>
             <th>Producto</th>
             <th>Precio</th>
-            <th>Habilitar</th>
+            <th>Editar</th>
             <th>Eliminar</th>
         </tr>
     </thead>
-    <tr>
-        <td><img class="rounded mx-auto d-block" width=100 src="../../../assets/72475874-fish-burger-fishburger-hamburger-and-fries-tomatoes-lettuce-cheese-unhealthy.jpg"></td>
-        <td>Producto 1</td>
-        <td>Precio: </td>
-        <td>
-
-        </td>
-        <td><a class="btn btn-primary">Eliminar</a></td>
-    </tr>
-    <tr>
-        <td><img class="rounded mx-auto d-block" width=100 src="../../../assets/fish_chips_feature-1.jpg"></td>
-        <td>Producto 2</td>
-        <td>Precio 2</td>
-        <td></td>
-        <td><a class="btn btn-primary">Eliminar</a></td>
-    </tr>
-    <tr>
-        <td><img class="rounded mx-auto d-block" width=100 src="../../../assets/48a41143eb799e0dd3173009144895c1.jpg"></td>
-        <td>Producto 3</td>
-        <td>Precio 3</td>
-        <td>
-            
-        </td>
-        <td><a class="btn btn-primary">Eliminar</a></td>
+    <tr  *ngFor="let plato of platos">
+        <td *ngIf="plato.id!=0"><img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"></td>
+        <td *ngIf="plato.id!=0"><p>{{plato.nombre}}</p></td>
+        <td *ngIf="plato.id!=0"><p>{{plato.precio}}</p></td>
+        <td *ngIf="plato.id!=0"><a class="btn btn-primary" routerLink="editar/{{plato.id}}">Editar</a></td>
+        <td *ngIf="plato.id!=0"><a class="btn btn-primary" (click)="delete(plato)">Eliminar</a></td>
     </tr>
 </table>
 
+<input type="text" placeholder="Busca un plato"><a class="btn btn-primary">Buscar</a><br><br>
+
+<input #newPlato />
+<button (click)="add(newPlato.value); newPlato.value=''">
+        add
+</button>

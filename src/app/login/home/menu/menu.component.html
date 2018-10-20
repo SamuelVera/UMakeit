@@ -11,47 +11,24 @@
             <th>Ordenar</th>
         </tr>
     </thead>
-    <tr>
-        <td><img class="rounded mx-auto d-block" width=100 src="../../../assets/72475874-fish-burger-fishburger-hamburger-and-fries-tomatoes-lettuce-cheese-unhealthy.jpg"></td>
-        <td>Producto 1</td>
-        <td>Precio 1</td>
-        <td>
-            <div class="dropdown">
+    <tr *ngFor="let plato of platos">
+        <td *ngIf="plato.activo"><img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"></td>
+        <td *ngIf="plato.activo">{{plato.nombre}}</td>
+        <td *ngIf="plato.activo">{{plato.precio}} Bs.</td>
+        <td *ngIf="plato.activo">
+            <div *ngIf="plato.personal" class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                  Personalizar
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item">Contorno 1</a><div class="dropdown-divider"></div>
-                  <a class="dropdown-item">Contorno 2</a><div class="dropdown-divider"></div>
-                  <a class="dropdown-item">Contorno 3</a>
+                Personalizar</button>
+                <div *ngFor="let contorno of plato.contornos" class="dropdown-menu">
+                    <a class="dropdown-item">{{contorno.nombre}} ({{contorno.carga}} Bs.)</a><div class="dropdown-divider"></div>
                 </div>
             </div>
-        </td>
-        <td><a class="btn btn-primary">Ordenar</a></td>
-    </tr>
-    <tr>
-        <td><img class="rounded mx-auto d-block" width=100 src="../../../assets/fish_chips_feature-1.jpg"></td>
-        <td>Producto 2</td>
-        <td>Precio 2</td>
-        <td><a>Personalizar (No es personalizable)</a></td>
-        <td><a class="btn btn-primary">Ordenar</a></td>
-    </tr>
-    <tr>
-        <td><img class="rounded mx-auto d-block" width=100 src="../../../assets/48a41143eb799e0dd3173009144895c1.jpg"></td>
-        <td>Producto 3</td>
-        <td>Precio 3</td>
-        <td>
-            <div class="dropdown">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                    Personalizar
-                </button>
-                    <div class="dropdown-menu">
-                    <a class="dropdown-item">Contorno 1</a><div class="dropdown-divider"></div>
-                    <a class="dropdown-item">Contorno 2</a><div class="dropdown-divider"></div>
-                    <a class="dropdown-item">Contorno 3</a>
-                </div>
+            <div *ngIf="plato.personal == false">
+                No personalizable
             </div>
         </td>
-        <td><a class="btn btn-primary">Ordenar</a></td>
+        <td *ngIf="plato.activo"><a class="btn btn-primary">Ordenar</a></td>
     </tr>
 </table>
+<input type="text" placeholder="Busca un plato"> 
+<a class="btn btn-primary">Buscar</a>
