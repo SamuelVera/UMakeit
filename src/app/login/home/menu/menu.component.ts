@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { PlatoService } from './../../../plato.service';
+import { Component, OnInit, Injectable } from '@angular/core';
+import { Plato } from 'src/app/plato';
 
 @Component({
   selector: 'app-menu',
@@ -7,11 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  public platos = [];
 
-  public menu = [];
+  constructor(private platoService: PlatoService) { }
 
   ngOnInit() {
+    this.getPlatos();
+  }
+
+  private getPlatos(){
+    this.platoService.getPlatos()
+    .subscribe(data => {this.platos = data;})
   }
 
 }
