@@ -20,10 +20,10 @@ import { NavbarAdminComponent } from './login/navigation/navbar-admin/navbar-adm
 import { MenuAdminComponent } from './admin/menu-admin/menu-admin.component';
 import { HomeAdminComponent } from './admin/home-admin/home-admin.component';
 import { EnviosComponent } from './admin/envios/envios.component';
-import { EditarPlatoComponent } from './admin/menu-admin/editar-plato/editar-plato.component';
 
   //Servicios
 import { PlatoService } from './plato.service';
+import { AddPlatoComponent } from './admin/menu-admin/add-plato/add-plato.component';
 
 @NgModule({
   imports: [
@@ -47,7 +47,7 @@ import { PlatoService } from './plato.service';
     MenuAdminComponent,
     HomeAdminComponent,
     EnviosComponent,
-    EditarPlatoComponent,
+    AddPlatoComponent,
   ],
   providers: [PlatoService ],
   bootstrap: [AppComponent]
