@@ -19,8 +19,10 @@
             <div *ngIf="plato.personal" class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                 Personalizar</button>
-                <div *ngFor="let contorno of plato.contornos" class="dropdown-menu">
-                    <a class="dropdown-item">{{contorno.nombre}} ({{contorno.carga}} Bs.)</a><div class="dropdown-divider"></div>
+                <div class="dropdown-menu">
+                    <div *ngFor="let contorno of plato.contornos" >
+                      <a class="dropdown-item">{{contorno.nombre}} ({{contorno.carga}} Bs.)</a>
+                    </div>
                 </div>
             </div>
             <div *ngIf="plato.personal == false">

@@ -9,43 +9,51 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuAdminComponent implements OnInit {
 
-  todo: boolean = true;
-  filtro: boolean = false;
   public platos = [];
-  public filtrado: Plato;
-  campo: String = '';
+  private editState: boolean = false;
+  private platoToEdit: Plato;
+  private addingContorno: String;
+  private cargaContorno: number;
 
   constructor(private platoService: PlatoService) { }
 
   ngOnInit() {
-    this.getPlatos();
-  }
-
-  private getPlatos(){
     this.platoService.getPlatos()
-    .subscribe(data => {this.platos = data;})
+    .subscribe(data => {
+      this.platos = data;
+    })
   }
 
-  add(name: string): void {
-    name = name.trim();
-    if (!name) { return; }
-    else{
-      var aux = new Plato();
-      aux.nombre = name;
-      this.platoService.addPlato(aux)
-        .subscribe(plato => {
-          this.platos.push(plato);
-        });
-    }
+  delete(event, plato: Plato){
+    this.platoService.deletePlato(plato);
   }
 
-  delete(plato: Plato): void{
-    this.platos = this.platos.filter(p => p !== plato);
-    this.platoService.deletePlato(plato).subscribe();
+  edit(event, plato: Plato){
+    this.editState = true;
+    this.platoToEdit = plato;
+  }
+  
+  updatePlato(plato: Plato){
+    this.platoService.updatePlato(plato);
+    this.clearEditing();
   }
 
-  buscar(e){
-    
+  clearEditing(){
+    this.editState = false;
+    this.platoToEdit = null;
+  }
+
+  addContorno(){
+    this.platoToEdit.contornos.push({
+      nombre: this.addingContorno,
+      carga: this.cargaContorno
+    });
+    this.addingContorno = "";
+    this.cargaContorno = 0;
+  }
+
+  deleteContorno(){
+    this.platoToEdit.contornos.pop();
   }
 
 }

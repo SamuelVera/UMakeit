@@ -15,12 +15,10 @@ export class MenuComponent implements OnInit {
   constructor(private platoService: PlatoService) { }
 
   ngOnInit() {
-    this.getPlatos();
-  }
-
-  private getPlatos(){
     this.platoService.getPlatos()
-    .subscribe(data => {this.platos = data;})
+    .subscribe(data => {
+      this.platos = data;
+    })
   }
 
 }
