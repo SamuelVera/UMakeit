@@ -1,3 +1,4 @@
+import { AddPlatoComponent } from './admin/menu-admin/add-plato/add-plato.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes} from '@angular/router';
 
@@ -13,7 +14,6 @@ import { NavbarAdminComponent } from './login/navigation/navbar-admin/navbar-adm
 import { MenuAdminComponent } from './admin/menu-admin/menu-admin.component';
 import { HomeAdminComponent } from './admin/home-admin/home-admin.component';
 import { EnviosComponent } from './admin/envios/envios.component';
-import { EditarPlatoComponent } from './admin/menu-admin/editar-plato/editar-plato.component';
 
 const routes: Routes = [
 
@@ -101,8 +101,8 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: 'menu-admin/editar/:id', redirectTo: '/menu-admin/editar/:id', pathMatch: 'full'},
-      { path: 'menu-admin/editar/:id', component: EditarPlatoComponent},
+      { path: 'menu-admin/add-plato', redirectTo: 'menu-admin/add-plato', pathMatch: 'full'},
+      { path: 'menu-admin/add-plato', component: AddPlatoComponent},
     ],
     component: NavbarAdminComponent,
   }

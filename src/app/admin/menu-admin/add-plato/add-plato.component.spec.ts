@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditarPlatoComponent } from './editar-plato.component';
+import { AddPlatoComponent } from './add-plato.component';
 
-describe('EditarPlatoComponent', () => {
-  let component: EditarPlatoComponent;
-  let fixture: ComponentFixture<EditarPlatoComponent>;
+describe('AddPlatoComponent', () => {
+  let component: AddPlatoComponent;
+  let fixture: ComponentFixture<AddPlatoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditarPlatoComponent ]
+      declarations: [ AddPlatoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditarPlatoComponent);
+    fixture = TestBed.createComponent(AddPlatoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

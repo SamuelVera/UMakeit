@@ -1,6 +1,6 @@
 <router-outlet></router-outlet>
 
-<table *ngIf=todo class="table table-bordered">
+<table *ngIf="!editState" class="table table-bordered">
     <thead>
         <tr>
             <th>Imágen</th>
@@ -11,17 +11,45 @@
         </tr>
     </thead>
     <tr  *ngFor="let plato of platos">
-        <td *ngIf="plato.id!=0"><img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"></td>
-        <td *ngIf="plato.id!=0"><p>{{plato.nombre}}</p></td>
-        <td *ngIf="plato.id!=0"><p>{{plato.precio}}</p></td>
-        <td *ngIf="plato.id!=0"><a class="btn btn-primary" routerLink="editar/{{plato.id}}">Editar</a></td>
-        <td *ngIf="plato.id!=0"><a class="btn btn-primary" (click)="delete(plato)">Eliminar</a></td>
+        <td><img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"></td>
+        <td><p>{{plato.nombre}}</p></td>
+        <td><p>{{plato.precio}}</p></td>
+        <td><a class="btn btn-primary" (click)="edit($event, plato)">Editar</a></td>
+        <td><a class="btn btn-primary" (click)="delete($event,plato)">Eliminar</a></td>
     </tr>
 </table>
 
-<input type="text" placeholder="Busca un plato"><a class="btn btn-primary">Buscar</a><br><br>
+<div *ngIf="editState">
+    <form (ngSubmit)="updatePlato(platoToEdit)">
+        <div>
+          <div>
+            Nombre: <input type="text" maxlength="20" [(ngModel)]="platoToEdit.nombre" #nombre="ngModel" placeholder="Nombre del plato" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div>
+            Precio: <input type="number" placeholder="Precio"[(ngModel)]="platoToEdit.precio" #precio="ngModel" [ngModelOptions]="{standalone: true}"> Bs.
+          </div>
+          <div>
+            Personalizable: <input type="checkbox" [(ngModel)]="platoToEdit.personal" #personal="ngModel" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div *ngIf="platoToEdit.personal">
+            <div *ngFor="let contorno of platoToEdit.contornos">
+                <input type="text" placeholder="Nombre" [(ngModel)]="contorno.nombre" [ngModelOptions]="{standalone: true}">
+                <input type="number" placeholder="Precio" [(ngModel)]="contorno.carga" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div>
+                <input type="text" placeholder="Nombre" [(ngModel)]="addingContorno" [ngModelOptions]="{standalone: true}">
+                <input type="number" placeholder="Precio" [(ngModel)]="cargaContorno" [ngModelOptions]="{standalone: true}">
+                <a (click)="addContorno()" class="btn btn-primary">Agregar</a>
+                <a (click)="deleteContorno()" class="btn btn-primary">Eliminar Último</a>
+            </div>
+          </div>
+          <div>
+            Habilitado: <input type="checkbox" [(ngModel)]="platoToEdit.activo" #activo="ngModel" [ngModelOptions]="{standalone: true}">
+          </div>
+          <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        </div>
+      </form>
+      <a (click)="clearEditing()" class="btn btn-primary">Volver</a>
+</div>
 
-<input #newPlato />
-<button (click)="add(newPlato.value); newPlato.value=''">
-        add
-</button>
+<td *ngIf="!editState"><a href="menu-admin/add-plato" class="btn btn-primary">Agregar</a></td>

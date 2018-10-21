@@ -1,0 +1,22 @@
+<router-outlet></router-outlet>
+
+<h1>Agregar Plato</h1>
+<form (ngSubmit)="add(formNew)" #formNew="ngForm">
+  <div>
+    <div>
+      Nombre: <input type="text" maxlength="20" [(ngModel)]="plato.nombre" #nombre="ngModel" placeholder="Nombre del plato" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div>
+      Precio: <input type="number" placeholder="Precio"[(ngModel)]="plato.precio" #precio="ngModel" [ngModelOptions]="{standalone: true}"> Bs.
+    </div>
+    <div>
+      Personalizable: <input type="checkbox" [(ngModel)]="plato.personal" #personal="ngModel" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div>
+        Habilitado: <input type="checkbox" [(ngModel)]="plato.activo" #activo="ngModel" [ngModelOptions]="{standalone: true}">
+    </div>
+    <button type="submit" class="btn btn-primary">Agregar</button>
+  </div>
+</form>
+
+

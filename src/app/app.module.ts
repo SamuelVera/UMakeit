@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { AngularFirestoreModule} from 'angularfire2/firestore';
+import { AngularFireModule} from 'angularfire2';
+import { environment } from './../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -18,24 +20,18 @@ import { NavbarAdminComponent } from './login/navigation/navbar-admin/navbar-adm
 import { MenuAdminComponent } from './admin/menu-admin/menu-admin.component';
 import { HomeAdminComponent } from './admin/home-admin/home-admin.component';
 import { EnviosComponent } from './admin/envios/envios.component';
-import { EditarPlatoComponent } from './admin/menu-admin/editar-plato/editar-plato.component';
 
-  //Simulador de servidor
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './in-memory-data.service';
+  //Servicios
+import { PlatoService } from './plato.service';
+import { AddPlatoComponent } from './admin/menu-admin/add-plato/add-plato.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule,
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'uMakeIt'),
+    AngularFirestoreModule,
   ],
   declarations: [
     AppComponent,
@@ -51,8 +47,9 @@ import { InMemoryDataService }  from './in-memory-data.service';
     MenuAdminComponent,
     HomeAdminComponent,
     EnviosComponent,
-    EditarPlatoComponent,
+    AddPlatoComponent,
   ],
+  providers: [PlatoService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

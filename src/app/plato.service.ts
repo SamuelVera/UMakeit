@@ -1,12 +1,9 @@
+import { AppPage } from './../../e2e/src/app.po';
 import { Observable, of } from 'rxjs';
 import { Plato } from './plato';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import { map, find} from 'rxjs/operators';
+import { AngularFirestore , AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -14,74 +11,50 @@ const httpOptions = {
 
 export class PlatoService {
 
-  private _url: string = 'api/platos';
+  platosCollection: AngularFirestoreCollection<Plato>;
+  platos: Observable<Plato[]>;
+  platoDoc: AngularFirestoreDocument<Plato>;
 
-  constructor(private http: HttpClient,) { }
+  constructor(public afs: AngularFirestore,
+    ) { 
+      this.platosCollection = afs.collection<Plato>('menu', ref => ref.orderBy('nombre', 'asc'));
+      this.platos = this.platosCollection.snapshotChanges().pipe(
+        map(actions => actions.map( a =>{ 
+          const data = a.payload.doc.data() as Plato
+          const id = a.payload.doc.id;
+          return { id, ...data};
+          }
+        ))
+      );
+    }
 
     //Get platos from server
-  getPlatos(): Observable<Plato[]>{
-    return this.http.get<Plato[]>(this._url)
-      .pipe(
-        tap(platos => console.log('fetched platos')),
-        catchError(this.handleError('getPlatos', []))
-      );
+  public getPlatos(){
+    return this.platos;
   };
 
-  getPlato(id: number): Observable<Plato>{
-    const url = `${this._url}/${id}`;
-    return this.http.get<Plato>(url).pipe(
-      tap(_ => console.log(`fetched plato id=${id}`)),
-      catchError(this.handleError<Plato>(`getPlato id=${id}`))
-    );
+    //Get plato by its id
+  public getPlato(id: String){
+    return this.platoDoc = this.afs.doc(`menu/${id}`);
   }
 
-
-    //Métodos de guardar, añadir y eliminar
-  //Update con metodo PUT
-  updatePlato(plato: Plato): Observable<any> {
-    return this.http.put(this._url, plato, httpOptions).pipe(
-      tap(_ => console.log(`updated plato id=${plato.id}`)),
-      catchError(this.handleError<any>('updateplato'))
-    );
+    //Add new plato
+  public addPlato(plato: Plato){
+    this.platosCollection.add(plato);
+    console.log("Plato added");
   }
 
-  //Guardar con el método POST
-  addPlato (plato: Plato): Observable<Plato> {
-    return this.http.post<Plato>(this._url, plato, httpOptions).pipe(
-      tap((plato: Plato) => console.log(`added plato w/ id=${plato.id}`)),
-      catchError(this.handleError<Plato>('addPlato'))
-    );
+    //Delete plato
+  public deletePlato(plato: Plato){
+    this.platoDoc = this.afs.doc(`menu/${plato.id}`);
+    this.platoDoc.delete();
+    console.log("Plato deleted");
   }
 
-  //Eliminar 
-  deletePlato(plato: Plato | number){
-    const id = typeof plato === 'number' ? plato : plato.id;
-    const url = `${this._url}/${id}`;
-
-    return this.http.delete<Plato>(url, httpOptions).pipe(
-      tap(_ => console.log(`deleted hero id=${id}`)),
-      catchError(this.handleError<Plato>('deleteHero'))
-    );
+    //Update plato
+  public updatePlato(plato: Plato){
+    this.platoDoc = this.afs.doc(`menu/${plato.id}`);
+    this.platoDoc.update(plato);
+    console.log("Plato updated");
   }
-
-    /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private handleError<T> (operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
- 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
- 
-      // TODO: better job of transforming error for user consumption
-      console.log(`${operation} failed: ${error.message}`);
- 
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
-
 }
