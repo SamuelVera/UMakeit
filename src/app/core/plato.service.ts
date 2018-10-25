@@ -1,8 +1,7 @@
-import { AppPage } from './../../e2e/src/app.po';
-import { Observable, of } from 'rxjs';
-import { Plato } from './plato';
+import { Observable} from 'rxjs';
+import { Plato } from '../clases/plato';
 import { Injectable } from '@angular/core';
-import { map, find} from 'rxjs/operators';
+import { map} from 'rxjs/operators';
 import { AngularFirestore , AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 
 @Injectable({
