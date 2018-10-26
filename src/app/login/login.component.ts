@@ -1,5 +1,8 @@
-import { Cliente } from './../cliente';
+import { Cliente } from '../clases/cliente';
 import { Component, OnInit} from '@angular/core';
+import { AuthService } from '../core/auth.service';
+import { Router } from '@angular/router';
+import { validateConfig } from '@angular/router/src/config';
 
 @Component({
   selector: 'app-login',
@@ -10,22 +13,45 @@ import { Component, OnInit} from '@angular/core';
 
 export class LoginComponent implements OnInit{
 
-  user: Cliente = new Cliente();
-  path: String;
+    //Cliente a pasar
+  user: Cliente = {
+    email: '',
+    displayName:'',
+    cedula: '',
+    password: '',
+    telefono: '',
+    direcciones:[
+      {
+        direccion: ''
+      }
+    ],
+    ordenes: [
+      {
+        plato: {
+          nombre: '',
+          precio: 0,
+          personal: false,
+          activo: false,
+          image: '',
+          contornos:[{
+            nombre: '',
+            carga: 0,
+          }]
+        }
+      }
+    ]
+  };
+  path: String = "";
+  valid: boolean = false;
 
-  constructor() { }
-
-  logear(e){
-      //Acceso del admin
-    if(this.user.username === "admin" && this.user.password === "admin123"){
-      this.path = "/home-admin";
-    }else{  //Rutina de acceso de otro usuario
-      this.path = "home";
-    }
-    console.log(this.path);
-  }
-
+  constructor(public auth: AuthService,
+    private router: Router) { }
+  
   ngOnInit() {
+    this.path = "";
   }
 
+  login(e){
+    this.auth.login(this.user.email,this.user.password);
+  }
 }

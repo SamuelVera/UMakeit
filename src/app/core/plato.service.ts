@@ -1,7 +1,7 @@
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { Plato } from '../clases/plato';
 import { Injectable } from '@angular/core';
-import { map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AngularFirestore , AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
 
 @Injectable({
@@ -15,10 +15,10 @@ export class PlatoService {
   platoDoc: AngularFirestoreDocument<Plato>;
 
   constructor(public afs: AngularFirestore,
-    ) { 
+    ) {
       this.platosCollection = afs.collection<Plato>('menu', ref => ref.orderBy('nombre', 'asc'));
       this.platos = this.platosCollection.snapshotChanges().pipe(
-        map(actions => actions.map( a =>{ 
+        map(actions => actions.map( a => { 
           const data = a.payload.doc.data() as Plato
           const id = a.payload.doc.id;
           return { id, ...data};

@@ -3,12 +3,12 @@
 </div>
 <br>
 <h1>Inicio de Sesión</h1>
-<form>
-  <label>Nombre de Usuario</label>
-  <input type="text" [(ngModel)]="user.username" [ngModelOptions]="{standalone: true}" placeholder="Nombre de Usuario" maxlength="20"><br><br>
+<form (submit)="login($event)">
+  <label>Correo electrónico</label>
+  <input type="text" placeholder="Nombre de Usuario" [(ngModel)]="user.email" [ngModelOptions]="{standalone: true}" maxlength="20"><br><br>
   <label>Contraseña</label>
-  <input type="password" [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}" placeholder="Contraseña" maxlength="20"><br><br>
-  <button type="button" class="btn btn-primary bt" (mouseover) = "logear($event)" routerLink="/{{path}}" role="button">Entrar</button>
-  <button type="button" class="btn btn-primary bt" routerLink="/form" role="button">Registrarse</button>
+  <input type="password" placeholder="Contraseña" [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}" maxlength="20"><br><br>
+  <button type="submit" class="btn btn-primary bt log" role="button">Entrar</button><br>
+  <button type="button" class="btn btn-primary bt register" routerLink="/form" role="button">Registrarse</button><br>_
 </form>
 

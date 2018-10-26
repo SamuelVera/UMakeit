@@ -2,23 +2,19 @@ h1{
     text-align: center;
     width:25%;
     margin-left:37%;
-    margin-bottom:5%;
+    margin-bottom:4%;
     font-family:'Lucida Sans Unicode';
     border-bottom:solid orangered 2px;
-    ;
 }
-
 img{
     border-style: solid;
     border-width: 2px;
     border-color: orangered;
 }
-
 label{
     margin-left:5%;
     font-family:'Lucida Sans Unicode';
 }
-
 input{
     border-radius: 20px;
     width: 50%;
@@ -27,10 +23,9 @@ input{
     border: none;
     background: white;
 }
-
 form{
     background:#f1f1f1;
-    border-radius: 10%;
+    border-radius: 5%;
     width:30%;
     margin-left:35%;
     padding: 4% 4% 1% 0;
@@ -39,7 +34,6 @@ form{
 
 button{
     text-decoration: none;
-    margin-left:22%;
     color: whitesmoke;
     padding: 2% 2%;
     background: rgb(18, 147, 233);
@@ -48,11 +42,20 @@ button{
     font-size: 100%;
 }
 
-button:link{
+.log{
+    margin-left:43%;
+    margin-bottom: 4%;
+}
+
+.register{
+    margin-left:35%;
+}
+
+a:link{
     color:black;
 }
 
-button:hover{
+a:hover{
     background: #0a1aff;
 }
 

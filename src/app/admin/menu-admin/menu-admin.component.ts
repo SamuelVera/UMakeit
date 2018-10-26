@@ -1,5 +1,5 @@
-import { PlatoService } from './../../plato.service';
-import { Plato } from './../../plato';
+import { PlatoService } from '../../core/plato.service';
+import { Plato } from '../../clases/plato';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -14,6 +14,7 @@ export class MenuAdminComponent implements OnInit {
   private platoToEdit: Plato;
   private addingContorno: String;
   private cargaContorno: number;
+  private last: boolean;
 
   constructor(private platoService: PlatoService) { }
 
@@ -24,36 +25,55 @@ export class MenuAdminComponent implements OnInit {
     })
   }
 
-  delete(event, plato: Plato){
+  delete(event, plato: Plato){ //Borrar el plato
     this.platoService.deletePlato(plato);
   }
 
-  edit(event, plato: Plato){
+  edit(event, plato: Plato){ //Activar edición del plato
     this.editState = true;
+    this.last = true;
     this.platoToEdit = plato;
-  }
-  
-  updatePlato(plato: Plato){
-    this.platoService.updatePlato(plato);
-    this.clearEditing();
-  }
-
-  clearEditing(){
-    this.editState = false;
-    this.platoToEdit = null;
-  }
-
-  addContorno(){
+    this.addingContorno = "";
+    this.cargaContorno = 0; 
     this.platoToEdit.contornos.push({
       nombre: this.addingContorno,
       carga: this.cargaContorno
     });
-    this.addingContorno = "";
-    this.cargaContorno = 0;
+  }
+  
+  updatePlato(plato: Plato){ //Actualizar información del plato
+    if(plato.precio > 0 && plato.nombre != ""){
+      this.platoService.updatePlato(plato);
+      this.clearEditing();
+    }else{
+      console.log("Información inválida para el plato");
+    }
   }
 
-  deleteContorno(){
+  addContorno(){ //Añadir un contorno al editar
+    if(this.cargaContorno > 0 && this.addingContorno != ""){
+      this.platoToEdit.contornos.push({
+        nombre: this.addingContorno,
+        carga: this.cargaContorno
+      });
+      this.addingContorno = "";
+      this.cargaContorno = 0;  
+    }else{
+      console.log("Datos incorrectos");
+    }
+  }
+
+  deleteContorno(){//Eliminar un contorno del plato
     this.platoToEdit.contornos.pop();
+    if(this.last){
+      this.platoToEdit.contornos.pop();
+      this.last = false;
+    }
+  }
+
+  clearEditing(){ //Clear state
+    this.editState = false;
+    this.platoToEdit = null;
   }
 
 }

@@ -7,18 +7,15 @@ h1{
     border-bottom:solid orangered 2px;
     ;
 }
-
 img{
     border-style: solid;
     border-width: 2px;
     border-color: orangered;
 }
-
 label{
     margin-left:5%;
     font-family:'Lucida Sans Unicode';
 }
-
 input{
     border-radius: 20px;
     width: 50%;
@@ -27,18 +24,17 @@ input{
     border: none;
     background: white;
 }
-
 form{
     background:#f1f1f1;
     border-radius: 10%;
-    width:30%;
-    margin-left:36%;
+    width:40%;
+    margin-left:31%;
     padding: 4% 4% 1% 0;
     font-family:'Lucida Sans Unicode';
 }
-a{
+button{
     text-decoration: none;
-    margin-left:40%;
+    margin-left:30%;
     color: rgb(0, 0, 0);
     padding: 2% 6%;
     background: rgb(18, 147, 233);
@@ -47,10 +43,10 @@ a{
     font-size: small;
     text-align: center;
 }
-a:link{
+button:link{
     color:black;
 }
-a:hover{
+button:hover{
     background: #0a1aff;
 }
 input{
@@ -64,4 +60,8 @@ input{
 input:focus{
     border: 1px solid #2f49da;
 }
-
+p{
+    margin-top:0%;
+    font-size:90%;
+    color:red;
+}

@@ -4,16 +4,23 @@
 <br>
 
 <h1>Nuevo Usuario</h1>
-<form>
-  <label>Nombre</label>
-  <input type="text" placeholder="Introduzca su Nombre" maxlength="20"><br><br>
+<form (ngSubmit)="register($event,formNew)" #formNew="ngForm">
   <label>Cédula de identidad</label>
-  <input type="text" placeholder="Introduzca su número de cédula" maxlength="20"><br><br>
+  <input type="text" (keyup)="advance($event)" [(ngModel)]="user.cedula" #cedula="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su número de cédula" maxlength="20"><br><br>
+  <label>Correo electrónico</label>
+  <input type="text" (keyup)="advance($event)" [(ngModel)]="user.email" #email="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su correo electrónico"><br><br>
   <label>Nombre de Usuario</label>
-  <input type="text" placeholder="Escoja un Nombre de Usuario" maxlength="20"><br><br>
+  <input type="text" (keyup)="advance($event)" [(ngModel)]="user.displayName" #displayName="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su nombre de usuario" maxlength="20"><br><br>
+  <label>Teléfono</label>
+  <input type="text" (keyup)="advance($event)" [(ngModel)]="user.telefono" #telefono="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su número de teléfono" maxlength="12"><br><br>
+  <label>Dirección</label>
+  <input type="text" (keyup)="advance($event)" [(ngModel)]="dir" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su dirección" maxlength="30"><br><br>
   <label>Contraseña</label>
-  <input type="password" placeholder="Elija una Contraseña" maxlength="20"><br><br>
-  <label>Correo</label>
-  <input type="text" placeholder="Escriba su correo" maxlength="20"><br><br>
-  <a class="inicio" href="../home/" role="button">Crear Cuenta</a>
+  <input type="password" (keyup)="validarPass($event)" [(ngModel)]="user.password" #password="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Elija una contraseña"  maxlength="20"><br>
+  <p *ngIf=validPass>La contraseña debe ser mayor a 8 caracteres</p><br>  
+  <label>Confirmar Contraseña</label>
+  <input type="password" (keyup)="validarConfirPass($event)" [(ngModel)]="passConfirm" [ngModelOptions]="{standalone: true}" placeholder="Confirma la contraseña" maxlength="20"><br>
+  <p *ngIf=validConfirPass>Las contraseñas no coinciden</p><br>
+
+  <button type="submit" class="btn btn-primary bt" role="button" >Crear cuenta</button>
 </form>

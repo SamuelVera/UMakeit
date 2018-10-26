@@ -17,7 +17,12 @@ ul{
 }
 
 li{
+    color: white;
     margin-left: 8%;
+}
+
+li:hover{
+    cursor: pointer;
 }
 
 a:hover{
@@ -25,7 +30,7 @@ a:hover{
 }
 
 a{
-    color:rgb(255, 94, 0);
+    color: white;
 }
 
 img{

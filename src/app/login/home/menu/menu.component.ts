@@ -1,7 +1,5 @@
-import { Observable } from 'rxjs';
-import { PlatoService } from './../../../plato.service';
+import { PlatoService } from '../../../core/plato.service';
 import { Component, OnInit, Injectable } from '@angular/core';
-import { Plato } from 'src/app/plato';
 
 @Component({
   selector: 'app-menu',

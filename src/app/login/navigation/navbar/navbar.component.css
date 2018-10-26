@@ -17,7 +17,16 @@ ul{
 }
 
 li{
-    margin-left: 8%;
+    color: white;
+    margin-left: 3%;
+}
+
+.name{
+    margin-left:5%;
+}
+
+li:hover{
+    cursor: pointer;
 }
 
 a:hover{
@@ -25,7 +34,7 @@ a:hover{
 }
 
 a{
-    color:rgb(255, 94, 0);
+    color: white;
 }
 
 img{
