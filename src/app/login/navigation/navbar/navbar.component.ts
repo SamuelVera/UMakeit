@@ -20,10 +20,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.auth.getCurrent().subscribe(data => {
-      this.user = data;
-      console.log(this.user);
-    });
+    
   }
 
   logout(){
