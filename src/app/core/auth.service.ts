@@ -18,7 +18,6 @@ export class AuthService {
       this.user = fbauth.authState;
   }
 
-
   login(email: string, password: string){
     this.fbauth.auth.signInWithEmailAndPassword(email, password)
     .then(value => {
@@ -39,7 +38,7 @@ export class AuthService {
     })
   }
 
-  getCurrent(){
+  getCurrentEmail(){
     return this.user;
   }
 
