@@ -1,8 +1,9 @@
+import { CoreModule } from './core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AngularFirestoreModule} from 'angularfire2/firestore';
-import { AngularFireModule} from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireModule } from 'angularfire2';
 import { environment } from './../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,7 +23,7 @@ import { HomeAdminComponent } from './admin/home-admin/home-admin.component';
 import { EnviosComponent } from './admin/envios/envios.component';
 
   //Servicios
-import { PlatoService } from './plato.service';
+import { PlatoService } from './core/plato.service';
 import { AddPlatoComponent } from './admin/menu-admin/add-plato/add-plato.component';
 
 @NgModule({
@@ -31,7 +32,9 @@ import { AddPlatoComponent } from './admin/menu-admin/add-plato/add-plato.compon
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig, 'uMakeIt'),
+    AngularFirestoreModule.enablePersistence(),
     AngularFirestoreModule,
+    CoreModule,
   ],
   declarations: [
     AppComponent,

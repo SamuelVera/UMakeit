@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, Output } from '@angular/core';
+import { Component, Input, ViewChild, Output, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',

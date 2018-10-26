@@ -13,34 +13,38 @@
     <tr  *ngFor="let plato of platos">
         <td><img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"></td>
         <td><p>{{plato.nombre}}</p></td>
-        <td><p>{{plato.precio}}</p></td>
-        <td><a class="btn btn-primary" (click)="edit($event, plato)">Editar</a></td>
-        <td><a class="btn btn-primary" (click)="delete($event,plato)">Eliminar</a></td>
+        <td><p>{{plato.precio}} BsS.</p></td>
+        <td><a class="btn btn-primary other" (click)="edit($event,plato)">Editar</a></td>
+        <td><a class="btn btn-primary other" (click)="delete($event,plato)">Eliminar</a></td>
     </tr>
 </table>
 
 <div *ngIf="editState">
     <form (ngSubmit)="updatePlato(platoToEdit)">
         <div>
+          <h5>Editando: {{platoToEdit.nombre}}</h5>
           <div>
             Nombre: <input type="text" maxlength="20" [(ngModel)]="platoToEdit.nombre" #nombre="ngModel" placeholder="Nombre del plato" [ngModelOptions]="{standalone: true}">
           </div>
           <div>
-            Precio: <input type="number" placeholder="Precio"[(ngModel)]="platoToEdit.precio" #precio="ngModel" [ngModelOptions]="{standalone: true}"> Bs.
+            Precio: <input type="number" placeholder="Precio"[(ngModel)]="platoToEdit.precio" #precio="ngModel" [ngModelOptions]="{standalone: true}">
           </div>
           <div>
             Personalizable: <input type="checkbox" [(ngModel)]="platoToEdit.personal" #personal="ngModel" [ngModelOptions]="{standalone: true}">
           </div>
           <div *ngIf="platoToEdit.personal">
+            <h6>Contornos:</h6>
             <div *ngFor="let contorno of platoToEdit.contornos">
-                <input type="text" placeholder="Nombre" [(ngModel)]="contorno.nombre" [ngModelOptions]="{standalone: true}">
-                <input type="number" placeholder="Precio" [(ngModel)]="contorno.carga" [ngModelOptions]="{standalone: true}">
+                <div *ngIf=contorno.nombre >
+                    <input type="text" placeholder="Nombre" [(ngModel)]="contorno.nombre" [ngModelOptions]="{standalone: true}">
+                    <input type="number" placeholder="Precio" [(ngModel)]="contorno.carga" [ngModelOptions]="{standalone: true}"><br>
+                </div>
             </div>
             <div>
                 <input type="text" placeholder="Nombre" [(ngModel)]="addingContorno" [ngModelOptions]="{standalone: true}">
-                <input type="number" placeholder="Precio" [(ngModel)]="cargaContorno" [ngModelOptions]="{standalone: true}">
-                <a (click)="addContorno()" class="btn btn-primary">Agregar</a>
-                <a (click)="deleteContorno()" class="btn btn-primary">Eliminar Último</a>
+                <input type="number" placeholder="Precio" [(ngModel)]="cargaContorno" [ngModelOptions]="{standalone: true}"><br>
+                <a (click)="addContorno()" class="btn btn-primary contorno">Agregar</a>
+                <a (click)="deleteContorno()" class="btn btn-primary contorno">Eliminar Último</a>
             </div>
           </div>
           <div>
@@ -52,4 +56,4 @@
       <a (click)="clearEditing()" class="btn btn-primary">Volver</a>
 </div>
 
-<td *ngIf="!editState"><a href="menu-admin/add-plato" class="btn btn-primary">Agregar</a></td>
+<td *ngIf="!editState"><a href="menu-admin/add-plato" class="btn btn-primary add">Agregar</a></td>

@@ -3,11 +3,12 @@
     margin-left:20%;
     width: 50%;
 }
-a{
-    width:25%;
+button{
+    width:30%;
     margin-top:2%;
     margin-bottom:2%;
     margin-left:37.5%;
+    text-align:center;
 }
 .card-header{
     display: flex;
