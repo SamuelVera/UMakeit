@@ -73,6 +73,7 @@ export class FormComponent implements OnInit {
   }
 
   validarPass(e){
+    console.log(e.target.isEmpty());
     if(this.user.password.length <  8){
       this.validPass = true;
     }else{

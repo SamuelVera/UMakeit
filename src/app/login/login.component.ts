@@ -41,11 +41,9 @@ export class LoginComponent implements OnInit{
       }
     ]
   };
-  path: String = "";
-  valid: boolean = false;
+  path: String;
 
-  constructor(public auth: AuthService,
-    private router: Router) { }
+  constructor(public auth: AuthService) { }
   
   ngOnInit() {
     this.path = "";
@@ -53,5 +51,10 @@ export class LoginComponent implements OnInit{
 
   login(e){
     this.auth.login(this.user.email,this.user.password);
+    if(this.user.email === "admin@umakeit.com"){
+      this.path = "/home-admin";
+    }else{
+      this.path = "/home";
+    }
   }
 }
