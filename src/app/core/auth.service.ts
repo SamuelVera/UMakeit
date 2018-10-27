@@ -1,25 +1,43 @@
+import { map, switchMap } from 'rxjs/operators';
 import { ClientesService } from './clientes.service';
-import { Observable } from 'rxjs';
+import { Observable, fromEventPattern } from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
-import * as firebase from 'firebase/app';
 import { Cliente } from '../clases/cliente';
+import { auth } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  user: Observable<firebase.User>;
+    //Retrieve email
+  uid = this.fauth.authState.pipe(map(
+    authState => {
+      if(!authState){
+        return null;
+      }else{
+        return authState.email}
+      }
+  ));
 
-  constructor(private fbauth: AngularFireAuth,
+  id = this.fauth.authState.pipe(map(
+    authState => {
+      if(!authState){
+        return null;
+      }else{
+        return authState.uid
+      }
+    }
+  ));
+
+  constructor(private fauth: AngularFireAuth,
     private clientesService: ClientesService
     ) { 
-      this.user = fbauth.authState;
   }
 
   login(email: string, password: string){
-    this.fbauth.auth.signInWithEmailAndPassword(email, password)
+    this.fauth.auth.signInWithEmailAndPassword(email, password)
     .then(value => {
       console.log("Login succesful");
     }).catch(err => {
@@ -29,20 +47,19 @@ export class AuthService {
 
     //Metódo de signup con el email y el password
   signUp(email: string, password: string, user:Cliente){
-    this.fbauth.auth.createUserWithEmailAndPassword(email, password)
+    this.fauth.auth.createUserWithEmailAndPassword(email, password)
     .then(value => {
       console.log("User added");
-      this.clientesService.addCliente(user);
+      this.id.subscribe(data =>{
+        user.id = data;
+        this.clientesService.addCliente(user);
+      });
     }).catch(err => {
-      console.log("Error al añadir usuario: ",err.message);
+      console.log("Error al añadir usuario: ", err.message);
     })
   }
 
-  getCurrentEmail(){
-    return this.user;
-  }
-
   logout(){
-    this.fbauth.auth.signOut();
+    this.fauth.auth.signOut();
   }
 }
