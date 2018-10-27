@@ -13,10 +13,7 @@ export class NavbarComponent implements OnInit {
 
   user: Cliente;
 
-  constructor(public auth: AuthService,
-    private clientesService: ClientesService,
-    private router: Router) { 
-    
+  constructor(public auth: AuthService) { 
   }
 
   ngOnInit() {
@@ -25,7 +22,6 @@ export class NavbarComponent implements OnInit {
 
   logout(){
     this.auth.logout();
-    this.router.navigate([""]);
   }
 
 }
