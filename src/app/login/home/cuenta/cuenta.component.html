@@ -1,11 +1,14 @@
 <router-outlet></router-outlet>
 
-  <div class="container">
+  <div *ngIf="cliente" class="container">
     <div class="card">
-      <h2>Daniel Natera</h2>
-      <div class="card-header">Número de contacto: 04147931742</div>
-      <div class="card-body">Correo: nateragomes@gmail.com</div> 
-      <div class="card-footer">Dirección: Av FF</div>
+      <h2>{{cliente.displayName}}</h2>
+      <div class="card-header">Número de contacto: {{cliente.telefono}}</div>
+      <div class="card-body">Correo: {{cliente.email}}</div> 
+      <div class="card-footer">Direcciones: </div>
       <button class="btn btn-primary">Cambiar Clave</button>
+    </div>
+    <div>
+      
     </div>
   </div>
