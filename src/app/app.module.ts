@@ -1,3 +1,7 @@
+import { EnviosService } from './core/envios.service';
+import { AuthService } from './core/auth.service';
+import { ClientesService } from './core/clientes.service';
+import { AuthGuard } from './guards/auth.guard';
 import { CoreModule } from './core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -52,7 +56,7 @@ import { AddPlatoComponent } from './admin/menu-admin/add-plato/add-plato.compon
     EnviosComponent,
     AddPlatoComponent,
   ],
-  providers: [PlatoService ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
