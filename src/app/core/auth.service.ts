@@ -1,6 +1,6 @@
+import { Router } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 import { ClientesService } from './clientes.service';
-import { Observable, fromEventPattern } from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
 import { Cliente } from '../clases/cliente';
@@ -21,18 +21,9 @@ export class AuthService {
       }
   ));
 
-  id = this.fauth.authState.pipe(map(
-    authState => {
-      if(!authState){
-        return null;
-      }else{
-        return authState.uid
-      }
-    }
-  ));
-
-  constructor(private fauth: AngularFireAuth,
-    private clientesService: ClientesService
+  constructor(public fauth: AngularFireAuth,
+    private clientesService: ClientesService,
+    private router: Router
     ) { 
   }
 
@@ -40,6 +31,11 @@ export class AuthService {
     this.fauth.auth.signInWithEmailAndPassword(email, password)
     .then(value => {
       console.log("Login succesful");
+      if(email === "admin@umakeit.com"){
+        this.router.navigate(['/home-admin']);
+      }else{
+        this.router.navigate(['/home']);
+      }
     }).catch(err => {
       console.log("Error al iniciar sesión: ",err.message);
     })
@@ -50,10 +46,8 @@ export class AuthService {
     this.fauth.auth.createUserWithEmailAndPassword(email, password)
     .then(value => {
       console.log("User added");
-      this.id.subscribe(data =>{
-        user.id = data;
-        this.clientesService.addCliente(user);
-      });
+      this.clientesService.addCliente(user);
+      this.router.navigate(['/home']);
     }).catch(err => {
       console.log("Error al añadir usuario: ", err.message);
     })
@@ -61,5 +55,9 @@ export class AuthService {
 
   logout(){
     this.fauth.auth.signOut();
+  }
+
+  changePassword(){
+    
   }
 }
