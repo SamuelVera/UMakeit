@@ -11,21 +11,31 @@ import { Cliente } from 'src/app/clases/cliente';
 })
 export class NavbarComponent implements OnInit {
 
-  user: Cliente;
-
   constructor(public auth: AuthService,
-    private clientesService: ClientesService,
     private router: Router) { 
-    
   }
 
   ngOnInit() {
-    
+  }
+
+  private toHome(){
+    this.router.navigate(['/home']);
+  }
+
+  private toMenu(){
+    this.router.navigate(['/menu']);
+  }
+
+  private toUser(){
+    this.router.navigate(['/user']);
+  }
+
+  private toHelp(){
+    this.router.navigate(['/ayuda']);
   }
 
   logout(){
     this.auth.logout();
-    this.router.navigate([""]);
   }
 
 }

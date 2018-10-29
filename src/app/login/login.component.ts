@@ -18,7 +18,6 @@ export class LoginComponent implements OnInit{
     email: '',
     displayName:'',
     cedula: '',
-    password: '',
     telefono: '',
     direcciones:[
       {
@@ -39,19 +38,18 @@ export class LoginComponent implements OnInit{
           }]
         }
       }
-    ]
+    ],
+    admin: false
   };
-  path: String = "";
-  valid: boolean = false;
+  path: String;
+  pass: string;
 
-  constructor(public auth: AuthService,
-    private router: Router) { }
+  constructor(public auth: AuthService) { }
   
   ngOnInit() {
-    this.path = "";
   }
 
   login(e){
-    this.auth.login(this.user.email,this.user.password);
+    this.auth.login(this.user.email,this.pass);
   }
 }

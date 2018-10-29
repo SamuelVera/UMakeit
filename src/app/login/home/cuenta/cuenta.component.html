@@ -1,11 +1,24 @@
 <router-outlet></router-outlet>
 
-  <div class="container">
+  <div *ngIf="cliente" class="container">
     <div class="card">
-      <h2>Daniel Natera</h2>
-      <div class="card-header">Número de contacto: 04147931742</div>
-      <div class="card-body">Correo: nateragomes@gmail.com</div> 
-      <div class="card-footer">Dirección: Av FF</div>
-      <button class="btn btn-primary">Cambiar Clave</button>
+      <h2>{{cliente.displayName}}</h2>
+      <div class="card-header">Número de contacto: {{cliente.telefono}}</div>
+      <div class="card-body">Correo: {{cliente.email}}</div> 
+      <div class="card-footer">Dirección: {{cliente.direccion}}</div>
+      <div ></div>
+      <button (click)="setCambiarTrue()" class="btn btn-primary">Cambiar Clave</button>
+      <div *ngIf=cambiandoClave>
+        <label>Nueva contraseña:</label><br>
+        <input type="password" (keyup)="validarPass($event)" [(ngModel)]="pass" #password="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Elija una contraseña"  maxlength="20"><br>
+        <p *ngIf=validPass>La contraseña debe ser mayor a 8 caracteres</p><br>
+        <label>Confirmar Contraseña:</label><br>
+        <input type="password" (keyup)="validarConfirPass($event)" [(ngModel)]="passConfirm" [ngModelOptions]="{standalone: true}" placeholder="Confirma la contraseña" maxlength="20"><br>
+        <p *ngIf=validConfirPass>Las contraseñas no coinciden</p><br>
+        <button (click)="cambiarClave()" class="btn btn-primary bt">Guardar</button>
+      </div>
+    </div>
+    <div>
+      
     </div>
   </div>

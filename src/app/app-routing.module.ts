@@ -1,3 +1,6 @@
+import { AdminGuard } from './guards/admin.guard';
+import { AuthGuard } from './guards/auth.guard';
+
 import { AddPlatoComponent } from './admin/menu-admin/add-plato/add-plato.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes} from '@angular/router';
@@ -38,8 +41,8 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: 'home', redirectTo: '/home', pathMatch: 'full'},
-      { path: 'home', component: HomeComponent},
+      { path: 'home', redirectTo: '/home', pathMatch: 'full', canActivate: [AuthGuard]},
+      { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
     ],
     component: NavbarComponent,
   },
@@ -47,8 +50,8 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: 'menu', redirectTo: '/menu', pathMatch: 'full'},
-      { path: 'menu', component: MenuComponent},
+      { path: 'menu', redirectTo: '/menu', pathMatch: 'full', canActivate: [AuthGuard]},
+      { path: 'menu', component: MenuComponent, canActivate: [AuthGuard]},
     ],
     component: NavbarComponent,
   },
@@ -56,8 +59,8 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: 'ayuda', redirectTo: '/ayuda', pathMatch: 'full'},
-      { path: 'ayuda', component: HelpComponent},
+      { path: 'ayuda', redirectTo: '/ayuda', pathMatch: 'full', canActivate: [AuthGuard]},
+      { path: 'ayuda', component: HelpComponent, canActivate: [AuthGuard]},
     ],
     component: NavbarComponent,
   },
@@ -65,8 +68,8 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: 'user', redirectTo: '/user', pathMatch: 'full'},
-      { path: 'user', component: CuentaComponent},
+      { path: 'user', redirectTo: '/user', pathMatch: 'full', canActivate: [AuthGuard]},
+      { path: 'user', component: CuentaComponent, canActivate: [AuthGuard]},
     ],
     component: NavbarComponent,
   },
@@ -74,8 +77,8 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: 'menu-admin', redirectTo: '/menu-admin', pathMatch: 'full'},
-      { path: 'menu-admin', component: MenuAdminComponent},
+      { path: 'menu-admin', redirectTo: '/menu-admin', pathMatch: 'full', canActivate: [AuthGuard]},
+      { path: 'menu-admin', component: MenuAdminComponent, canActivate: [AuthGuard]},
     ],
     component: NavbarAdminComponent,
   },
@@ -83,8 +86,8 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: 'home-admin', redirectTo: '/home-admin', pathMatch: 'full'},
-      { path: 'home-admin', component: HomeAdminComponent},
+      { path: 'home-admin', redirectTo: '/home-admin', pathMatch: 'full', canActivate: [AuthGuard]},
+      { path: 'home-admin', component: HomeAdminComponent, canActivate: [AuthGuard]},
     ],
     component: NavbarAdminComponent,
   },
@@ -92,8 +95,8 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: 'envios', redirectTo: '/envios', pathMatch: 'full'},
-      { path: 'envios', component: EnviosComponent},
+      { path: 'envios', redirectTo: '/envios', pathMatch: 'full', canActivate: [AuthGuard]},
+      { path: 'envios', component: EnviosComponent, canActivate: [AuthGuard]},
     ],
     component: NavbarAdminComponent,
   },
@@ -101,8 +104,8 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      { path: 'menu-admin/add-plato', redirectTo: 'menu-admin/add-plato', pathMatch: 'full'},
-      { path: 'menu-admin/add-plato', component: AddPlatoComponent},
+      { path: 'menu-admin/add-plato', redirectTo: 'menu-admin/add-plato', pathMatch: 'full', canActivate: [AuthGuard]},
+      { path: 'menu-admin/add-plato', component: AddPlatoComponent, canActivate: [AuthGuard]},
     ],
     component: NavbarAdminComponent,
   }

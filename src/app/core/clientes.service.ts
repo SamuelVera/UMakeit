@@ -1,8 +1,9 @@
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Cliente } from '../clases/cliente';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { AngularFirestore , AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
+import { startTimeRange } from '@angular/core/src/profile/wtf_impl';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class ClientesService {
 
   constructor(public afs: AngularFirestore,
     ) {
-      this.clientesCollection = afs.collection<Cliente>('clientes', ref => ref.orderBy('displayName', 'asc'));
+      this.clientesCollection = afs.collection<Cliente>('clientes', ref => ref.orderBy('email', 'asc'));
       this.clientes = this.clientesCollection.snapshotChanges().pipe(
         map(actions => actions.map( a => { 
           const data = a.payload.doc.data() as Cliente
@@ -34,13 +35,15 @@ export class ClientesService {
 
     //Update cliente
   public updateCliente(cliente: Cliente){
-    this.clienteDoc = this.afs.doc(`menu/${cliente.uid}`);
+    this.clienteDoc = this.afs.doc(`cliente/${cliente.id}`);
     this.clienteDoc.update(cliente);
     console.log("Cliente "+cliente.email+" updated");
   }
 
     //Get cliente by its email
   public getCliente(email: string){
-    return this.clienteDoc = this.afs.doc(`clientes/${email}`);
+    return this.afs.collection('clientes', ref => 
+    ref.orderBy('email').startAt(email)
+    ).valueChanges();
   }
 }

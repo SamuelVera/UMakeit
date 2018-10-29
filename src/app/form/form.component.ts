@@ -1,5 +1,5 @@
 import { AuthService } from './../core/auth.service';
-import { Cliente } from './../clases/cliente';
+import { Cliente } from '../clases/cliente';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -16,13 +16,8 @@ export class FormComponent implements OnInit {
     email: '',
     displayName:'',
     cedula: '',
-    password: '',
     telefono: '',
-    direcciones:[
-        {
-            direccion: ''
-        }
-    ],
+    direccion:'',
     ordenes: [
         {
             plato: {
@@ -37,21 +32,23 @@ export class FormComponent implements OnInit {
               }]
             }
         }
-    ]
+    ],
+    admin: false
   };
-  dir: String = '';
-  passConfirm: String = '';
+
+  dir: string = '';
+  passConfirm: string = '';
+  pass: string = '';
   validPass: boolean = false;
   validConfirPass: boolean = false;
-  validEmail: boolean = false;
   canAdvance: boolean = false;
 
   constructor(private authService: AuthService,
     private router: Router) { }
 
   ngOnInit() {
-    this.dir = "";
-    this.passConfirm = "";
+    this.dir = '';
+    this.passConfirm = '';
   }
 
   advance(e){
@@ -64,7 +61,7 @@ export class FormComponent implements OnInit {
   }
 
   validarConfirPass(e){
-    if(this.user.password != this.passConfirm){
+    if(this.pass != this.passConfirm){
       this.validConfirPass = true;
     }else{
       this.validConfirPass = false;
@@ -73,7 +70,7 @@ export class FormComponent implements OnInit {
   }
 
   validarPass(e){
-    if(this.user.password.length <  8){
+    if(this.pass.length < 8){
       this.validPass = true;
     }else{
       this.validPass = false;
@@ -83,9 +80,9 @@ export class FormComponent implements OnInit {
 
   register(e, f: NgForm){
     if(this.canAdvance){
+      this.user.direccion = this.dir;
       console.log("Campos llenos");
-      this.authService.signUp(this.user.email, this.user.password, this.user);
-      this.router.navigate([`/home`]);
+      this.authService.signUp(this.user.email, this.pass, this.user);
     }else{
       console.log("Campos inválidos");
     }
