@@ -3,11 +3,11 @@
   <nav class="navbar navbar-expand-sm bg-light">
     <ul class="navbar-nav">
       <li><img src="../../../assets/logo.jpg" height="40"></li>
-      <li class="nav-item"><a class="nav-link" href="/home"><strong>Inicio</strong></a></li>
-      <li class="nav-item"><a class="nav-link" href="/menu"><strong>Ordenar</strong></a></li>
-      <li class="nav-item"><a class="nav-link" href="/user"><strong>Usuario</strong></a></li>
-      <li class="nav-item"><a class="nav-link" href="/ayuda"><strong>Ayuda</strong></a></li>
-      <li class="nav-item"><a class="nav-link" (click)="logout()"><strong>Salir</strong></a></li>
+      <li class="nav-item"><a class="nav-link" (click)="toHome()"><strong>Inicio</strong></a></li>
+      <li class="nav-item"><a class="nav-link" (click)="toMenu()"><strong>Ordenar</strong></a></li>
+      <li class="nav-item"><a class="nav-link" (click)="toUser()"><strong>Usuario</strong></a></li>
+      <li class="nav-item"><a class="nav-link" (click)="toHelp()"><strong>Ayuda</strong></a></li>
+      <li class="nav-item"><a class="nav-link" href="" (click)="logout()"><strong>Salir</strong></a></li>
       <li *ngIf="auth.uid | async as uid" class="name">Nombre: {{uid}}</li>
     </ul>
   </nav>

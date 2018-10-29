@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Cliente } from './../../../clases/cliente';
+import { Cliente } from '../../../clases/cliente';
 import { AuthService } from './../../../core/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { ClientesService } from 'src/app/core/clientes.service';
@@ -14,6 +14,12 @@ export class CuentaComponent implements OnInit {
   public cliente: Cliente;
   private aux: Observable<Cliente[]>;
   private email: string;
+  private passConfirm: string = '';
+  private pass: string = '';
+  private validPass: boolean = false;
+  private validConfirPass: boolean = false;
+  private canAdvance: boolean = false;
+  private cambiandoClave: boolean = false;
 
   constructor(public auth: AuthService,
     private clientesService: ClientesService) { }
@@ -21,14 +27,49 @@ export class CuentaComponent implements OnInit {
   ngOnInit() {
     this.auth.uid.subscribe(data => {
       this.email = data;
-      console.log(this.email);
       this.aux = this.clientesService.getCliente(this.email) as Observable<Cliente[]>;
-      console.log(this.aux);
       this.aux.subscribe(data =>{
         this.cliente = data[0];
       })
     });
   }
+
+  advance(e){
+    if((!this.validConfirPass) && (!this.validPass)){
+      this.canAdvance = true;
+    }else{
+      this.canAdvance = false;
+    }
+  }
+
+  validarConfirPass(e){
+    if(this.pass != this.passConfirm){
+      this.validConfirPass = true;
+    }else{
+      this.validConfirPass = false;
+    }
+    this.advance(e);
+  }
+
+  validarPass(e){
+    if(this.pass.length < 8){
+      this.validPass = true;
+    }else{
+      this.validPass = false;
+    }
+    this.advance(e);
+  }
+
+  setCambiarTrue(){
+    this.cambiandoClave = true;
+  }
+
+  cambiarClave(){
+    if(this.advance){
+      console.log("cambia")
+    }
+  }
+
 }
 
 
