@@ -19,11 +19,7 @@ export class LoginComponent implements OnInit{
     displayName:'',
     cedula: '',
     telefono: '',
-    direcciones:[
-      {
-        direccion: ''
-      }
-    ],
+    direccion: '',
     ordenes: [
       {
         plato: {
@@ -45,7 +41,7 @@ export class LoginComponent implements OnInit{
   pass: string;
 
   constructor(public auth: AuthService) { }
-  
+
   ngOnInit() {
   }
 
