@@ -1,12 +1,17 @@
+import { Router } from '@angular/router';
 import { PlatoService } from '../../core/plato.service';
 import { Plato } from '../../clases/plato';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 
 @Component({
   selector: 'app-menu-admin',
   templateUrl: './menu-admin.component.html',
   styleUrls: ['./menu-admin.component.css']
 })
+@Injectable({
+  providedIn: 'root'
+})
+
 export class MenuAdminComponent implements OnInit {
 
   public platos = [];
@@ -16,7 +21,8 @@ export class MenuAdminComponent implements OnInit {
   private cargaContorno: number;
   private last: boolean;
 
-  constructor(private platoService: PlatoService) { }
+  constructor(private platoService: PlatoService,
+    private router: Router) { }
 
   ngOnInit() {
     this.platoService.getPlatos()
@@ -74,6 +80,10 @@ export class MenuAdminComponent implements OnInit {
   clearEditing(){ //Clear state
     this.editState = false;
     this.platoToEdit = null;
+  }
+
+  goAdd(){
+    this.router.navigate(['/menu-admin/add-plato']);
   }
 
 }

@@ -1,3 +1,4 @@
+import { MenuAdminComponent } from './../../../admin/menu-admin/menu-admin.component';
 import { AuthService } from './../../../core/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -10,20 +11,21 @@ import { Router } from '@angular/router';
 export class NavbarAdminComponent implements OnInit {
 
   constructor(public auth: AuthService,
-    private router: Router) { }
+    private router: Router,
+    private menuAdmin: MenuAdminComponent) { }
 
   ngOnInit() {
   }
 
-  toHome(){
+  private toHome(){
     this.router.navigate(['/home-admin']);
   }
 
-  toMenu(){
+  private toMenu(){
     this.router.navigate(['/menu-admin']);
   }
 
-  toEnvios(){
+  private toEnvios(){
     this.router.navigate(['/envios']);
   }
 

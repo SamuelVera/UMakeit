@@ -10,10 +10,7 @@ import { Cliente } from 'src/app/clases/cliente';
 
 export class HomeComponent implements OnInit {
 
-  user: Cliente;
-
   constructor(private auth: AuthService) { 
-    
   }
 
   ngOnInit() {

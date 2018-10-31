@@ -56,4 +56,4 @@
       <a (click)="clearEditing()" class="btn btn-primary">Volver</a>
 </div>
 
-<td *ngIf="!editState"><a href="menu-admin/add-plato" class="btn btn-primary add">Agregar</a></td>
+<td *ngIf="!editState"><a (click)="goAdd()" class="btn btn-primary add">Agregar</a></td>

@@ -6,13 +6,13 @@
 <h1>Nuevo Usuario</h1>
 <form (ngSubmit)="register($event,formNew)" #formNew="ngForm">
   <label>Cédula de identidad</label>
-  <input type="text" (keyup)="advance($event)" [(ngModel)]="user.cedula" #cedula="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su número de cédula" maxlength="20"><br><br>
+  <input type="number" (keyup)="advance($event)" [(ngModel)]="user.cedula" #cedula="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su número de cédula" maxlength="20"><br><br>
   <label>Correo electrónico</label>
   <input type="text" (keyup)="advance($event)" [(ngModel)]="user.email" #email="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su correo electrónico"><br><br>
   <label>Nombre de Usuario</label>
   <input type="text" (keyup)="advance($event)" [(ngModel)]="user.displayName" #displayName="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su nombre de usuario" maxlength="20"><br><br>
   <label>Teléfono</label>
-  <input type="text" (keyup)="advance($event)" [(ngModel)]="user.telefono" #telefono="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su número de teléfono" maxlength="12"><br><br>
+  <input type="number" (keyup)="advance($event)" [(ngModel)]="user.telefono" #telefono="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su número de teléfono" maxlength="12"><br><br>
   <label>Dirección</label>
   <input type="text" (keyup)="advance($event)" [(ngModel)]="dir" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su dirección" maxlength="30"><br><br>
   <label>Contraseña</label>
