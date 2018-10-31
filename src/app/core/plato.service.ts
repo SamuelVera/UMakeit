@@ -16,7 +16,12 @@ export class PlatoService {
 
   constructor(public afs: AngularFirestore,
     ) {
-      this.platosCollection = afs.collection<Plato>('menu', ref => ref.orderBy('nombre', 'asc'));
+    }
+
+    //Get platos from server
+  public getPlatos(){
+    console.log("Platos fetched");
+    this.platosCollection = this.afs.collection<Plato>('menu', ref => ref.orderBy('nombre', 'asc'));
       this.platos = this.platosCollection.snapshotChanges().pipe(
         map(actions => actions.map( a => { 
           const data = a.payload.doc.data() as Plato
@@ -25,10 +30,6 @@ export class PlatoService {
           }
         ))
       );
-    }
-
-    //Get platos from server
-  public getPlatos(){
     return this.platos;
   };
 

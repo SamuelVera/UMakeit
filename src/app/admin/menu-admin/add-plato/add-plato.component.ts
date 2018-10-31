@@ -32,7 +32,6 @@ export class AddPlatoComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    
   }
 
   add(f: NgForm){ //Añadir un plato con los datos especificados
