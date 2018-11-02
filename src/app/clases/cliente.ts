@@ -1,16 +1,13 @@
-import { Plato } from "./plato";
+import { Envio } from './envio';
 
 export interface Cliente{
+
     id ?: string; 
     email: string; //Nombre del usuario
     displayName ?: string; //Correo electrónico
     cedula ?: string; //Número de cédula
     telefono ?: string; //Número de teléfono
     direccion ?: string;
-    ordenes ?: [ //Arreglo de platos
-        {
-            plato: Plato;
-        }
-    ]
+    envios ?: Envio[];
     admin ?: boolean;
 }

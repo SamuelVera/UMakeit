@@ -1,7 +1,7 @@
 
 <router-outlet></router-outlet>
 
-<table class="table table-bordered">
+<table *ngIf="platos.length !== 0" class="table table-bordered">
     <thead>
         <tr>
             <th>Imágen</th>
@@ -29,8 +29,43 @@
                 No personalizable
             </div>
         </td>
-        <td *ngIf="plato.activo"><a class="btn btn-primary">Ordenar</a></td>
+        <td (click)="agregar(plato)" *ngIf="plato.activo"><a class="btn btn-primary">Ordenar</a></td>
     </tr>
 </table>
-<input type="text" placeholder="Busca un plato"> 
-<a class="btn btn-primary">Buscar</a>
+<div *ngIf="platos.length === 0">
+    No hay platos por ese nombre!!
+</div><br><br>
+<div *ngIf="envio.platos.length !== 0">
+    Orden:
+    <div>
+        <table *ngIf="platos.length !== 0" class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Imágen</th>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Personalizar</th>
+                <th>Ordenar</th>
+            </tr>
+            </thead>
+            <tr *ngFor="let plato of envio.platos">
+                <td><img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"></td>
+                <td>{{plato.nombre}}</td>
+                <td>{{plato.precio}} Bs.</td>
+                <td>
+                    <div *ngIf="plato.personal">
+                    <div *ngFor="let contorno of plato.contornos" >
+                        <a>{{contorno.nombre}} ({{contorno.carga}} Bs.)<input type="checkbox"></a>
+                    </div>
+                    </div>
+                    <div *ngIf="plato.personal == false">
+                        No personalizable
+                    </div>
+                </td>
+                <td (click)="eliminar(i)"><a class="btn btn-primary">Eliminar</a></td>
+            </tr>
+        </table>
+        <button (click)="ordenar()" class="btn btn-primary">Confirmar Orden</button>
+    </div>
+</div>
+<input type="text" [(ngModel)]="campoText" #campo="ngModel" [ngModelOptions]="{standalone: true}" (keyup)="search($event)" placeholder="Busca un plato">

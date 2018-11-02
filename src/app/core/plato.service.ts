@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Plato } from '../clases/plato';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
@@ -32,6 +32,13 @@ export class PlatoService {
       );
     return this.platos;
   };
+
+    //Get platos by searchterm
+  public searchPlatos(campo: string){
+    return this.afs.collection('menu', ref => 
+    ref.orderBy('nombre').startAt(campo).endAt(campo+'\uf8ff')
+    ).valueChanges();
+  }
 
     //Get plato by its id
   public getPlato(id: String){

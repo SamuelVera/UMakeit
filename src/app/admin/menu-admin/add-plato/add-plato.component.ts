@@ -52,7 +52,7 @@ export class AddPlatoComponent implements OnInit {
     if(this.cargaContorno > 0 && this.addingContorno != ""){
       this.plato.contornos.push({
         nombre: this.addingContorno,
-        carga: this.cargaContorno
+        carga: this.cargaContorno,
       });
       this.addingContorno = "";
       this.cargaContorno = 0;  

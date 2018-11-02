@@ -20,6 +20,7 @@ export class MenuAdminComponent implements OnInit {
   private addingContorno: String;
   private cargaContorno: number;
   private last: boolean;
+  campoText: string;
 
   constructor(private platoService: PlatoService,
     private router: Router) { }
@@ -43,7 +44,7 @@ export class MenuAdminComponent implements OnInit {
     this.cargaContorno = 0; 
     this.platoToEdit.contornos.push({
       nombre: this.addingContorno,
-      carga: this.cargaContorno
+      carga: this.cargaContorno,
     });
   }
   
@@ -60,7 +61,7 @@ export class MenuAdminComponent implements OnInit {
     if(this.cargaContorno > 0 && this.addingContorno != ""){
       this.platoToEdit.contornos.push({
         nombre: this.addingContorno,
-        carga: this.cargaContorno
+        carga: this.cargaContorno,
       });
       this.addingContorno = "";
       this.cargaContorno = 0;  
@@ -84,6 +85,15 @@ export class MenuAdminComponent implements OnInit {
 
   goAdd(){
     this.router.navigate(['/menu-admin/add-plato']);
+  }
+
+  search(e){
+    console.log(this.campoText);
+    this.platoService.searchPlatos(this.campoText)
+    .subscribe(data  => {
+      this.platos = data;
+      console.log(this.platos);
+    });
   }
 
 }
