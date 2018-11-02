@@ -18,21 +18,7 @@ export class FormComponent implements OnInit {
     cedula: '',
     telefono: '',
     direccion:'',
-    ordenes: [
-        {
-            plato: {
-              nombre: '',
-              precio: 0,
-              personal: false,
-              activo: false,
-              image: '',
-              contornos:[{
-                  nombre: '',
-                  carga: 0,
-              }]
-            }
-        }
-    ],
+    envios:[],
     admin: false
   };
 

@@ -1,4 +1,4 @@
-import { Cliente } from '../clases/cliente';
+import { Cliente } from './../clases/cliente';
 import { Component, OnInit} from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { Router } from '@angular/router';
@@ -20,21 +20,7 @@ export class LoginComponent implements OnInit{
     cedula: '',
     telefono: '',
     direccion: '',
-    ordenes: [
-      {
-        plato: {
-          nombre: '',
-          precio: 0,
-          personal: false,
-          activo: false,
-          image: '',
-          contornos:[{
-            nombre: '',
-            carga: 0,
-          }]
-        }
-      }
-    ],
+    envios:[],
     admin: false
   };
   path: String;
