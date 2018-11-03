@@ -45,6 +45,7 @@ export class MenuAdminComponent implements OnInit {
     this.platoToEdit.contornos.push({
       nombre: this.addingContorno,
       carga: this.cargaContorno,
+      elegido: false
     });
   }
   
@@ -62,6 +63,7 @@ export class MenuAdminComponent implements OnInit {
       this.platoToEdit.contornos.push({
         nombre: this.addingContorno,
         carga: this.cargaContorno,
+        elegido: false
       });
       this.addingContorno = "";
       this.cargaContorno = 0;  

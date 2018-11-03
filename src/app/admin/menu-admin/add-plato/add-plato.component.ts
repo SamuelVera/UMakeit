@@ -21,6 +21,7 @@ export class AddPlatoComponent implements OnInit {
     contornos:[{
         nombre: '',
         carga: 0,
+        elegido: false
     }]
   };
 
@@ -53,6 +54,7 @@ export class AddPlatoComponent implements OnInit {
       this.plato.contornos.push({
         nombre: this.addingContorno,
         carga: this.cargaContorno,
+        elegido: false
       });
       this.addingContorno = "";
       this.cargaContorno = 0;  

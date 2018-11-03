@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit{
     cedula: '',
     telefono: '',
     direccion: '',
-    envios:[],
+    envios: [''],
     admin: false
   };
   path: String;

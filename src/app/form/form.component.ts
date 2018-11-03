@@ -18,7 +18,7 @@ export class FormComponent implements OnInit {
     cedula: '',
     telefono: '',
     direccion:'',
-    envios:[],
+    envios:[''],
     admin: false
   };
 
