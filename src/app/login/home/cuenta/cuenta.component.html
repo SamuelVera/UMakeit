@@ -1,6 +1,6 @@
 <router-outlet></router-outlet>
 
-  <div *ngIf="cliente" class="container">
+<div *ngIf="cliente" class="container">
     <div class="card">
       <h2>{{cliente.displayName}}</h2>
       <div class="card-header">Número de contacto: {{cliente.telefono}}</div>
@@ -21,4 +21,38 @@
     <div>
       
     </div>
+  
+
+  <h2>Ordenes:</h2>
+  <div *ngIf="cliente.envios.length !== 0">
+    Por pagar:
+    <div *ngFor="let envio of envios">
+      Orden:
+      <div *ngIf="!envio.pagada">
+        <div *ngFor="let plato of envio.platos">
+          Plato:<br>
+          {{plato.nombre}}<br>
+          {{plato.precio}} Bs.<br>
+          <div *ngIf="plato.contornos">
+            <div *ngFor="let contorno of plato.contornos">
+              <div *ngIf="contorno.elegido">
+                Contorno:
+                {{contorno.nombre}}<br>
+                {{contorno.carga}} Bs.<br>
+              </div>
+            </div>
+          </div>
+        </div><br>
+        <p>Total: {{envio.precio}}</p>
+        <a class="btn btn-primary">Pagar</a><br>
+        --------------------------------------------------------------------
+      </div>
+    </div>
+    Previas:
+    <div *ngFor="let envio of envios">
+      <div *ngIf="envio.pagada">
+        Pagadas
+      </div>
+    </div>
   </div>
+</div>
