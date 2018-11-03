@@ -33,13 +33,15 @@ export class EnviosService {
 
     //Get envio by its id
   public getEnvio(id: String){
-    return this.envioDoc = this.afs.doc(`menu/${id}`);
+    return (this.afs.doc(`envios/${id}`).valueChanges()) as Observable<Envio>;
   }
 
     //Add new envio
   public addEnvio(envio: Envio){
-    this.enviosCollection.add(envio);
+    const wow = this.afs.createId()
+    this.enviosCollection.doc(wow).set(envio);
     console.log("Envio added");
+    return wow;
   }
 
     //Delete envio

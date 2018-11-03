@@ -18,9 +18,9 @@ export class ClientesService {
     ) {
       this.clientesCollection = afs.collection<Cliente>('clientes', ref => ref.orderBy('email', 'asc'));
       this.clientes = this.clientesCollection.snapshotChanges().pipe(
-        map(actions => actions.map( a => { 
-          const data = a.payload.doc.data() as Cliente
-          const id = a.payload.doc.id;
+        map(actions => actions.map( ref => { 
+          const data = ref.payload.doc.data() as Cliente
+          const id = ref.payload.doc.id;
           return { id, ...data};
           }
         ))
@@ -35,7 +35,7 @@ export class ClientesService {
 
     //Update cliente
   public updateCliente(cliente: Cliente){
-    this.clienteDoc = this.afs.doc(`cliente/${cliente.id}`);
+    this.clienteDoc = this.afs.doc(`clientes/${cliente.id}`);
     this.clienteDoc.update(cliente);
     console.log("Cliente "+cliente.email+" updated");
   }
@@ -44,7 +44,11 @@ export class ClientesService {
   public getCliente(email: string){
     return this.afs.collection('clientes', ref => 
     ref.orderBy('email').startAt(email)
-    ).valueChanges();
+    ).snapshotChanges().pipe(map(actions => actions.map(ref =>{
+      const data = ref.payload.doc.data() as Cliente
+      const id = ref.payload.doc.id;
+      return { id, ...data};
+    })));
   }
   
 }

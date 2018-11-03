@@ -29,7 +29,7 @@
                 No personalizable
             </div>
         </td>
-        <td (click)="agregar(plato)" *ngIf="plato.activo"><a class="btn btn-primary">Ordenar</a></td>
+        <td *ngIf="plato.activo"><a (click)="agregar(plato)"  class="btn btn-primary">Ordenar</a></td>
     </tr>
 </table>
 <div *ngIf="platos.length === 0">
@@ -55,14 +55,14 @@
                 <td>
                     <div *ngIf="plato.personal">
                     <div *ngFor="let contorno of plato.contornos" >
-                        <a>{{contorno.nombre}} ({{contorno.carga}} Bs.)<input type="checkbox"></a>
+                        <a>{{contorno.nombre}} ({{contorno.carga}} Bs.)<input (click)="select(contorno)" type="checkbox"></a>
                     </div>
                     </div>
                     <div *ngIf="plato.personal == false">
                         No personalizable
                     </div>
                 </td>
-                <td (click)="eliminar(i)"><a class="btn btn-primary">Eliminar</a></td>
+                <td><a (click)="eliminar(i)" class="btn btn-primary">Eliminar</a></td>
             </tr>
         </table>
         <button (click)="ordenar()" class="btn btn-primary">Confirmar Orden</button>

@@ -8,6 +8,6 @@ export interface Cliente{
     cedula ?: string; //Número de cédula
     telefono ?: string; //Número de teléfono
     direccion ?: string;
-    envios ?: Envio[];
+    envios ?: string[];
     admin ?: boolean;
 }

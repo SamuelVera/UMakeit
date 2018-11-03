@@ -1,3 +1,5 @@
+import { EnviosService } from './../../../core/envios.service';
+import { Envio } from 'src/app/clases/envio';
 import { Observable } from 'rxjs';
 import { Cliente } from '../../../clases/cliente';
 import { AuthService } from './../../../core/auth.service';
@@ -12,6 +14,7 @@ import { ClientesService } from 'src/app/core/clientes.service';
 export class CuentaComponent implements OnInit {
 
   public cliente: Cliente;
+  public envios: Envio[] = [];
   private aux: Observable<Cliente[]>;
   private email: string;
   private passConfirm: string = '';
@@ -22,7 +25,8 @@ export class CuentaComponent implements OnInit {
   private cambiandoClave: boolean = false;
 
   constructor(public auth: AuthService,
-    private clientesService: ClientesService) { }
+    private clientesService: ClientesService,
+    private enviosService: EnviosService) { }
 
   ngOnInit() {
     this.auth.uid.subscribe(data => {
@@ -30,6 +34,16 @@ export class CuentaComponent implements OnInit {
       this.aux = this.clientesService.getCliente(this.email) as Observable<Cliente[]>;
       this.aux.subscribe(data =>{
         this.cliente = data[0];
+        var i = 0;
+        while(i < this.cliente.envios.length){
+          var aux;
+          this.enviosService.getEnvio(this.cliente.envios[i])
+          .subscribe(data => {
+            aux = data;
+            this.envios.push(aux);
+          })
+          i++;
+        }
       })
     });
   }
