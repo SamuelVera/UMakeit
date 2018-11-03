@@ -3,8 +3,11 @@ import { Plato } from './plato';
 
 export interface Envio{
     id ?: string;
-    owner: Cliente,
+    owner_ref: string,
     fecha ?: Date,
+    precio ?: number,
     platos: Plato[],
-    confirmada: boolean
+    direccion: string,
+    confirmada: boolean,
+    pagada: boolean
 }

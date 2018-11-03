@@ -9,6 +9,7 @@ export interface Plato{
         {
             nombre: String;
             carga: number;
+            elegido: boolean;
         }
     ]
 }
