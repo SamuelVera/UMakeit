@@ -26,7 +26,9 @@ export class MenuComponent implements OnInit {
     platos:[],
     direccion: '',
     confirmada: false,
-    pagada: false
+    pagada: false,
+    telefono: '',
+    cedula: ''
   };
 
   aux: string;
@@ -81,6 +83,8 @@ export class MenuComponent implements OnInit {
     this.calcPrecio();
     this.envio.owner_ref = "clientes/"+this.ordena.id;
     this.envio.direccion = this.ordena.direccion;
+    this.envio.telefono = this.ordena.telefono;
+    this.envio.cedula = this.ordena.cedula;
     this.envio.fecha = new Date();
     const id = this.enviosService.addEnvio(this.envio);
     this.ordena.envios.push(id);

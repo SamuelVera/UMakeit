@@ -29,23 +29,22 @@ export class CuentaComponent implements OnInit {
     private enviosService: EnviosService) { }
 
   ngOnInit() {
+    this.envios = [];
     this.auth.uid.subscribe(data => {
       this.email = data;
       this.aux = this.clientesService.getCliente(this.email) as Observable<Cliente[]>;
-      this.aux.subscribe(data =>{
-        this.cliente = data[0];
-        var i = 0;
-        while(i < this.cliente.envios.length){
-          var aux;
-          this.enviosService.getEnvio(this.cliente.envios[i])
-          .subscribe(data => {
-            aux = data;
-            this.envios.push(aux);
-          })
-          i++;
-        }
-      })
+      this.getEnvios();
     });
+  }
+
+  private getEnvios(){
+    this.aux.subscribe(data =>{
+      this.cliente = data[0];
+      this.enviosService.getEnviosOfCliente(this.cliente.id)
+      .subscribe(data =>{
+        this.envios = data;
+      });
+    })
   }
 
   advance(e){
@@ -82,6 +81,23 @@ export class CuentaComponent implements OnInit {
     if(this.advance){
       console.log("cambia")
     }
+  }
+
+  pagar(envio: Envio, i: number){
+    envio.pagada = true;
+    this.enviosService.updateEnvio(envio);
+  }
+
+  reordenar(envio: Envio){
+    var aux: Envio;
+    aux = envio;
+    aux.id = '';
+    aux.fecha = new Date();
+    aux.confirmada = false;
+    aux.pagada = false;
+    const id = this.enviosService.addEnvio(aux);
+    this.cliente.envios.push(id);
+    this.clientesService.updateCliente(this.cliente);
   }
 
 }

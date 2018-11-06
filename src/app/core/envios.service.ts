@@ -15,39 +15,60 @@ export class EnviosService {
 
   constructor(public afs: AngularFirestore,
     ) { 
-      this.enviosCollection = afs.collection<Envio>('envios', ref => ref.orderBy('fecha', 'asc'));
-      this.envios = this.enviosCollection.snapshotChanges().pipe(
-        map(actions => actions.map( a =>{ 
-          const data = a.payload.doc.data() as Envio
-          const id = a.payload.doc.id;
-          return { id, ...data};
-          }
-        ))
-      );
   }
 
   //Get envios from server
   public getEnvios(){
+    this.enviosCollection = this.afs.collection<Envio>('envios', ref => ref.orderBy('fecha', 'asc'));
+    this.envios = this.enviosCollection.snapshotChanges().pipe(
+      map(actions => actions.map( a =>{ 
+        const data = a.payload.doc.data() as Envio
+        const id = a.payload.doc.id;
+        data.id = id;
+        return data;
+        }
+      ))
+    );
     return this.envios;
   };
 
     //Get envio by its id
-  public getEnvio(id: String){
-    return (this.afs.doc(`envios/${id}`).valueChanges()) as Observable<Envio>;
+  public getEnvio(id: string){
+    return ((this.afs.doc(`envios/${id}`).valueChanges()) as Observable<Envio>);
   }
 
     //Add new envio
   public addEnvio(envio: Envio){
     const wow = this.afs.createId()
+    envio.id = wow;
+    this.enviosCollection = this.afs.collection<Envio>('envios', ref => ref.orderBy('fecha', 'asc'));
     this.enviosCollection.doc(wow).set(envio);
     console.log("Envio added");
     return wow;
   }
 
     //Delete envio
-  public deletePlato(envio: Envio){
+  public deleteEnvio(envio: Envio){
     this.envioDoc = this.afs.doc(`envios/${envio.id}`);
     this.envioDoc.delete();
     console.log("Envio deleted");
   }
+
+    //Update envio
+  public updateEnvio(envio: Envio){
+    this.envioDoc = this.afs.doc(`envios/${envio.id}`);
+    this.envioDoc.update(envio);
+    console.log("Envío "+envio.id+" actualizado");
+  }
+
+    //Get Envios of a cliente
+    public getEnviosOfCliente(idc: string){
+      return (this.afs.collection('envios', ref => 
+      ref.orderBy('owner_ref').startAt(idc)
+      ).snapshotChanges().pipe(map(actions => actions.map(ref =>{
+        const data = ref.payload.doc.data() as Envio
+        const id = ref.payload.doc.id;
+        return { id, ...data};
+      })))) as Observable<Envio[]>;
+    }
 }
