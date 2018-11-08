@@ -6,7 +6,6 @@
       <div class="card-header">Número de contacto: {{cliente.telefono}}</div>
       <div class="card-body">Correo: {{cliente.email}}</div> 
       <div class="card-footer">Dirección: {{cliente.direccion}}</div>
-      <div ></div>
       <button (click)="setCambiarTrue()" class="btn btn-primary">Cambiar Clave</button>
       <div *ngIf=cambiandoClave>
         <label>Nueva contraseña:</label><br>
@@ -26,9 +25,9 @@
   <h2>Ordenes:</h2>
   <div *ngIf="cliente.envios.length !== 0">
     Por pagar:
-    <div *ngFor="let envio of envios">
-      Orden:
+    <div *ngFor="let envio of envios; index as i">
       <div *ngIf="!envio.pagada">
+        Orden:
         <div *ngFor="let plato of envio.platos">
           Plato:<br>
           {{plato.nombre}}<br>
@@ -42,16 +41,40 @@
               </div>
             </div>
           </div>
+          <img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"><br>
         </div><br>
         <p>Total: {{envio.precio}}</p>
-        <a class="btn btn-primary">Pagar</a><br>
+        <a class="btn btn-primary" (click)="pagar(envio, i)">Pagar</a><br>
         --------------------------------------------------------------------
       </div>
-    </div>
+    </div><br><br><br>
     Previas:
     <div *ngFor="let envio of envios">
-      <div *ngIf="envio.pagada">
-        Pagadas
+      <div *ngIf="envio.pagada; index as i">
+        Orden:
+        <div *ngFor="let plato of envio.platos">
+          Plato:<br>
+          {{plato.nombre}}<br>
+          {{plato.precio}} Bs.<br>
+          <div *ngIf="plato.contornos">
+            <div *ngFor="let contorno of plato.contornos">
+              <div *ngIf="contorno.elegido">
+                Contorno:
+                {{contorno.nombre}}<br>
+                {{contorno.carga}} Bs.<br>
+              </div>
+            </div>
+          </div>
+          <img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"><br>
+        </div><br>
+        {{envio.fecha}}<br>
+        <p>Total: {{envio.precio}}</p><br>
+        <div *ngIf="envio.confirmada">
+          <a class="btn btn-primary" (click)="reordenar(envio)">Reordenar</a>
+        </div>
+        <div *ngIf="!envio.confirmada">
+          Esperando confirmación
+        </div><br><br>
       </div>
     </div>
   </div>

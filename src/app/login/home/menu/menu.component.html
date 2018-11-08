@@ -48,7 +48,7 @@
                 <th>Ordenar</th>
             </tr>
             </thead>
-            <tr *ngFor="let plato of envio.platos">
+            <tr *ngFor="let plato of envio.platos; index as i">
                 <td><img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"></td>
                 <td>{{plato.nombre}}</td>
                 <td>{{plato.precio}} Bs.</td>

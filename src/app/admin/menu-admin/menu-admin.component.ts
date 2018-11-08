@@ -2,6 +2,8 @@ import { Router } from '@angular/router';
 import { PlatoService } from '../../core/plato.service';
 import { Plato } from '../../clases/plato';
 import { Component, OnInit, Injectable } from '@angular/core';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-menu-admin',
@@ -23,7 +25,8 @@ export class MenuAdminComponent implements OnInit {
   campoText: string;
 
   constructor(private platoService: PlatoService,
-    private router: Router) { }
+    private router: Router,
+    private afStorage: AngularFireStorage) { }
 
   ngOnInit() {
     this.platoService.getPlatos()
@@ -96,6 +99,9 @@ export class MenuAdminComponent implements OnInit {
       this.platos = data;
       console.log(this.platos);
     });
+
   }
+
+
 
 }

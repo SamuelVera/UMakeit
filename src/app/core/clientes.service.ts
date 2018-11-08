@@ -3,7 +3,6 @@ import { Cliente } from '../clases/cliente';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { AngularFirestore , AngularFirestoreCollection, AngularFirestoreDocument} from 'angularfire2/firestore';
-import { startTimeRange } from '@angular/core/src/profile/wtf_impl';
 
 @Injectable({
   providedIn: 'root'

@@ -1,13 +1,14 @@
-import { Cliente } from './cliente';
 import { Plato } from './plato';
 
 export interface Envio{
-    id ?: string;
+    id ?: string,
     owner_ref: string,
     fecha ?: Date,
     precio ?: number,
     platos: Plato[],
     direccion: string,
     confirmada: boolean,
-    pagada: boolean
+    pagada: boolean,
+    telefono: string,
+    cedula: string
 }
