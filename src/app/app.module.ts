@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireModule } from 'angularfire2';
 import { environment } from './../environments/environment';
 
@@ -38,6 +39,7 @@ import { AddPlatoComponent } from './admin/menu-admin/add-plato/add-plato.compon
     AngularFireModule.initializeApp(environment.firebaseConfig, 'uMakeIt'),
     AngularFirestoreModule.enablePersistence(),
     AngularFirestoreModule,
+    AngularFireStorageModule,
     CoreModule,
   ],
   declarations: [

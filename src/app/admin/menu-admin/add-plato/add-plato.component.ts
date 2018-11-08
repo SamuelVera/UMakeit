@@ -1,9 +1,12 @@
+import { Observable } from 'rxjs';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Router } from '@angular/router';
 import { PlatoService } from '../../../core/plato.service';
 import { Component, OnInit } from '@angular/core';
 import { Plato } from 'src/app/clases/plato';
 import { NgForm } from '@angular/forms/src/directives/ng_form';
 import { Location } from '@angular/common';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-add-plato',
@@ -24,20 +27,24 @@ export class AddPlatoComponent implements OnInit {
         elegido: false
     }]
   };
-
   addingContorno: String;
   cargaContorno: number;
+  isFoto: boolean;
+  private uploadTask: AngularFireUploadTask;
+  private ref: AngularFireStorageReference;
+  uploadProgress: Observable<number>;
 
   constructor(private platosService: PlatoService,
     private location: Location,
-    private router: Router) { }
+    private router: Router,
+    private afStorage: AngularFireStorage) { }
 
   ngOnInit() {
   }
 
   add(f: NgForm){ //Añadir un plato con los datos especificados
     if(this.plato.nombre != "" && this.plato.precio > 0){
-      this.plato.image = "src";
+      this.plato.nombre.toLowerCase();
       this.platosService.addPlato(this.plato);
       this.router.navigate(["/menu-admin"]);
     }else{
@@ -50,7 +57,7 @@ export class AddPlatoComponent implements OnInit {
   }
 
   addContorno(){ //Añadir un contorno al editar
-    if(this.cargaContorno > 0 && this.addingContorno != ""){
+    if(this.cargaContorno > 0 && this.addingContorno != "" && this.isFoto){
       this.plato.contornos.push({
         nombre: this.addingContorno,
         carga: this.cargaContorno,
@@ -65,6 +72,19 @@ export class AddPlatoComponent implements OnInit {
 
   deleteContorno(){//Eliminar un contorno del plato
     this.plato.contornos.pop();
+  }
+
+
+  uploadFoto(e: any){
+    const file: File = e.target.files[0];
+    const id = file.name;
+    this.ref = this.afStorage.ref(id);
+    this.uploadTask = this.ref.put(file);
+    this.uploadProgress = this.uploadTask.percentageChanges();
+    this.ref.getDownloadURL().subscribe(data =>{
+      this.plato.image = data;
+      this.isFoto = true;
+    });
   }
 
 }

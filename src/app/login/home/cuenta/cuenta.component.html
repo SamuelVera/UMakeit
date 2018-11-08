@@ -6,7 +6,6 @@
       <div class="card-header">Número de contacto: {{cliente.telefono}}</div>
       <div class="card-body">Correo: {{cliente.email}}</div> 
       <div class="card-footer">Dirección: {{cliente.direccion}}</div>
-      <div ></div>
       <button (click)="setCambiarTrue()" class="btn btn-primary">Cambiar Clave</button>
       <div *ngIf=cambiandoClave>
         <label>Nueva contraseña:</label><br>
@@ -42,6 +41,7 @@
               </div>
             </div>
           </div>
+          <img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"><br>
         </div><br>
         <p>Total: {{envio.precio}}</p>
         <a class="btn btn-primary" (click)="pagar(envio, i)">Pagar</a><br>
@@ -65,6 +65,7 @@
               </div>
             </div>
           </div>
+          <img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"><br>
         </div><br>
         {{envio.fecha}}<br>
         <p>Total: {{envio.precio}}</p><br>
