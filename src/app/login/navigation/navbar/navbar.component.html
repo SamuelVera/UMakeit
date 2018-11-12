@@ -1,14 +1,28 @@
-<div class="container">
-  
+<div class="container1 row">
+
   <nav class="navbar navbar-expand-sm bg-light">
     <ul class="navbar-nav">
-      <li><img src="../../../assets/logo.jpg" height="40"></li>
+      <div class="col-md-1 col-sm-3">
+      <li><img src="../../../assets/logo.jpg"></li>
+      </div>
+      <div class="col-md-2 col-sm-3">
       <li class="nav-item"><a class="nav-link" (click)="toHome()"><strong>Inicio</strong></a></li>
+      </div>
+      <div class="col-md-2 col-sm-3">
       <li class="nav-item"><a class="nav-link" (click)="toMenu()"><strong>Ordenar</strong></a></li>
+      </div>
+      <div class="col-md-2 col-sm-3">
       <li class="nav-item"><a class="nav-link" (click)="toUser()"><strong>Usuario</strong></a></li>
+      </div>
+      <div class="col-md-2 col-sm-3">
       <li class="nav-item"><a class="nav-link" (click)="toHelp()"><strong>Ayuda</strong></a></li>
+      </div>
+      <div class="col-md-2 col-sm-3">
       <li class="nav-item"><a class="nav-link" href="" (click)="logout()"><strong>Salir</strong></a></li>
-      <li *ngIf="auth.uid | async as uid" class="name">Nombre: {{uid}}</li>
+      </div>
+      <div class="col-md-1 col-sm-3">
+      <li *ngIf="auth.uid | async as uid" class="name">Usuario: {{uid}}</li>
+      </div>
     </ul>
   </nav>
 </div>
