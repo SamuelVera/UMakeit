@@ -17,7 +17,7 @@ ul{
 }
 
 li{
-    color: white;
+    color:white;
     margin-left: 3%;
 }
 
@@ -33,11 +33,11 @@ a:hover{
     box-shadow: 0 2px orange;
 }
 
-a{
-    color: white;
-}
-
 img{
     background:rgb(204, 204, 204);
     margin-left:10%;
+}
+
+a{
+    color:white;
 }

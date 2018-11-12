@@ -71,16 +71,17 @@ export class MenuComponent implements OnInit {
     //Agregar plato a la orden
   agregar(plato: Plato){
     this.envio.platos.push(plato);
+    this.calcPrecio();
   }
 
     //Eliminar plato de la orden
   eliminar(i: number){
     this.envio.platos.splice(i,1);
+    this.calcPrecio();
   }
 
     //Confirmar la orden
   ordenar(){
-    this.calcPrecio();
     this.envio.owner_ref = "clientes/"+this.ordena.id;
     this.envio.direccion = this.ordena.direccion;
     this.envio.telefono = this.ordena.telefono;
