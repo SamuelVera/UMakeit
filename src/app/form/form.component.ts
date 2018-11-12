@@ -61,6 +61,7 @@ export class FormComponent implements OnInit {
     }else{
       this.validPass = false;
     }
+    this.validarConfirPass(e);
     this.advance(e);
   }
 

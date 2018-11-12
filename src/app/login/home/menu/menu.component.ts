@@ -82,6 +82,7 @@ export class MenuComponent implements OnInit {
 
     //Confirmar la orden
   ordenar(){
+    this.calcPrecio();
     this.envio.owner_ref = "clientes/"+this.ordena.id;
     this.envio.direccion = this.ordena.direccion;
     this.envio.telefono = this.ordena.telefono;

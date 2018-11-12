@@ -1,10 +1,11 @@
-.container{
+.container1{
     width: 100%;
-    background:rgb(204, 204, 204);
+    background: rgb(219, 20, 20);
 }
 
 p{
-    color:white;
+    font-size: 150%;
+    color: white;
 }
 
 nav{
@@ -12,13 +13,21 @@ nav{
 }
 
 ul{
-    background:rgb(204, 204, 204);
-    width:100%;
+    background: rgb(219, 20, 20);
+    color:rgb(85, 47, 47);
+    width: 100%;
 }
 
 li{
-    color: white;
-    margin-left: 8%;
+    padding: 0;
+    background: rgb(219, 20, 20);
+    color:white;
+}
+
+.name{
+    padding: 0;
+    margin: 0;
+    text-align: center;
 }
 
 li:hover{
@@ -26,14 +35,16 @@ li:hover{
 }
 
 a:hover{
-    box-shadow: 0 2px orange;
-}
-
-a{
-    color: white;
+    background: rgb(136, 12, 12);
 }
 
 img{
-    background:rgb(204, 204, 204);
-    margin-left:10%;
+    width: 90%;
+}
+
+a{
+    text-align: center;
+    font-size: 150%;
+    color:white;
+    margin: 0;
 }
