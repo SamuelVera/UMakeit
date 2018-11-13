@@ -7,7 +7,7 @@
             <th>Imágen</th>
             <th>Producto</th>
             <th>Precio</th>
-            <th>Personalizar</th>
+            <th>Contornos</th>
             <th>Ordenar</th>
         </tr>
     </thead>
@@ -18,7 +18,7 @@
         <td *ngIf="plato.activo">
             <div *ngIf="plato.personal" class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                Personalizar</button>
+                Contornos</button>
                 <div class="dropdown-menu">
                     <div *ngFor="let contorno of plato.contornos" >
                       <a class="dropdown-item">{{contorno.nombre}} ({{contorno.carga}} Bs.)</a>

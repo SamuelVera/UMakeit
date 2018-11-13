@@ -23,8 +23,9 @@ export class LoginComponent implements OnInit{
     envios: [''],
     admin: false
   };
-  path: String;
   pass: string;
+  llenar: boolean = false;
+
 
   constructor(public auth: AuthService) { }
 
@@ -32,6 +33,11 @@ export class LoginComponent implements OnInit{
   }
 
   login(e){
-    this.auth.login(this.user.email,this.pass);
+    if(this.user.email.length > 0 && this.pass.length > 0){
+      this.auth.login(this.user.email,this.pass);
+      this.llenar = false;
+    }else{
+      this.llenar = true;
+    }
   }
 }

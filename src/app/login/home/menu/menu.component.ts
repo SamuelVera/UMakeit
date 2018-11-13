@@ -60,11 +60,10 @@ export class MenuComponent implements OnInit {
   }
 
   search(e){
-    console.log(this.campoText);
+    this.campoText = this.campoText.toLowerCase();
     this.platoService.searchPlatos(this.campoText)
     .subscribe(data  => {
       this.platos = data;
-      console.log(this.platos);
     });
   }
 
@@ -113,6 +112,7 @@ export class MenuComponent implements OnInit {
 
   select(contorno){
     contorno.elegido = !contorno.elegido;
+    this.calcPrecio();
   }
 
 }

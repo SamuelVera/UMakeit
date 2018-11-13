@@ -58,3 +58,9 @@ input{
 input:focus{
     border: 1px solid #2f49da;
 }
+p{
+    margin-left:5%;
+    margin-top:0%;
+    font-size:90%;
+    color:red;
+}

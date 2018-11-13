@@ -28,6 +28,7 @@ export class FormComponent implements OnInit {
   validPass: boolean = false;
   validConfirPass: boolean = false;
   canAdvance: boolean = false;
+  error: boolean = false;
 
   constructor(private authService: AuthService,
     private router: Router) { }
@@ -68,10 +69,10 @@ export class FormComponent implements OnInit {
   register(e, f: NgForm){
     if(this.canAdvance){
       this.user.direccion = this.dir;
-      console.log("Campos llenos");
+      this.error = false;
       this.authService.signUp(this.user.email, this.pass, this.user);
     }else{
-      console.log("Campos inválidos");
+      this.error = true;
     }
   }
 }
