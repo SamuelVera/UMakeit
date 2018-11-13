@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { PlatoService } from '../../core/plato.service';
 import { Plato } from '../../clases/plato';
@@ -23,6 +24,13 @@ export class MenuAdminComponent implements OnInit {
   private cargaContorno: number;
   private last: boolean;
   campoText: string;
+
+  private isFoto: boolean;
+  private uploadTask: AngularFireUploadTask;
+  private ref: AngularFireStorageReference;
+  uploadProgress: Observable<number>;
+  error: string = "";
+  errorContorno: string = "";
 
   constructor(private platoService: PlatoService,
     private router: Router,
@@ -54,10 +62,12 @@ export class MenuAdminComponent implements OnInit {
   
   updatePlato(plato: Plato){ //Actualizar información del plato
     if(plato.precio > 0 && plato.nombre != ""){
+      plato.nombre = plato.nombre.toLowerCase();
       this.platoService.updatePlato(plato);
       this.clearEditing();
+      this.error = "";
     }else{
-      console.log("Información inválida para el plato");
+      this.error = "Campos inválidos";
     }
   }
 
@@ -69,9 +79,10 @@ export class MenuAdminComponent implements OnInit {
         elegido: false
       });
       this.addingContorno = "";
-      this.cargaContorno = 0;  
+      this.cargaContorno = 0;
+      this.errorContorno = "";
     }else{
-      console.log("Datos incorrectos");
+      this.errorContorno = "Campos inválidos";
     }
   }
 
@@ -81,11 +92,13 @@ export class MenuAdminComponent implements OnInit {
       this.platoToEdit.contornos.pop();
       this.last = false;
     }
+    this.errorContorno="";
   }
 
   clearEditing(){ //Clear state
     this.editState = false;
     this.platoToEdit = null;
+    this.error = "";
   }
 
   goAdd(){
@@ -93,15 +106,25 @@ export class MenuAdminComponent implements OnInit {
   }
 
   search(e){
-    console.log(this.campoText);
+    this.campoText = this.campoText.toLowerCase();
     this.platoService.searchPlatos(this.campoText)
     .subscribe(data  => {
       this.platos = data;
-      console.log(this.platos);
     });
 
   }
 
-
+  uploadFoto(e: any){
+    const file: File = e.target.files[0];
+    const id = file.name;
+    this.ref = this.afStorage.ref(id);
+    this.uploadTask = this.ref.put(file);
+    this.uploadProgress = this.uploadTask.percentageChanges();
+    this.ref.getDownloadURL().subscribe(data =>{
+      this.platoToEdit.image = data;
+      this.isFoto = true;
+      this.error = "";
+    });
+  }
 
 }

@@ -26,6 +26,7 @@
         <a (click)="addContorno()" class="btn btn-primary contorno">Agregar</a>
         <a (click)="deleteContorno()" class="btn btn-primary contorno">Eliminar Último</a>
       </div>
+      <p *ngIf="errorContorno.length>0">{{errorContorno}}</p>
     </div>
     <div>
       Habilitado: <input type="checkbox" [(ngModel)]="plato.activo" #activo="ngModel" [ngModelOptions]="{standalone: true}">
@@ -36,6 +37,7 @@
         <div class="progress-bar" role="progressbar" [style.width]="(uploadProgress | async) + '%'" [attr.aria-valuenow]="(uploadProgress | async)" aria-valuemin="0" aria-valuemax="100"></div>
       </div>
     </div>
+    <p *ngIf="error.length>0">{{error}}</p>
     <button type="submit" class="btn btn-primary">Agregar</button>
   </div>
 </form>

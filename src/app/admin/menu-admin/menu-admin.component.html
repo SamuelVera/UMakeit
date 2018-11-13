@@ -21,19 +21,12 @@
 
 <div *ngIf="editState">
     <form (ngSubmit)="updatePlato(platoToEdit)">
-        <div>
           <h5>Editando: {{platoToEdit.nombre}}</h5>
-          <div>
-            Nombre: <input type="text" maxlength="20" [(ngModel)]="platoToEdit.nombre" #nombre="ngModel" placeholder="Nombre del plato" [ngModelOptions]="{standalone: true}">
-          </div>
-          <div>
-            Precio: <input type="number" placeholder="Precio"[(ngModel)]="platoToEdit.precio" #precio="ngModel" [ngModelOptions]="{standalone: true}">
-          </div>
-          <div>
-            Personalizable: <input type="checkbox" [(ngModel)]="platoToEdit.personal" #personal="ngModel" [ngModelOptions]="{standalone: true}">
-          </div>
+            <label>Nombre:</label> <input type="text" maxlength="20" [(ngModel)]="platoToEdit.nombre" #nombre="ngModel" placeholder="Nombre del plato" [ngModelOptions]="{standalone: true}">
+            <label>Precio:</label> <input type="number" placeholder="Precio"[(ngModel)]="platoToEdit.precio" #precio="ngModel" [ngModelOptions]="{standalone: true}">
+            <label>Personalizable:</label> <input type="checkbox" [(ngModel)]="platoToEdit.personal" #personal="ngModel" [ngModelOptions]="{standalone: true}">
           <div *ngIf="platoToEdit.personal">
-            <h6>Contornos:</h6>
+            <label>Contornos:</label>
             <div *ngFor="let contorno of platoToEdit.contornos">
                 <div *ngIf=contorno.nombre >
                     <input type="text" placeholder="Nombre" [(ngModel)]="contorno.nombre" [ngModelOptions]="{standalone: true}">
@@ -43,15 +36,18 @@
             <div>
                 <input type="text" placeholder="Nombre" [(ngModel)]="addingContorno" [ngModelOptions]="{standalone: true}">
                 <input type="number" placeholder="Precio" [(ngModel)]="cargaContorno" [ngModelOptions]="{standalone: true}"><br>
+                <p class="error" *ngIf="errorContorno.length>0">{{errorContorno}}</p>
                 <a (click)="addContorno()" class="btn btn-primary contorno">Agregar</a>
                 <a (click)="deleteContorno()" class="btn btn-primary contorno">Eliminar Último</a>
             </div>
           </div>
-          <div>
-            Habilitado: <input type="checkbox" [(ngModel)]="platoToEdit.activo" #activo="ngModel" [ngModelOptions]="{standalone: true}">
-          </div>
+            <label>Habilitado:</label> <input type="checkbox" [(ngModel)]="platoToEdit.activo" #activo="ngModel" [ngModelOptions]="{standalone: true}">
+            <label>Imágen:</label> <input type="file" (change)="uploadFoto($event)">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" [style.width]="(uploadProgress | async) + '%'" [attr.aria-valuenow]="(uploadProgress | async)" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <p class="error" *ngIf="error.length>0">{{error}}</p>
           <button type="submit" class="btn btn-primary">Guardar cambios</button>
-        </div>
       </form>
       <a (click)="clearEditing()" class="btn btn-primary">Volver</a>
 </div>

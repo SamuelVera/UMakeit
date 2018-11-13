@@ -7,7 +7,9 @@
   <label>Correo electrónico</label>
   <input type="text" placeholder="Nombre de Usuario" [(ngModel)]="user.email" [ngModelOptions]="{standalone: true}" maxlength="20"><br><br>
   <label>Contraseña</label>
-  <input type="password" placeholder="Contraseña" [(ngModel)]="pass" [ngModelOptions]="{standalone: true}" maxlength="20"><br><br>
+  <input type="password" placeholder="Contraseña" [(ngModel)]="pass" [ngModelOptions]="{standalone: true}" maxlength="20"><br>
+  <p *ngIf="auth.error">{{auth.error}}</p>
+  <p *ngIf="llenar">Faltan campos por llenar</p>
   <button type="submit" class="btn btn-primary bt log" role="button">Entrar</button><br>
   <button type="button" class="btn btn-primary bt register" routerLink="/form" role="button">Registrarse</button><br>_
 </form>

@@ -22,6 +22,9 @@ label{
     text-align: center;
     width: 30%;
 }
+.progress{
+    margin-left: 7%;
+}
 input{
     border-radius: 20px;
     width: 40%;
@@ -76,4 +79,10 @@ input:focus{
 }
 a{
     color:white
+}
+.error{
+    margin-left:5%;
+    margin-top:0%;
+    font-size:90%;
+    color:red;
 }

@@ -33,6 +33,8 @@ export class AddPlatoComponent implements OnInit {
   private uploadTask: AngularFireUploadTask;
   private ref: AngularFireStorageReference;
   uploadProgress: Observable<number>;
+  error: string = "";
+  errorContorno: string = "";
 
   constructor(private platosService: PlatoService,
     private location: Location,
@@ -43,12 +45,13 @@ export class AddPlatoComponent implements OnInit {
   }
 
   add(f: NgForm){ //Añadir un plato con los datos especificados
-    if(this.plato.nombre != "" && this.plato.precio > 0){
-      this.plato.nombre.toLowerCase();
+    if(this.plato.nombre != "" && this.plato.precio > 0 && this.isFoto){
+      this.plato.nombre = this.plato.nombre.toLowerCase();
+      this.error = "";
       this.platosService.addPlato(this.plato);
       this.router.navigate(["/menu-admin"]);
     }else{
-      console.log("Error al agregar plato");
+      this.error = "Campos inválidos";
     }
   }
 
@@ -57,7 +60,7 @@ export class AddPlatoComponent implements OnInit {
   }
 
   addContorno(){ //Añadir un contorno al editar
-    if(this.cargaContorno > 0 && this.addingContorno != "" && this.isFoto){
+    if(this.cargaContorno > 0 && this.addingContorno != ""){
       this.plato.contornos.push({
         nombre: this.addingContorno,
         carga: this.cargaContorno,
@@ -65,15 +68,16 @@ export class AddPlatoComponent implements OnInit {
       });
       this.addingContorno = "";
       this.cargaContorno = 0;  
+      this.errorContorno = "";
     }else{
-      console.log("Datos incorrectos");
+      this.errorContorno = "Campos inválidos";
     }
   }
 
   deleteContorno(){//Eliminar un contorno del plato
     this.plato.contornos.pop();
+    this.errorContorno = "";
   }
-
 
   uploadFoto(e: any){
     const file: File = e.target.files[0];
@@ -84,6 +88,7 @@ export class AddPlatoComponent implements OnInit {
     this.ref.getDownloadURL().subscribe(data =>{
       this.plato.image = data;
       this.isFoto = true;
+      this.error = "";
     });
   }
 
