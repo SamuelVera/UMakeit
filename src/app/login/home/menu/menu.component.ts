@@ -7,6 +7,7 @@ import { Cliente } from './../../../clases/cliente';
 import { PlatoService } from '../../../core/plato.service';
 import { Component, OnInit, Injectable, enableProdMode } from '@angular/core';
 import { Envio } from 'src/app/clases/envio';
+import { getLocaleDateFormat } from '@angular/common';
 
 @Component({
   selector: 'app-menu',
@@ -32,7 +33,6 @@ export class MenuComponent implements OnInit {
   };
 
   aux: string;
-  aux2: Observable<Cliente[]>;
   ordena: Cliente;
 
   constructor(private platoService: PlatoService,
@@ -42,13 +42,10 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.getPlatos();
-    this.authService.uid.subscribe(data =>{
-      this.aux = data;
-      this.aux2 = this.clientesService.getCliente(this.aux);
-      this.aux2.subscribe(data => {
-        this.ordena = data[0];
-        console.log("Cliente fetched");
-      })
+    this.clientesService.getCliente(this.authService.uid)
+      .subscribe(data => {
+      this.ordena = data[0];
+      console.log("Cliente fetched");
     });
   }
 
@@ -60,8 +57,8 @@ export class MenuComponent implements OnInit {
   }
 
   search(e){
-    this.campoText = this.campoText.toLowerCase();
-    this.platoService.searchPlatos(this.campoText)
+    var aux = this.campoText.toLowerCase();
+    this.platoService.searchPlatos(aux)
     .subscribe(data  => {
       this.platos = data;
     });

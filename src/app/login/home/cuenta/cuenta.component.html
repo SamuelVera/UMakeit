@@ -25,7 +25,7 @@
   <h2>Ordenes:</h2>
   <div *ngIf="cliente.envios.length !== 0">
     Por pagar:
-    <div *ngFor="let envio of envios; index as i">
+     <div *ngFor="let envio of envios; index as i">
       <div *ngIf="!envio.pagada">
         Orden:
         <div *ngFor="let plato of envio.platos">
@@ -43,11 +43,11 @@
           </div>
           <img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"><br>
         </div><br>
-        <p>Total: {{envio.precio}}</p>
-        <a class="btn btn-primary" (click)="pagar(envio, i)">Pagar</a><br>
+        <p>Total: {{envio.precio}} Bs.</p>
+        <a class="btn btn-primary" (click)="pagar(envio,i)">Pagar</a><br>
         --------------------------------------------------------------------
       </div>
-    </div><br><br><br>
+      </div><br><br><br>
     Previas:
     <div *ngFor="let envio of envios">
       <div *ngIf="envio.pagada; index as i">
@@ -67,14 +67,46 @@
           </div>
           <img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"><br>
         </div><br>
-        {{envio.fecha}}<br>
-        <p>Total: {{envio.precio}}</p><br>
+        {{envio.fecha.toDate() | date}}<br>
+        <p>Total: {{envio.precio}} Bs.</p><br>
         <div *ngIf="envio.confirmada">
-          <a class="btn btn-primary" (click)="reordenar(envio)">Reordenar</a>
+          <a class="btn btn-primary" (click)="reordenar(envio,i)">Reordenar</a>
         </div>
         <div *ngIf="!envio.confirmada">
           Esperando confirmación
         </div><br><br>
+      </div>
+    </div>
+    <div *ngIf="envioReordenado">
+      <table class="table table-bordered">
+          <thead>
+          <tr>
+              <th>Imágen</th>
+              <th>Producto</th>
+              <th>Precio</th>
+              <th>Personalizar</th>
+          </tr>
+          </thead>
+          <tr *ngFor="let plato of envioReordenado.platos; index as i">
+              <td><img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"></td>
+              <td>{{plato.nombre}}</td>
+              <td>{{plato.precio}} Bs.</td>
+              <td>
+                <div *ngIf="plato.personal">
+                <div *ngFor="let contorno of plato.contornos" >
+                  <a>{{contorno.nombre}} ({{contorno.carga}} Bs.)<input (click)="select(contorno)" checked="contorno.elegido" type="checkbox"></a>
+                </div>
+                </div>
+                <div *ngIf="plato.personal == false">
+                  No personalizable
+                </div>
+              </td>
+          </tr>
+      </table>
+      <p>Total: {{envioReordenado.precio}} Bs.</p>
+      <div  class="row">
+        <div class="col-md-6"><button (click)="ordenar()" class="btn btn-primary">Recomprar</button></div>
+        <div class="col-md-6"><button (click)="eliminarReorden()" class="btn btn-primary">Eliminar</button></div>
       </div>
     </div>
   </div>

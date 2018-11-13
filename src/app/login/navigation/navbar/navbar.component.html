@@ -18,10 +18,10 @@
       <li class="nav-item"><a class="nav-link" (click)="toHelp()"><strong>Ayuda</strong></a></li>
       </div>
       <div class="col-md-2 col-sm-3">
-      <li class="nav-item"><a class="nav-link" href="" (click)="logout()"><strong>Salir</strong></a></li>
+      <li class="nav-item"><a class="nav-link" (click)="logout()"><strong>Salir</strong></a></li>
       </div>
       <div class="col-md-1 col-sm-3">
-      <li *ngIf="auth.uid | async as uid" class="name">Usuario: {{uid}}</li>
+      <li *ngIf="auth.uid" class="name">Usuario: {{auth.uid}}</li>
       </div>
     </ul>
   </nav>

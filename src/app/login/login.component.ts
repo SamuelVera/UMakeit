@@ -1,8 +1,6 @@
 import { Cliente } from './../clases/cliente';
 import { Component, OnInit} from '@angular/core';
 import { AuthService } from '../core/auth.service';
-import { Router } from '@angular/router';
-import { validateConfig } from '@angular/router/src/config';
 
 @Component({
   selector: 'app-login',

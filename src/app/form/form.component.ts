@@ -34,6 +34,7 @@ export class FormComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.authService.error = "";
     this.dir = '';
     this.passConfirm = '';
   }
