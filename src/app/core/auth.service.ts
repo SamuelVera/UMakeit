@@ -12,14 +12,7 @@ import { Cliente } from '../clases/cliente';
 export class AuthService {
 
     //Retrieve email
-  uid = this.fauth.authState.pipe(map(
-    authState => {
-      if(!authState){
-        return null;
-      }else{
-        return authState.email}
-      }
-  ));
+  uid: string;
 
   error: string = "";
 
@@ -33,6 +26,7 @@ export class AuthService {
     this.fauth.auth.signInWithEmailAndPassword(email, password)
     .then(value => {
       console.log("Login succesful");
+      this.uid = email;
       this.error = "";
       if(email === "admin@umakeit.com"){
         this.router.navigate(['/home-admin']);
@@ -60,6 +54,7 @@ export class AuthService {
   }
 
   logout(){
+    this.uid = "";
     this.fauth.auth.signOut();
   }
 

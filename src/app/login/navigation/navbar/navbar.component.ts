@@ -34,8 +34,9 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/ayuda']);
   }
 
-  logout(){
+  private logout(){
     this.auth.logout();
+    this.router.navigate(['']);
   }
 
 }

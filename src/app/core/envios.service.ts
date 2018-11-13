@@ -60,15 +60,4 @@ export class EnviosService {
     this.envioDoc.update(envio);
     console.log("Envío "+envio.id+" actualizado");
   }
-
-    //Get Envios of a cliente
-    public getEnviosOfCliente(idc: string){
-      return (this.afs.collection('envios', ref => 
-      ref.orderBy('owner_ref').startAt(idc)
-      ).snapshotChanges().pipe(map(actions => actions.map(ref =>{
-        const data = ref.payload.doc.data() as Envio
-        const id = ref.payload.doc.id;
-        return { id, ...data};
-      })))) as Observable<Envio[]>;
-    }
 }
