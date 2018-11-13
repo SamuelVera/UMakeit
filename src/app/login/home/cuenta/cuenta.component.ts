@@ -1,6 +1,5 @@
 import { EnviosService } from './../../../core/envios.service';
 import { Envio } from 'src/app/clases/envio';
-import { Observable } from 'rxjs';
 import { Cliente } from '../../../clases/cliente';
 import { AuthService } from './../../../core/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,37 +13,37 @@ import { ClientesService } from 'src/app/core/clientes.service';
 export class CuentaComponent implements OnInit {
 
   public cliente: Cliente;
-  public envios: Envio[] = [];
-  private aux: Observable<Cliente[]>;
-  private email: string;
+  public envios;
   private passConfirm: string = '';
   private pass: string = '';
   private validPass: boolean = false;
   private validConfirPass: boolean = false;
   private canAdvance: boolean = false;
   private cambiandoClave: boolean = false;
+  envioReordenado: Envio;
 
   constructor(public auth: AuthService,
     private clientesService: ClientesService,
     private enviosService: EnviosService) { }
 
   ngOnInit() {
+    this.envioReordenado = null;
+    this.cliente = null;
     this.envios = [];
-    this.auth.uid.subscribe(data => {
-      this.email = data;
-      this.aux = this.clientesService.getCliente(this.email) as Observable<Cliente[]>;
-      this.getEnvios();
-    });
-  }
-
-  private getEnvios(){
-    this.aux.subscribe(data =>{
+    this.clientesService.getCliente(this.auth.uid)
+    .subscribe(data => {
       this.cliente = data[0];
-      this.enviosService.getEnviosOfCliente(this.cliente.id)
-      .subscribe(data =>{
-        this.envios = data;
-      });
-    })
+      var i=0;
+      while(i < this.cliente.envios.length){
+        if(this.cliente.envios[i] != ""){
+          this.enviosService.getEnvio(this.cliente.envios[i])
+          .subscribe(data => {
+            this.envios.push(data);
+          });
+        }
+        i++;
+      }
+    });
   }
 
   advance(e){
@@ -89,16 +88,46 @@ export class CuentaComponent implements OnInit {
   }
 
   reordenar(envio: Envio){
-    var aux: Envio;
-    aux = envio;
-    aux.id = '';
-    aux.fecha = new Date();
-    aux.confirmada = false;
-    aux.pagada = false;
-    const id = this.enviosService.addEnvio(aux);
+    this.envioReordenado = envio;
+    this.envioReordenado.confirmada = false;
+    this.envioReordenado.pagada = false;
+  }
+
+  ordenar(){
+    this.calcPrecio();
+    this.envioReordenado.owner_ref = "clientes/"+this.cliente.id;
+    this.envioReordenado.direccion = this.cliente.direccion;
+    this.envioReordenado.telefono = this.cliente.telefono;
+    this.envioReordenado.cedula = this.cliente.cedula;
+    this.envioReordenado.fecha = new Date();
+    const id = this.enviosService.addEnvio(this.envioReordenado);
     this.cliente.envios.push(id);
     this.clientesService.updateCliente(this.cliente);
+    this.envioReordenado = null;
   }
+
+  eliminarReorden(){
+    this.envioReordenado = null;
+  }
+
+  private calcPrecio(){
+    var i = 0;
+    var j;
+    this.envioReordenado.precio = 0;
+    while(i < this.envioReordenado.platos.length){
+      this.envioReordenado.precio += this.envioReordenado.platos[i].precio; // Precio del plato
+      j = 0;
+      while(j < this.envioReordenado.platos[i].contornos.length){
+        if(this.envioReordenado.platos[i].contornos[j].elegido){
+          this.envioReordenado.precio += this.envioReordenado.platos[i].contornos[j].carga; //Precio del añadido
+        }
+        j++;
+      }
+      i++;
+    }
+  }
+
+
 
 }
 
