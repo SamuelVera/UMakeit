@@ -1,10 +1,10 @@
+import { MenuAdminComponent } from './../admin/menu-admin/menu-admin.component';
 import { Router } from '@angular/router';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ClientesService } from './clientes.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
 import { Cliente } from '../clases/cliente';
-import { auth } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,8 @@ export class AuthService {
       }
   ));
 
+  error: string = "";
+
   constructor(public fauth: AngularFireAuth,
     private clientesService: ClientesService,
     private router: Router
@@ -31,6 +33,7 @@ export class AuthService {
     this.fauth.auth.signInWithEmailAndPassword(email, password)
     .then(value => {
       console.log("Login succesful");
+      this.error = "";
       if(email === "admin@umakeit.com"){
         this.router.navigate(['/home-admin']);
       }else{
@@ -38,6 +41,7 @@ export class AuthService {
       }
     }).catch(err => {
       console.log("Error al iniciar sesión: ",err.message);
+      this.error = err.message;
     })
   }
 
@@ -46,10 +50,12 @@ export class AuthService {
     this.fauth.auth.createUserWithEmailAndPassword(email, password)
     .then(value => {
       console.log("User added");
+      this.error = "";
       this.clientesService.addCliente(user);
       this.router.navigate(['/home']);
     }).catch(err => {
       console.log("Error al añadir usuario: ", err.message);
+      this.error = err.message;
     })
   }
 
