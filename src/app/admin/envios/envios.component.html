@@ -10,10 +10,10 @@
         </thead>
         <tr *ngFor="let envio of envios; index as i">
             <td *ngIf="envio.pagada && !envio.confirmada">{{i+1}}</td>
-            <td *ngIf="envio.pagada && !envio.confirmada">{{envio.ci}}</td>
+            <td *ngIf="envio.pagada && !envio.confirmada">{{envio.cedula}}</td>
             <td *ngIf="envio.pagada && !envio.confirmada">{{envio.telefono}}</td>
             <td *ngIf="envio.pagada && !envio.confirmada">{{envio.direccion}}</td>
-            <td *ngIf="envio.pagada && !envio.confirmada">{{envio.fecha}}</td>
+            <td *ngIf="envio.pagada && !envio.confirmada">{{envio.fecha.toDate() | date}}</td>
             <td *ngIf="envio.pagada && !envio.confirmada"><a class="btn btn-primary" (click)="confirmar(envio)">Confirmar envío</a></td>
         </tr>
     </table>

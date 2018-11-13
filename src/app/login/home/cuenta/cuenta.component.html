@@ -43,8 +43,8 @@
           </div>
           <img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"><br>
         </div><br>
-        <p>Total: {{envio.precio}}</p>
-        <a class="btn btn-primary" (click)="pagar(envio, i)">Pagar</a><br>
+        <p>Total: {{envio.precio}} Bs.</p>
+        <a class="btn btn-primary" (click)="pagar(envio,i)">Pagar</a><br>
         --------------------------------------------------------------------
       </div>
       </div><br><br><br>
@@ -67,10 +67,10 @@
           </div>
           <img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"><br>
         </div><br>
-        {{envio.fecha}}<br>
-        <p>Total: {{envio.precio}}</p><br>
+        {{envio.fecha.toDate() | date}}<br>
+        <p>Total: {{envio.precio}} Bs.</p><br>
         <div *ngIf="envio.confirmada">
-          <a class="btn btn-primary" (click)="reordenar(envio)">Reordenar</a>
+          <a class="btn btn-primary" (click)="reordenar(envio,i)">Reordenar</a>
         </div>
         <div *ngIf="!envio.confirmada">
           Esperando confirmación
@@ -94,7 +94,7 @@
               <td>
                 <div *ngIf="plato.personal">
                 <div *ngFor="let contorno of plato.contornos" >
-                  <a>{{contorno.nombre}} ({{contorno.carga}} Bs.)<input (click)="select(contorno)" type="checkbox"></a>
+                  <a>{{contorno.nombre}} ({{contorno.carga}} Bs.)<input (click)="select(contorno)" checked="contorno.elegido" type="checkbox"></a>
                 </div>
                 </div>
                 <div *ngIf="plato.personal == false">
@@ -103,7 +103,7 @@
               </td>
           </tr>
       </table>
-      <p>Total: {{envioReordenado.precio}}</p>
+      <p>Total: {{envioReordenado.precio}} Bs.</p>
       <div  class="row">
         <div class="col-md-6"><button (click)="ordenar()" class="btn btn-primary">Recomprar</button></div>
         <div class="col-md-6"><button (click)="eliminarReorden()" class="btn btn-primary">Eliminar</button></div>

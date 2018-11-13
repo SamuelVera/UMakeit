@@ -13,7 +13,7 @@ import { ClientesService } from 'src/app/core/clientes.service';
 export class CuentaComponent implements OnInit {
 
   public cliente: Cliente;
-  public envios;
+  public envios: Envio[];
   private passConfirm: string = '';
   private pass: string = '';
   private validPass: boolean = false;
@@ -21,6 +21,7 @@ export class CuentaComponent implements OnInit {
   private canAdvance: boolean = false;
   private cambiandoClave: boolean = false;
   envioReordenado: Envio;
+  pos: number;
 
   constructor(public auth: AuthService,
     private clientesService: ClientesService,
@@ -29,6 +30,10 @@ export class CuentaComponent implements OnInit {
   ngOnInit() {
     this.envioReordenado = null;
     this.cliente = null;
+    this.getEnvios();
+  }
+
+  private getEnvios(){
     this.envios = [];
     this.clientesService.getCliente(this.auth.uid)
     .subscribe(data => {
@@ -85,12 +90,12 @@ export class CuentaComponent implements OnInit {
   pagar(envio: Envio, i: number){
     envio.pagada = true;
     this.enviosService.updateEnvio(envio);
+    this.envios.splice(i,1);
   }
 
-  reordenar(envio: Envio){
+  reordenar(envio: Envio,i: number){
     this.envioReordenado = envio;
-    this.envioReordenado.confirmada = false;
-    this.envioReordenado.pagada = false;
+    this.pos = i;
   }
 
   ordenar(){
@@ -100,6 +105,10 @@ export class CuentaComponent implements OnInit {
     this.envioReordenado.telefono = this.cliente.telefono;
     this.envioReordenado.cedula = this.cliente.cedula;
     this.envioReordenado.fecha = new Date();
+    this.envioReordenado.confirmada = false;
+    this.envios.splice(this.pos, 1);
+    this.envioReordenado.pagada = false;
+    this.envios.splice(this.pos, 1);
     const id = this.enviosService.addEnvio(this.envioReordenado);
     this.cliente.envios.push(id);
     this.clientesService.updateCliente(this.cliente);
@@ -127,7 +136,10 @@ export class CuentaComponent implements OnInit {
     }
   }
 
-
+  select(contorno){
+    contorno.elegido = !contorno.elegido;
+    this.calcPrecio();
+  }
 
 }
 
