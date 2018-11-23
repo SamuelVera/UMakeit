@@ -35,6 +35,7 @@
 <div *ngIf="platos.length === 0">
     No hay platos por ese nombre!!
 </div><br><br>
+<input type="text" [(ngModel)]="campoText" #campo="ngModel" [ngModelOptions]="{standalone: true}" (keyup)="search($event)" placeholder="Busca un plato">
 <div *ngIf="envio.platos.length !== 0">
     Orden:
     <div>
@@ -65,8 +66,9 @@
                 <td><a (click)="eliminar(i)" class="btn btn-primary">Eliminar</a></td>
             </tr>
         </table>
-        <p>Total: {{envio.precio}}</p>
-        <button (click)="ordenar()" class="btn btn-primary">Confirmar Orden</button>
+        <p>Total: {{envio.precio}} Bs.</p>
+        
     </div>
 </div>
-<input type="text" [(ngModel)]="campoText" #campo="ngModel" [ngModelOptions]="{standalone: true}" (keyup)="search($event)" placeholder="Busca un plato">
+<p *ngIf="paypalLoad">Se está cargando el botón</p>
+<div id="paypal-button-container"></div>

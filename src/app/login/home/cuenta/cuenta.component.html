@@ -24,33 +24,8 @@
 
   <h2>Ordenes:</h2>
   <div *ngIf="cliente.envios.length !== 0">
-    Por pagar:
-     <div *ngFor="let envio of envios; index as i">
-      <div *ngIf="!envio.pagada">
-        Orden:
-        <div *ngFor="let plato of envio.platos">
-          Plato:<br>
-          {{plato.nombre}}<br>
-          {{plato.precio}} Bs.<br>
-          <div *ngIf="plato.contornos">
-            <div *ngFor="let contorno of plato.contornos">
-              <div *ngIf="contorno.elegido">
-                Contorno:
-                {{contorno.nombre}}<br>
-                {{contorno.carga}} Bs.<br>
-              </div>
-            </div>
-          </div>
-          <img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"><br>
-        </div><br>
-        <p>Total: {{envio.precio}} Bs.</p>
-        <a class="btn btn-primary" (click)="pagar(envio,i)">Pagar</a><br>
-        --------------------------------------------------------------------
-      </div>
-      </div><br><br><br>
     Previas:
-    <div *ngFor="let envio of envios">
-      <div *ngIf="envio.pagada; index as i">
+    <div *ngFor="let envio of envios; index as i">
         Orden:
         <div *ngFor="let plato of envio.platos">
           Plato:<br>
@@ -75,7 +50,6 @@
         <div *ngIf="!envio.confirmada">
           Esperando confirmación
         </div><br><br>
-      </div>
     </div>
     <div *ngIf="envioReordenado">
       <table class="table table-bordered">
@@ -105,9 +79,10 @@
       </table>
       <p>Total: {{envioReordenado.precio}} Bs.</p>
       <div  class="row">
-        <div class="col-md-6"><button (click)="ordenar()" class="btn btn-primary">Recomprar</button></div>
         <div class="col-md-6"><button (click)="eliminarReorden()" class="btn btn-primary">Eliminar</button></div>
       </div>
     </div>
   </div>
 </div>
+<p *ngIf="paypalLoad">Se está cargando el botón</p>
+<div id="paypal-button-container"></div>

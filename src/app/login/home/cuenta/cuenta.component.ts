@@ -2,15 +2,17 @@ import { EnviosService } from './../../../core/envios.service';
 import { Envio } from 'src/app/clases/envio';
 import { Cliente } from '../../../clases/cliente';
 import { AuthService } from './../../../core/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { ClientesService } from 'src/app/core/clientes.service';
+
+declare let paypal:any;
 
 @Component({
   selector: 'app-cuenta',
   templateUrl: './cuenta.component.html',
   styleUrls: ['./cuenta.component.css']
 })
-export class CuentaComponent implements OnInit {
+export class CuentaComponent implements OnInit, AfterViewChecked {
 
   public cliente: Cliente;
   public envios: Envio[];
@@ -23,6 +25,40 @@ export class CuentaComponent implements OnInit {
   envioReordenado: Envio;
   pos: number;
 
+  addScript: boolean = false;
+  paypalLoad: boolean = true;
+
+  paypalConfig = {
+    env:'sandbox',
+    client:{
+      sandbox: 'AZLQoirNWCHZM05je0pi0cPrKTmL9XJmfVVzpa5SducLULNI91Ii0AOxQt9BNeWWLAMblzOM-JDVwCIR',
+      production: '<insert-production-client-id>'
+    },
+    commit: true,
+    payment: (data, actions)=>{
+      return actions.payment.create({
+        payment:{
+          transactions: [{
+            amount: { total: this.envioReordenado.precio, currency: 'USD' }
+          }]
+        }
+      });
+    },
+    onAuthorize: (data, actions)=>{
+      this.envioReordenado.owner_ref = "clientes/"+this.cliente.id;
+      this.envioReordenado.direccion = this.cliente.direccion;
+      this.envioReordenado.telefono = this.cliente.telefono;
+      this.envioReordenado.cedula = this.cliente.cedula;
+      this.envioReordenado.fecha = new Date();
+      this.envioReordenado.confirmada = false;
+      this.envios.splice(this.pos, 1);
+      const id = this.enviosService.addEnvio(this.envioReordenado);
+      this.cliente.envios.push(id);
+      this.clientesService.updateCliente(this.cliente);
+      this.envioReordenado = null;
+    }
+  };
+
   constructor(public auth: AuthService,
     private clientesService: ClientesService,
     private enviosService: EnviosService) { }
@@ -31,6 +67,27 @@ export class CuentaComponent implements OnInit {
     this.envioReordenado = null;
     this.cliente = null;
     this.getEnvios();
+  }
+
+  ngAfterViewChecked(){
+    if(!this.addScript){
+      this.addPaypalScript().then(()=>{
+        paypal.Button.render(this.paypalConfig, '#paypal-button-container');
+        this.paypalLoad = false;
+      })
+    }
+  }
+
+  private addPaypalScript(){
+    if(!this.addScript){
+      this.addScript = true;
+      return new Promise((resolve, reject)=>{
+        let scripttagElement = document.createElement('script');
+        scripttagElement.src='https://www.paypalobjects.com/api/checkout.js';
+        scripttagElement.onload = resolve;
+        document.body.appendChild(scripttagElement);
+      })
+    }
   }
 
   private getEnvios(){
@@ -87,32 +144,9 @@ export class CuentaComponent implements OnInit {
     }
   }
 
-  pagar(envio: Envio, i: number){
-    envio.pagada = true;
-    this.enviosService.updateEnvio(envio);
-    this.envios.splice(i,1);
-  }
-
   reordenar(envio: Envio,i: number){
     this.envioReordenado = envio;
     this.pos = i;
-  }
-
-  ordenar(){
-    this.calcPrecio();
-    this.envioReordenado.owner_ref = "clientes/"+this.cliente.id;
-    this.envioReordenado.direccion = this.cliente.direccion;
-    this.envioReordenado.telefono = this.cliente.telefono;
-    this.envioReordenado.cedula = this.cliente.cedula;
-    this.envioReordenado.fecha = new Date();
-    this.envioReordenado.confirmada = false;
-    this.envios.splice(this.pos, 1);
-    this.envioReordenado.pagada = false;
-    this.envios.splice(this.pos, 1);
-    const id = this.enviosService.addEnvio(this.envioReordenado);
-    this.cliente.envios.push(id);
-    this.clientesService.updateCliente(this.cliente);
-    this.envioReordenado = null;
   }
 
   eliminarReorden(){
