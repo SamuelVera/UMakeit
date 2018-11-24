@@ -1,7 +1,3 @@
-import { EnviosService } from './core/envios.service';
-import { AuthService } from './core/auth.service';
-import { ClientesService } from './core/clientes.service';
-import { AuthGuard } from './guards/auth.guard';
 import { CoreModule } from './core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -10,6 +6,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireModule } from 'angularfire2';
 import { environment } from './../environments/environment';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -41,6 +38,7 @@ import { AddPlatoComponent } from './admin/menu-admin/add-plato/add-plato.compon
     AngularFirestoreModule,
     AngularFireStorageModule,
     CoreModule,
+    NgxPayPalModule,
   ],
   declarations: [
     AppComponent,

@@ -1,25 +1,27 @@
 import { EnviosService } from './../../../core/envios.service';
-import { Observable } from 'rxjs';
 import { ClientesService } from './../../../core/clientes.service';
 import { AuthService } from './../../../core/auth.service';
 import { Plato } from 'src/app/clases/plato';
 import { Cliente } from './../../../clases/cliente';
 import { PlatoService } from '../../../core/plato.service';
-import { Component, OnInit, Injectable, enableProdMode } from '@angular/core';
+import { Component, OnInit, AfterViewChecked} from '@angular/core';
 import { Envio } from 'src/app/clases/envio';
-import { getLocaleDateFormat } from '@angular/common';
+import { PayPalConfig } from 'ngx-paypal';
+
+declare let paypal: any;
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, AfterViewChecked{
 
   public platos = [];
   campoText: string = '';
+  public payPalConfig?: PayPalConfig;
   
-  envio: Envio = {
+  public envio: Envio = {
     id: '',
     owner_ref: '',
     precio: 0,
@@ -27,13 +29,44 @@ export class MenuComponent implements OnInit {
     platos:[],
     direccion: '',
     confirmada: false,
-    pagada: false,
     telefono: '',
     cedula: ''
   };
 
   aux: string;
   ordena: Cliente;
+
+  addScript: boolean = false;
+  paypalLoad: boolean = true;
+
+  paypalConfig = {
+    env:'sandbox',
+    client:{
+      sandbox: 'AZLQoirNWCHZM05je0pi0cPrKTmL9XJmfVVzpa5SducLULNI91Ii0AOxQt9BNeWWLAMblzOM-JDVwCIR',
+      production: '<insert-production-client-id>'
+    },
+    commit: true,
+    payment: (data, actions)=>{
+      return actions.payment.create({
+        payment:{
+          transactions: [{
+            amount: { total: this.envio.precio, currency: 'USD' }
+          }]
+        }
+      });
+    },
+    onAuthorize: (data, actions)=>{
+      this.envio.owner_ref = "clientes/"+this.ordena.id;
+      this.envio.direccion = this.ordena.direccion;
+      this.envio.telefono = this.ordena.telefono;
+      this.envio.cedula = this.ordena.cedula;
+      this.envio.fecha = new Date();
+      const id = this.enviosService.addEnvio(this.envio);
+      this.ordena.envios.push(id);
+      this.clientesService.updateCliente(this.ordena);
+      this.envio.platos = [];
+    }
+  };
 
   constructor(private platoService: PlatoService,
     private authService: AuthService,
@@ -47,6 +80,27 @@ export class MenuComponent implements OnInit {
       this.ordena = data[0];
       console.log("Cliente fetched");
     });
+  }
+
+  ngAfterViewChecked(){
+    if(!this.addScript){
+      this.addPaypalScript().then(()=>{
+        paypal.Button.render(this.paypalConfig, '#paypal-button-container');
+        this.paypalLoad = false;
+      })
+    }
+  }
+
+  private addPaypalScript(){
+    if(!this.addScript){
+      this.addScript = true;
+      return new Promise((resolve, reject)=>{
+        let scripttagElement = document.createElement('script');
+        scripttagElement.src='https://www.paypalobjects.com/api/checkout.js';
+        scripttagElement.onload = resolve;
+        document.body.appendChild(scripttagElement);
+      })
+    }
   }
 
   getPlatos(){
@@ -74,20 +128,6 @@ export class MenuComponent implements OnInit {
   eliminar(i: number){
     this.envio.platos.splice(i,1);
     this.calcPrecio();
-  }
-
-    //Confirmar la orden
-  ordenar(){
-    this.calcPrecio();
-    this.envio.owner_ref = "clientes/"+this.ordena.id;
-    this.envio.direccion = this.ordena.direccion;
-    this.envio.telefono = this.ordena.telefono;
-    this.envio.cedula = this.ordena.cedula;
-    this.envio.fecha = new Date();
-    const id = this.enviosService.addEnvio(this.envio);
-    this.ordena.envios.push(id);
-    this.clientesService.updateCliente(this.ordena);
-    this.envio.platos = [];
   }
 
   private calcPrecio(){
