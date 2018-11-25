@@ -1,13 +1,13 @@
 export interface Plato{
-    id ?: String;
-    nombre ?: String;
+    id ?: string;
+    nombre ?: string;
     precio ?: number;
     personal ?: boolean;
     activo ?: boolean;
-    image ?: String;
+    image ?: string;
     contornos ?: [
         {
-            nombre: String;
+            nombre: string;
             carga: number;
             elegido: boolean;
         }
