@@ -20,17 +20,19 @@ export class MenuAdminComponent implements OnInit {
   public platos = [];
   private editState: boolean = false;
   private platoToEdit: Plato;
-  private addingContorno: String;
+  private editingImage: string;
+  private addingContorno: string;
   private cargaContorno: number;
   private last: boolean;
+  private advance: boolean;
   campoText: string;
 
   private isFoto: boolean;
   private uploadTask: AngularFireUploadTask;
   private ref: AngularFireStorageReference;
   uploadProgress: Observable<number>;
-  error: string = "";
-  errorContorno: string = "";
+  error: string = '';
+  errorContorno: string = '';
 
   constructor(private platoService: PlatoService,
     private router: Router,
@@ -50,24 +52,37 @@ export class MenuAdminComponent implements OnInit {
   edit(event, plato: Plato){ //Activar edición del plato
     this.editState = true;
     this.last = true;
+    this.advance = true;
     this.platoToEdit = plato;
-    this.addingContorno = "";
+    this.addingContorno = '';
     this.cargaContorno = 0; 
     this.platoToEdit.contornos.push({
       nombre: this.addingContorno,
       carga: this.cargaContorno,
       elegido: false
     });
+    this.editingImage = plato.image;
   }
   
   updatePlato(plato: Plato){ //Actualizar información del plato
-    if(plato.precio > 0 && plato.nombre != ""){
-      plato.nombre = plato.nombre.toLowerCase();
-      this.platoService.updatePlato(plato);
-      this.clearEditing();
-      this.error = "";
+    if(this.advance){
+      if(plato.precio > 0 && plato.nombre != ''){
+        plato.nombre = plato.nombre.toLowerCase();
+        var i: number = 0;
+        while(i < plato.contornos.length){
+          if(plato.contornos[i].carga === 0){
+            plato.contornos.splice(i,1);
+          }
+          i++;
+        }
+        plato.image = this.editingImage;
+        this.platoService.updatePlato(plato);
+        this.clearEditing();
+      }else{
+        this.error = 'Campos inválidos';
+      }
     }else{
-      this.error = "Campos inválidos";
+      this.error = 'Se está cargando una imágen';
     }
   }
 
@@ -92,13 +107,14 @@ export class MenuAdminComponent implements OnInit {
       this.platoToEdit.contornos.pop();
       this.last = false;
     }
-    this.errorContorno="";
+    this.errorContorno='';
   }
 
   clearEditing(){ //Clear state
     this.editState = false;
     this.platoToEdit = null;
-    this.error = "";
+    this.error = '';
+    this.editingImage = '';
   }
 
   goAdd(){
@@ -106,8 +122,8 @@ export class MenuAdminComponent implements OnInit {
   }
 
   search(e){
-    this.campoText = this.campoText.toLowerCase();
-    this.platoService.searchPlatos(this.campoText)
+    var v = this.campoText.toLowerCase();
+    this.platoService.searchPlatos(v)
     .subscribe(data  => {
       this.platos = data;
     });
@@ -116,15 +132,25 @@ export class MenuAdminComponent implements OnInit {
 
   uploadFoto(e: any){
     const file: File = e.target.files[0];
-    const id = file.name;
-    this.ref = this.afStorage.ref(id);
-    this.uploadTask = this.ref.put(file);
-    this.uploadProgress = this.uploadTask.percentageChanges();
-    this.ref.getDownloadURL().subscribe(data =>{
-      this.platoToEdit.image = data;
-      this.isFoto = true;
-      this.error = "";
-    });
+    if(file){
+      if(file.type == 'image/jpeg' || file.type == 'image/png' || file.type == 'image/jpg'){
+        this.advance = false;
+        const id = 'menu-images/'+file.name;
+        this.ref = this.afStorage.ref(id);
+        this.uploadTask = this.ref.put(file);
+        this.uploadProgress = this.uploadTask.percentageChanges();
+        this.ref.getDownloadURL().subscribe(data =>{
+          this.editingImage = data;
+          this.isFoto = true;
+          this.error = '';
+          this.advance = true;
+        });
+      }else{
+        this.error = 'El archivo no es una imágen';
+      }
+    }else{
+      this.error = '';
+    }
   }
 
 }
