@@ -1,6 +1,5 @@
-import { AuthService } from './../../core/auth.service';
 import { Component, OnInit} from '@angular/core';
-import { Cliente } from 'src/app/clases/cliente';
+import { CarouselImagesService, Image } from './../../core/carousel-images.service';
 
 @Component({
   selector: 'app-home',
@@ -10,9 +9,18 @@ import { Cliente } from 'src/app/clases/cliente';
 
 export class HomeComponent implements OnInit {
 
-  constructor(private auth: AuthService) { 
-  }
+  images: Image[];
+  showNavigationIndicators = false;
+
+  constructor(private carouselImagesService: CarouselImagesService) { }
 
   ngOnInit() {
+    this.getImages();
+  }
+
+  private getImages(){
+    this.carouselImagesService.getImages().subscribe(data =>{
+      this.images = data;
+    })
   }
 }
