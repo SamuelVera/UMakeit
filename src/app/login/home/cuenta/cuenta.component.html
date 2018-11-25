@@ -9,11 +9,11 @@
       <button (click)="setCambiarTrue()" class="btn btn-primary">Cambiar Clave</button>
       <div *ngIf=cambiandoClave>
         <label>Nueva contraseña:</label><br>
-        <input type="password" (keyup)="validarPass($event)" [(ngModel)]="pass" #password="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Elija una contraseña"  maxlength="20"><br>
-        <p *ngIf=validPass>La contraseña debe ser mayor a 8 caracteres</p><br>
+        <input type="password" (keyup)="validarPass($event)" [(ngModel)]="newPass" #password="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Elija una contraseña"  maxlength="20"><br>
+        <p *ngIf="validPass && newPass.length>0">La contraseña debe ser mayor a 8 caracteres</p><br>
         <label>Confirmar Contraseña:</label><br>
         <input type="password" (keyup)="validarConfirPass($event)" [(ngModel)]="passConfirm" [ngModelOptions]="{standalone: true}" placeholder="Confirma la contraseña" maxlength="20"><br>
-        <p *ngIf=validConfirPass>Las contraseñas no coinciden</p><br>
+        <p *ngIf="validConfirPass && passConfirm.length>0">Las contraseñas no coinciden</p><br>
         <button (click)="cambiarClave()" class="btn btn-primary bt">Guardar</button>
       </div>
     </div>

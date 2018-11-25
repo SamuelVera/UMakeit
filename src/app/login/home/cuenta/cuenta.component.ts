@@ -17,7 +17,7 @@ export class CuentaComponent implements OnInit, AfterViewChecked {
   public cliente: Cliente;
   public envios: Envio[];
   private passConfirm: string = '';
-  private pass: string = '';
+  private newPass: string = '';
   private validPass: boolean = false;
   private validConfirPass: boolean = false;
   private canAdvance: boolean = false;
@@ -117,20 +117,22 @@ export class CuentaComponent implements OnInit, AfterViewChecked {
   }
 
   validarConfirPass(e){
-    if(this.pass != this.passConfirm){
+    if(this.newPass != this.passConfirm){
       this.validConfirPass = true;
     }else{
       this.validConfirPass = false;
     }
+    this.validarPass(e);
     this.advance(e);
   }
 
   validarPass(e){
-    if(this.pass.length < 8){
+    if(this.newPass.length < 8){
       this.validPass = true;
     }else{
       this.validPass = false;
     }
+    this.validarConfirPass(e);
     this.advance(e);
   }
 
@@ -140,7 +142,10 @@ export class CuentaComponent implements OnInit, AfterViewChecked {
 
   cambiarClave(){
     if(this.advance){
-      console.log("cambia")
+      this.auth.changePassword(this.newPass);
+      if(this.auth.error == ''){
+        this.cambiandoClave = false;
+      }
     }
   }
 
