@@ -15,27 +15,31 @@ export class LoginComponent implements OnInit{
   user: Cliente = {
     email: '',
     displayName:'',
-    cedula: '',
-    telefono: '',
+    cedula: 0,
+    telefono: 0,
     direccion: '',
     envios: [''],
     admin: false
   };
   pass: string;
   llenar: boolean = false;
-
+  errMes1 = 'There is no user record corresponding to this identifier. The user may have been deleted.';
+  errMes2 = 'The email address is badly formatted.';
+  errMes3 = 'The password is invalid or the user does not have a password.';
+  errMes4 = 'Faltan campos por llenar';
+  errMes5 = 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.';
 
   constructor(public auth: AuthService) { }
 
   ngOnInit() {
+    this.auth.error = '';
   }
 
   login(e){
     if(this.user.email.length > 0 && this.pass.length > 0){
       this.auth.login(this.user.email,this.pass);
-      this.llenar = false;
     }else{
-      this.llenar = true;
+      this.auth.error = 'Faltan campos por llenar';
     }
   }
 }

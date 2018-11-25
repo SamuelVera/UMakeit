@@ -2,7 +2,6 @@ import { AuthService } from './../core/auth.service';
 import { Cliente } from '../clases/cliente';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form',
@@ -15,8 +14,8 @@ export class FormComponent implements OnInit {
   user: Cliente = {
     email: '',
     displayName:'',
-    cedula: '',
-    telefono: '',
+    cedula: 0,
+    telefono: 0,
     direccion:'',
     envios:[''],
     admin: false
@@ -28,20 +27,24 @@ export class FormComponent implements OnInit {
   validPass: boolean = false;
   validConfirPass: boolean = false;
   canAdvance: boolean = false;
-  error: boolean = false;
 
-  constructor(private authService: AuthService,
-    private router: Router) { }
+  errMes1 = 'The email address is already in use by another account.';
+  errMes2 = 'The email address is badly formatted.';
+  errMes3 = 'Los campos son inválidos';
+  errMes4 = 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.';
+
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    this.authService.error = "";
+    this.authService.error = '';
     this.dir = '';
     this.passConfirm = '';
   }
 
   advance(e){
-    if((!this.validConfirPass) && (!this.validPass) && (this.user.displayName!="") && 
-    (this.user.cedula!="") && (this.dir!="") && (this.user.email!="") && (this.user.telefono!="")){
+    if((!this.validConfirPass) && (!this.validPass) && (this.user.displayName!='') && 
+    (this.user.cedula > 0) && (this.dir!='') && (this.user.email!='') && (this.user.telefono > 0)){
       this.canAdvance = true;
     }else{
       this.canAdvance = false;
@@ -70,10 +73,9 @@ export class FormComponent implements OnInit {
   register(e, f: NgForm){
     if(this.canAdvance){
       this.user.direccion = this.dir;
-      this.error = false;
       this.authService.signUp(this.user.email, this.pass, this.user);
     }else{
-      this.error = true;
+      this.authService.error = this.errMes3;
     }
   }
 }
