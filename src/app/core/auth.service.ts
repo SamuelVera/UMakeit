@@ -14,7 +14,7 @@ export class AuthService {
     //Retrieve email
   uid: string;
 
-  error: string = "";
+  error: string = '';
 
   constructor(public fauth: AngularFireAuth,
     private clientesService: ClientesService,
@@ -25,16 +25,20 @@ export class AuthService {
   login(email: string, password: string){
     this.fauth.auth.signInWithEmailAndPassword(email, password)
     .then(value => {
-      console.log("Login succesful");
+      console.log('Login succesful');
       this.uid = email;
-      this.error = "";
-      if(email === "admin@umakeit.com"){
-        this.router.navigate(['/home-admin']);
-      }else{
-        this.router.navigate(['/home']);
-      }
+      this.error = '';
+      this.clientesService.getCliente(email)
+      .subscribe(data => {
+        var cliente: Cliente = data[0];
+        if(cliente.admin){
+          this.router.navigate(['/home-admin']);
+        }else{
+          this.router.navigate(['/home']);
+        }
+      })
     }).catch(err => {
-      console.log("Error al iniciar sesión: ",err.message);
+      console.log('Error al iniciar sesión: ',err.message);
       this.error = err.message;
     })
   }
@@ -43,22 +47,44 @@ export class AuthService {
   signUp(email: string, password: string, user:Cliente){
     this.fauth.auth.createUserWithEmailAndPassword(email, password)
     .then(value => {
-      console.log("User added");
-      this.error = "";
+      console.log('User added');
+      this.error = '';
       this.clientesService.addCliente(user);
       this.router.navigate(['/home']);
     }).catch(err => {
-      console.log("Error al añadir usuario: ", err.message);
+      console.log('Error al añadir usuario: ', err.message);
+      this.error = err.message;
+    })
+  }
+
+  signUpAdmin(email: string, pass: string){
+    this.fauth.auth.createUserWithEmailAndPassword(email, pass)
+    .then(value => {
+      console.log('Admin added');
+      this.error = '';
+      var cliente: Cliente = {
+        email: email,
+        admin:true
+      };
+      this.clientesService.addCliente(cliente);
+    }).catch(err => {
+      console.log('Error al añadir admin: ', err.message);
       this.error = err.message;
     })
   }
 
   logout(){
-    this.uid = "";
+    this.uid = '';
     this.fauth.auth.signOut();
   }
 
-  changePassword(){
-    
+  changePassword(newPass: string){
+    this.fauth.auth.currentUser.updatePassword(newPass)
+    .then(value => {
+      console.log('Password changed');
+      this.error = '';
+    }).catch(err => {
+      this.error = err.message;
+    });
   }
 }
