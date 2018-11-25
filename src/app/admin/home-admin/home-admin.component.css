@@ -1,0 +1,32 @@
+.carousel {
+    margin-left: 5%;
+    width:90%;
+    height:auto;
+}
+
+h1{
+    text-align: center;
+    width:25%;
+    margin-left:37%;
+    margin-bottom:4%;
+    font-family:'Lucida Sans Unicode';
+    border-bottom:solid orangered 2px;
+}
+
+.eliminate{
+    margin-left: 25%;
+    width: 50%;
+    color:black;
+    background: white;
+}
+
+p:hover{
+    cursor: pointer;
+    color:white;
+    background: black;
+}
+
+img{
+    width:100%;
+}
+

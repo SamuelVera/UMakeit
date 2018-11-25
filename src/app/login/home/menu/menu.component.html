@@ -1,0 +1,74 @@
+
+<router-outlet></router-outlet>
+
+<table *ngIf="platos.length !== 0" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Imágen</th>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Contornos</th>
+            <th>Ordenar</th>
+        </tr>
+    </thead>
+    <tr *ngFor="let plato of platos">
+        <td *ngIf="plato.activo"><img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"></td>
+        <td *ngIf="plato.activo">{{plato.nombre}}</td>
+        <td *ngIf="plato.activo">{{plato.precio}} Bs.</td>
+        <td *ngIf="plato.activo">
+            <div *ngIf="plato.personal" class="dropdown">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                Contornos</button>
+                <div class="dropdown-menu">
+                    <div *ngFor="let contorno of plato.contornos" >
+                      <a class="dropdown-item">{{contorno.nombre}} ({{contorno.carga}} Bs.)</a>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="plato.personal == false">
+                No personalizable
+            </div>
+        </td>
+        <td *ngIf="plato.activo"><a (click)="agregar(plato)"  class="btn btn-primary">Ordenar</a></td>
+    </tr>
+</table>
+<div *ngIf="platos.length === 0">
+    No hay platos por ese nombre!!
+</div><br><br>
+<input type="text" [(ngModel)]="campoText" #campo="ngModel" [ngModelOptions]="{standalone: true}" (keyup)="search($event)" placeholder="Busca un plato">
+<div *ngIf="envio.platos.length !== 0">
+    Orden:
+    <div>
+        <table *ngIf="platos.length !== 0" class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Imágen</th>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Personalizar</th>
+                <th>Eliminar</th>
+            </tr>
+            </thead>
+            <tr *ngFor="let plato of envio.platos; index as i">
+                <td><img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"></td>
+                <td>{{plato.nombre}}</td>
+                <td>{{plato.precio}} Bs.</td>
+                <td>
+                    <div *ngIf="plato.personal">
+                    <div *ngFor="let contorno of plato.contornos" >
+                        <a>{{contorno.nombre}} ({{contorno.carga}} Bs.)<input (click)="select(contorno)" type="checkbox"></a>
+                    </div>
+                    </div>
+                    <div *ngIf="plato.personal == false">
+                        No personalizable
+                    </div>
+                </td>
+                <td><a (click)="eliminar(i)" class="btn btn-primary">Eliminar</a></td>
+            </tr>
+        </table>
+        <p>Total: {{envio.precio}} Bs.</p>
+        
+    </div>
+</div>
+<p *ngIf="paypalLoad">Se está cargando el botón</p>
+<div id="paypal-button-container"></div>

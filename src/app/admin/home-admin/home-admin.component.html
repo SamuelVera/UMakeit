@@ -1,0 +1,47 @@
+<router-outlet></router-outlet>
+<div class="row">
+    <h1>Inicio de administrador</h1>
+</div>
+<div class="row">
+    <div class="col-md-6 col-xs-12">
+        <ngb-carousel *ngIf="images" [showNavigationIndicators]="showNavigationIndicators">
+            <div *ngFor="let image of images; index as i">
+                <ng-template ngbSlide>
+                    <img src="{{image.image}}" alt="{{i}}">
+                    <div class="carousel-caption">
+                        <h3></h3>
+                        <p class="eliminate" (click)="eliminar(image, i)">Eliminar</p>
+                    </div>
+                </ng-template>
+            </div>
+        </ngb-carousel>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <label>Agregar Imágen:</label><br>
+        <input type="file" (change)="uploadFoto($event)">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" [style.width]="(uploadProgress | async) + '%'" [attr.aria-valuenow]="(uploadProgress | async)" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div *ngIf="error">{{error}}</div><br>
+        <p>Registrar admin</p>
+        <form (ngSubmit)="register($event,fromNew)" #formNew="ngForm">
+            <label>Correo electrónico</label>
+            <input type="text" (keyup)="advance($event)" [(ngModel)]="newEmail" #email="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca un correo electrónico"><br><br>
+            <div *ngIf="auth.error">
+                <p *ngIf="auth.error == errMes2">Lo ingresado no es un correo</p>
+                <p *ngIf="auth.error == errMes1">El correo ya está en uso</p>
+            </div>
+            <label>Contraseña</label>
+            <input type="password" (keyup)="validarPass($event)" [(ngModel)]="pass" #password="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Elija una contraseña"  maxlength="20"><br>
+            <p *ngIf="validPass && pass.length>0">La contraseña debe ser mayor a 8 caracteres</p><br>
+            <label>Confirmar Contraseña</label>
+            <input type="password" (keyup)="validarConfirPass($event)" [(ngModel)]="passConfirm" [ngModelOptions]="{standalone: true}" placeholder="Confirma la contraseña" maxlength="20"><br>
+            <p *ngIf="validConfirPass && passConfirm.length>0">Las contraseñas no coinciden</p><br>
+            <div *ngIf="auth.error">
+                <p *ngIf="auth.error == errMes3">{{errMes3}}</p>
+                <p *ngIf="auth.error == errMes4">Error de conexión, inténtelo cuando su conexión sea más estable</p>
+            </div>
+            <button type="submit" class="btn btn-primary bt" role="button">Añadir admin</button>
+        </form>
+    </div>
+</div>

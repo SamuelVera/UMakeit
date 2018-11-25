@@ -1,0 +1,20 @@
+<router-outlet></router-outlet>
+<div class="container col-sm-12 col-md-8">
+    <table class="table">
+        <thead>
+            <th>#</th>
+            <th>CI Cliente</th>
+            <th>Número de Teléfono</th>
+            <th>Dirección</th>
+            <th>Fecha</th>
+        </thead>
+        <tr *ngFor="let envio of envios; index as i">
+            <td *ngIf="!envio.confirmada">{{i+1}}</td>
+            <td *ngIf="!envio.confirmada">{{envio.cedula}}</td>
+            <td *ngIf="!envio.confirmada">{{envio.telefono}}</td>
+            <td *ngIf="!envio.confirmada">{{envio.direccion}}</td>
+            <td *ngIf="!envio.confirmada">{{envio.fecha.toDate() | date}}</td>
+            <td *ngIf="!envio.confirmada"><a class="btn btn-primary" (click)="confirmar(envio)">Confirmar envío</a></td>
+        </tr>
+    </table>
+</div>

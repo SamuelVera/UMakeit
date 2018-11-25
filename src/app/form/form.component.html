@@ -1,0 +1,33 @@
+<div class="container">
+  <img class="rounded-circle mx-auto d-block" width=150 src="../../assets/logo.jpg">
+</div>
+<br>
+
+<h1>Nuevo Usuario</h1>
+<form (ngSubmit)="register($event,formNew)" #formNew="ngForm">
+  <label>Cédula de identidad</label>
+  <input type="number" (keyup)="advance($event)" [(ngModel)]="user.cedula" #cedula="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su número de cédula" maxlength="20"><br><br>
+  <label>Correo electrónico</label>
+  <input type="text" (keyup)="advance($event)" [(ngModel)]="user.email" #email="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su correo electrónico"><br><br>
+  <div *ngIf="authService.error">
+    <p *ngIf="authService.error == errMes2">Lo ingresado no es un correo</p>
+    <p *ngIf="authService.error == errMes1">El correo ya está en uso</p>
+  </div>
+  <label>Nombre de Usuario</label>
+  <input type="text" (keyup)="advance($event)" [(ngModel)]="user.displayName" #displayName="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su nombre de usuario" maxlength="20"><br><br>
+  <label>Teléfono</label>
+  <input type="number" (keyup)="advance($event)" [(ngModel)]="user.telefono" #telefono="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su número de teléfono" maxlength="12"><br><br>
+  <label>Dirección</label>
+  <input type="text" (keyup)="advance($event)" [(ngModel)]="dir" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su dirección" maxlength="30"><br><br>
+  <label>Contraseña</label>
+  <input type="password" (keyup)="validarPass($event)" [(ngModel)]="pass" #password="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Elija una contraseña"  maxlength="20"><br>
+  <p *ngIf="validPass && pass.length>0">La contraseña debe ser mayor a 8 caracteres</p><br>
+  <label>Confirmar Contraseña</label>
+  <input type="password" (keyup)="validarConfirPass($event)" [(ngModel)]="passConfirm" [ngModelOptions]="{standalone: true}" placeholder="Confirma la contraseña" maxlength="20"><br>
+  <p *ngIf="validConfirPass && passConfirm.length>0">Las contraseñas no coinciden</p><br>
+  <div *ngIf="authService.error">
+    <p *ngIf="authService.error == errMes3">{{errMes3}}</p>
+    <p *ngIf="authService.error == errMes4">Error de conexión, inténtelo cuando su conexión sea más estable</p>
+  </div>
+  <button type="submit" class="btn btn-primary bt" role="button">Crear cuenta</button>
+</form>

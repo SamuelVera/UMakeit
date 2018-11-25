@@ -1,0 +1,29 @@
+<div class="container1 row">
+
+  <nav class="navbar navbar-expand-sm bg-light">
+    <ul class="navbar-nav">
+      <div class="col-md-1 col-sm-3">
+      <li><img src="https://firebasestorage.googleapis.com/v0/b/u-make-it.appspot.com/o/logo.jpg?alt=media&token=a18b8ebe-8fa5-4f38-abcc-690ae9ee2758"></li>
+      </div>
+      <div class="col-md-2 col-sm-3">
+      <li class="nav-item"><a class="nav-link" (click)="toHome()"><strong>Inicio</strong></a></li>
+      </div>
+      <div class="col-md-2 col-sm-3">
+      <li class="nav-item"><a class="nav-link" (click)="toMenu()"><strong>Ordenar</strong></a></li>
+      </div>
+      <div class="col-md-2 col-sm-3">
+      <li class="nav-item"><a class="nav-link" (click)="toUser()"><strong>Usuario</strong></a></li>
+      </div>
+      <div class="col-md-2 col-sm-3">
+      <li class="nav-item"><a class="nav-link" (click)="toHelp()"><strong>Ayuda</strong></a></li>
+      </div>
+      <div class="col-md-2 col-sm-3">
+      <li class="nav-item"><a class="nav-link" (click)="logout()"><strong>Salir</strong></a></li>
+      </div>
+      <div class="col-md-1 col-sm-3">
+      <li *ngIf="auth.uid" class="name">Usuario: {{auth.uid}}</li>
+      </div>
+    </ul>
+  </nav>
+</div>
+<router-outlet></router-outlet>

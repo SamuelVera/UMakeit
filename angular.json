@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "uMakeItProyecto": {
+    "uMakeIt": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/uMakeItProyecto",
+            "outputPath": "dist/uMakeIt",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -50,18 +50,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "uMakeItProyecto:build"
+            "browserTarget": "uMakeIt:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "uMakeItProyecto:build:production"
+              "browserTarget": "uMakeIt:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "uMakeItProyecto:build"
+            "browserTarget": "uMakeIt:build"
           }
         },
         "test": {
@@ -95,7 +95,7 @@
         }
       }
     },
-    "uMakeItProyecto-e2e": {
+    "uMakeIt-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -103,11 +103,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "uMakeItProyecto:serve"
+            "devServerTarget": "uMakeIt:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "uMakeItProyecto:serve:production"
+              "devServerTarget": "uMakeIt:serve:production"
             }
           }
         },
@@ -123,5 +123,5 @@
       }
     }
   },
-  "defaultProject": "uMakeItProyecto"
+  "defaultProject": "uMakeIt"
 }

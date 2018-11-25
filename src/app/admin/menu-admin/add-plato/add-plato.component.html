@@ -1,0 +1,49 @@
+<router-outlet></router-outlet>
+
+<h1>Agregar Plato</h1>
+<form (ngSubmit)="add(formNew)" #formNew="ngForm">
+  <div>
+    <div *ngIf=plato.image>
+      <img src="{{plato.image}}" class="rounded mx-auto d-block" width=100>
+    </div><br>
+    <div>
+      Nombre: <input type="text" maxlength="20" [(ngModel)]="plato.nombre" #nombre="ngModel" placeholder="Nombre del plato" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div>
+      Precio: <input type="number" placeholder="Precio"[(ngModel)]="plato.precio" #precio="ngModel" [ngModelOptions]="{standalone: true}"> Bs.
+    </div>
+    <div>
+      Personalizable: <input type="checkbox" [(ngModel)]="plato.personal" #personal="ngModel" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div *ngIf="plato.personal">
+      <h6>Contornos:</h6>
+      <div *ngFor="let contorno of plato.contornos">
+        <div *ngIf=contorno.nombre >
+          <input type="text" placeholder="Nombre" [(ngModel)]="contorno.nombre" [ngModelOptions]="{standalone: true}">
+          <input type="number" placeholder="Precio" [(ngModel)]="contorno.carga" [ngModelOptions]="{standalone: true}"><br>
+        </div>
+      </div>
+      <div>
+        <input type="text" placeholder="Nombre" [(ngModel)]="addingContorno" [ngModelOptions]="{standalone: true}">
+        <input type="number" placeholder="Precio" [(ngModel)]="cargaContorno" [ngModelOptions]="{standalone: true}"><br>
+        <a (click)="addContorno()" class="btn btn-primary contorno">Agregar</a>
+        <a (click)="deleteContorno()" class="btn btn-primary contorno">Eliminar Último</a>
+      </div>
+      <p *ngIf="errorContorno.length>0">{{errorContorno}}</p>
+    </div>
+    <div>
+      Habilitado: <input type="checkbox" [(ngModel)]="plato.activo" #activo="ngModel" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div>
+      Imágen: <input type="file" (change)="uploadFoto($event)">
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" [style.width]="(uploadProgress | async) + '%'" [attr.aria-valuenow]="(uploadProgress | async)" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    </div>
+    <p *ngIf="error.length>0">{{error}}</p>
+    <button type="submit" class="btn btn-primary">Agregar</button>
+  </div>
+</form>
+<div>
+  <a (click)="goBack()">Volver</a>
+</div>
