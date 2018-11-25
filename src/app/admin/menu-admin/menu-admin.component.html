@@ -21,7 +21,10 @@
 
 <div *ngIf="editState">
     <form (ngSubmit)="updatePlato(platoToEdit)">
-          <h5>Editando: {{platoToEdit.nombre}}</h5>
+        <h5>Editando: {{platoToEdit.nombre}}</h5>
+        <div *ngIf=editingImage>
+            <img src="{{editingImage}}" class="rounded mx-auto d-block" width=100>
+        </div><br>
             <label>Nombre:</label> <input type="text" maxlength="20" [(ngModel)]="platoToEdit.nombre" #nombre="ngModel" placeholder="Nombre del plato" [ngModelOptions]="{standalone: true}">
             <label>Precio:</label> <input type="number" placeholder="Precio"[(ngModel)]="platoToEdit.precio" #precio="ngModel" [ngModelOptions]="{standalone: true}">
             <label>Personalizable:</label> <input type="checkbox" [(ngModel)]="platoToEdit.personal" #personal="ngModel" [ngModelOptions]="{standalone: true}">

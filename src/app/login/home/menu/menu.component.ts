@@ -29,8 +29,8 @@ export class MenuComponent implements OnInit, AfterViewChecked{
     platos:[],
     direccion: '',
     confirmada: false,
-    telefono: '',
-    cedula: ''
+    telefono: 0,
+    cedula: 0
   };
 
   aux: string;

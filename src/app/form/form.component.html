@@ -9,6 +9,10 @@
   <input type="number" (keyup)="advance($event)" [(ngModel)]="user.cedula" #cedula="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su número de cédula" maxlength="20"><br><br>
   <label>Correo electrónico</label>
   <input type="text" (keyup)="advance($event)" [(ngModel)]="user.email" #email="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su correo electrónico"><br><br>
+  <div *ngIf="authService.error">
+    <p *ngIf="authService.error == errMes2">Lo ingresado no es un correo</p>
+    <p *ngIf="authService.error == errMes1">El correo ya está en uso</p>
+  </div>
   <label>Nombre de Usuario</label>
   <input type="text" (keyup)="advance($event)" [(ngModel)]="user.displayName" #displayName="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduzca su nombre de usuario" maxlength="20"><br><br>
   <label>Teléfono</label>
@@ -21,7 +25,9 @@
   <label>Confirmar Contraseña</label>
   <input type="password" (keyup)="validarConfirPass($event)" [(ngModel)]="passConfirm" [ngModelOptions]="{standalone: true}" placeholder="Confirma la contraseña" maxlength="20"><br>
   <p *ngIf="validConfirPass && passConfirm.length>0">Las contraseñas no coinciden</p><br>
-  <p *ngIf="authService.error">{{authService.error}}</p>
-  <p *ngIf="error">Campos inválidos</p>
+  <div *ngIf="authService.error">
+    <p *ngIf="authService.error == errMes3">{{errMes3}}</p>
+    <p *ngIf="authService.error == errMes4">Error de conexión, inténtelo cuando su conexión sea más estable</p>
+  </div>
   <button type="submit" class="btn btn-primary bt" role="button">Crear cuenta</button>
 </form>

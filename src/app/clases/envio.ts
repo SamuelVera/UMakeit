@@ -8,6 +8,6 @@ export interface Envio{
     platos: Plato[],
     direccion: string,
     confirmada: boolean,
-    telefono: string,
-    cedula: string
+    telefono: number,
+    cedula: number
 }

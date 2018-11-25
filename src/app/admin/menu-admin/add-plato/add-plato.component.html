@@ -3,6 +3,9 @@
 <h1>Agregar Plato</h1>
 <form (ngSubmit)="add(formNew)" #formNew="ngForm">
   <div>
+    <div *ngIf=plato.image>
+      <img src="{{plato.image}}" class="rounded mx-auto d-block" width=100>
+    </div><br>
     <div>
       Nombre: <input type="text" maxlength="20" [(ngModel)]="plato.nombre" #nombre="ngModel" placeholder="Nombre del plato" [ngModelOptions]="{standalone: true}">
     </div>
@@ -41,3 +44,6 @@
     <button type="submit" class="btn btn-primary">Agregar</button>
   </div>
 </form>
+<div>
+  <a (click)="goBack()">Volver</a>
+</div>

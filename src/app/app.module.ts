@@ -7,6 +7,7 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireModule } from 'angularfire2';
 import { environment } from './../environments/environment';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -25,7 +26,6 @@ import { HomeAdminComponent } from './admin/home-admin/home-admin.component';
 import { EnviosComponent } from './admin/envios/envios.component';
 
   //Servicios
-import { PlatoService } from './core/plato.service';
 import { AddPlatoComponent } from './admin/menu-admin/add-plato/add-plato.component';
 
 @NgModule({
@@ -39,6 +39,7 @@ import { AddPlatoComponent } from './admin/menu-admin/add-plato/add-plato.compon
     AngularFireStorageModule,
     CoreModule,
     NgxPayPalModule,
+    NgbModule,
   ],
   declarations: [
     AppComponent,

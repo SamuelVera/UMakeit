@@ -27,7 +27,7 @@ export class AddPlatoComponent implements OnInit {
         elegido: false
     }]
   };
-  addingContorno: String;
+  addingContorno: string;
   cargaContorno: number;
   isFoto: boolean;
   private uploadTask: AngularFireUploadTask;
@@ -35,6 +35,7 @@ export class AddPlatoComponent implements OnInit {
   uploadProgress: Observable<number>;
   error: string = "";
   errorContorno: string = "";
+  private advance: boolean;
 
   constructor(private platosService: PlatoService,
     private location: Location,
@@ -42,35 +43,40 @@ export class AddPlatoComponent implements OnInit {
     private afStorage: AngularFireStorage) { }
 
   ngOnInit() {
+    this.advance = true;
   }
 
   add(f: NgForm){ //Añadir un plato con los datos especificados
-    if(this.plato.nombre != "" && this.plato.precio > 0 && this.isFoto){
-      this.plato.nombre = this.plato.nombre.toLowerCase();
-      this.error = "";
-      this.platosService.addPlato(this.plato);
-      this.router.navigate(["/menu-admin"]);
+    if(this.advance){
+      if(this.plato.nombre != '' && this.plato.precio > 0 && this.isFoto){
+        this.plato.nombre = this.plato.nombre.toLowerCase();
+        this.error = '';
+        this.platosService.addPlato(this.plato);
+        this.router.navigate(['/menu-admin']);
+      }else{
+        this.error = 'Campos inválidos';
+      }
     }else{
-      this.error = "Campos inválidos";
+      this.error = 'Se está cargando una imágen';
     }
   }
 
-  goBack(): void {
-    this.location.back();
+  goBack(){
+    this.router.navigate(['/menu-admin']);
   }
 
   addContorno(){ //Añadir un contorno al editar
-    if(this.cargaContorno > 0 && this.addingContorno != ""){
+    if(this.cargaContorno > 0 && this.addingContorno != ''){
       this.plato.contornos.push({
         nombre: this.addingContorno,
         carga: this.cargaContorno,
         elegido: false
       });
-      this.addingContorno = "";
+      this.addingContorno = '';
       this.cargaContorno = 0;  
-      this.errorContorno = "";
+      this.errorContorno = '';
     }else{
-      this.errorContorno = "Campos inválidos";
+      this.errorContorno = 'Campos inválidos';
     }
   }
 
@@ -81,15 +87,24 @@ export class AddPlatoComponent implements OnInit {
 
   uploadFoto(e: any){
     const file: File = e.target.files[0];
-    const id = file.name;
-    this.ref = this.afStorage.ref(id);
-    this.uploadTask = this.ref.put(file);
-    this.uploadProgress = this.uploadTask.percentageChanges();
-    this.ref.getDownloadURL().subscribe(data =>{
-      this.plato.image = data;
-      this.isFoto = true;
-      this.error = "";
-    });
+    if(file){
+      if(file.type == 'image/jpeg' || file.type == 'image/png' || file.type == 'image/jpg'){
+        this.advance = false;
+        const id = 'menu-images/'+file.name;
+        this.ref = this.afStorage.ref(id);
+        this.uploadTask = this.ref.put(file);
+        this.uploadProgress = this.uploadTask.percentageChanges();
+        this.ref.getDownloadURL().subscribe(data =>{
+          this.plato.image = data;
+          this.isFoto = true;
+          this.error = '';
+          this.advance = true;
+        });
+      }else{
+        this.error = 'El archivo no es una imágen';
+      }
+    }else{
+      this.error = '';
+    }
   }
-
 }

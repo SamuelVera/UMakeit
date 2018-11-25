@@ -12,10 +12,3 @@ h3, p{
 img{
     width:100%;
 }
-
-.row{
-    background: white;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 1em;
-}
