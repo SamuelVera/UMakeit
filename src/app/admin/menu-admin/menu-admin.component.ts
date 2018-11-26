@@ -18,7 +18,7 @@ import * as firebase from 'firebase';
 export class MenuAdminComponent implements OnInit {
 
   public platos = [];
-  private editState: boolean = false;
+  public editState: boolean = false;
   private platoToEdit: Plato;
   private editingImage: string;
   private addingContorno: string;

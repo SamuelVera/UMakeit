@@ -38,7 +38,7 @@ export class HomeAdminComponent implements OnInit {
 
   constructor(private carouselImagesService: CarouselImagesService,
     private afStorage: AngularFireStorage,
-    private auth: AuthService) { }
+    public auth: AuthService) { }
 
   ngOnInit() {
     this.auth.error = '';

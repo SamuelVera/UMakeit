@@ -17,15 +17,15 @@ export class NavbarAdminComponent implements OnInit {
   ngOnInit() {
   }
 
-  private toHome(){
+  toHome(){
     this.router.navigate(['/home-admin']);
   }
 
-  private toMenu(){
+  toMenu(){
     this.router.navigate(['/menu-admin']);
   }
 
-  private toEnvios(){
+  toEnvios(){
     this.router.navigate(['/envios']);
   }
 
