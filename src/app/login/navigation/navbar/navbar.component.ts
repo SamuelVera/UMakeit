@@ -18,23 +18,23 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
   }
 
-  private toHome(){
+  toHome(){
     this.router.navigate(['/home']);
   }
 
-  private toMenu(){
+  toMenu(){
     this.router.navigate(['/menu']);
   }
 
-  private toUser(){
+  toUser(){
     this.router.navigate(['/user']);
   }
 
-  private toHelp(){
+  toHelp(){
     this.router.navigate(['/ayuda']);
   }
 
-  private logout(){
+  logout(){
     this.auth.logout();
     this.router.navigate(['']);
   }

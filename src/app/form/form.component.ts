@@ -34,7 +34,7 @@ export class FormComponent implements OnInit {
   errMes4 = 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.';
 
 
-  constructor(private authService: AuthService) { }
+  constructor( public authService: AuthService) { }
 
   ngOnInit() {
     this.authService.error = '';
