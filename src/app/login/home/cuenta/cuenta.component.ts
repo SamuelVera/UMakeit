@@ -1,8 +1,9 @@
+import { PlatoService } from './../../../core/plato.service';
 import { EnviosService } from './../../../core/envios.service';
 import { Envio } from 'src/app/clases/envio';
 import { Cliente } from '../../../clases/cliente';
 import { AuthService } from './../../../core/auth.service';
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ClientesService } from 'src/app/core/clientes.service';
 
 declare let paypal:any;
@@ -12,21 +13,28 @@ declare let paypal:any;
   templateUrl: './cuenta.component.html',
   styleUrls: ['./cuenta.component.css']
 })
-export class CuentaComponent implements OnInit, AfterViewChecked {
+
+export class CuentaComponent implements OnInit {
 
   public cliente: Cliente;
   public envios: Envio[];
-  private passConfirm: string = '';
-  private newPass: string = '';
-  private validPass: boolean = false;
-  private validConfirPass: boolean = false;
-  private canAdvance: boolean = false;
-  private cambiandoClave: boolean = false;
+  passConfirm: string = '';
+  newPass: string = '';
+  validPass: boolean = false;
+  validConfirPass: boolean = false;
+  canAdvance: boolean = false;
+  cambiandoClave: boolean = false;
   envioReordenado: Envio;
   pos: number;
 
+  pagando: boolean;
+  ordenando: boolean;
+  viendo: boolean;
   addScript: boolean = false;
   paypalLoad: boolean = true;
+  impuestos: number;
+  total: number;
+  dirPago: string;
 
   paypalConfig = {
     env:'sandbox',
@@ -46,7 +54,6 @@ export class CuentaComponent implements OnInit, AfterViewChecked {
     },
     onAuthorize: (data, actions)=>{
       this.envioReordenado.owner_ref = "clientes/"+this.cliente.id;
-      this.envioReordenado.direccion = this.cliente.direccion;
       this.envioReordenado.telefono = this.cliente.telefono;
       this.envioReordenado.cedula = this.cliente.cedula;
       this.envioReordenado.fecha = new Date();
@@ -56,6 +63,9 @@ export class CuentaComponent implements OnInit, AfterViewChecked {
       this.cliente.envios.push(id);
       this.clientesService.updateCliente(this.cliente);
       this.envioReordenado = null;
+      this.pagando = false;
+      this.ordenando = false;
+      this.viendo = false;
     }
   };
 
@@ -64,18 +74,29 @@ export class CuentaComponent implements OnInit, AfterViewChecked {
     private enviosService: EnviosService) { }
 
   ngOnInit() {
+    this.viendo = false;
+    this.ordenando = false;
+    this.pagando = false;
     this.envioReordenado = null;
     this.cliente = null;
     this.getEnvios();
   }
 
-  ngAfterViewChecked(){
+  private addPaypalButton(){
     if(!this.addScript){
       this.addPaypalScript().then(()=>{
         paypal.Button.render(this.paypalConfig, '#paypal-button-container');
         this.paypalLoad = false;
       })
     }
+  }
+
+  verOrdenes(){
+    this.viendo = true;
+  }
+
+  volverDeVer(){
+    this.viendo = false;
   }
 
   private addPaypalScript(){
@@ -122,7 +143,6 @@ export class CuentaComponent implements OnInit, AfterViewChecked {
     }else{
       this.validConfirPass = false;
     }
-    this.validarPass(e);
     this.advance(e);
   }
 
@@ -149,12 +169,14 @@ export class CuentaComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  reordenar(envio: Envio,i: number){
+  reordenar(envio: Envio, i: number){
     this.envioReordenado = envio;
     this.pos = i;
+    this.ordenando = true;
   }
 
   eliminarReorden(){
+    this.ordenando = false;
     this.envioReordenado = null;
   }
 
@@ -173,11 +195,43 @@ export class CuentaComponent implements OnInit, AfterViewChecked {
       }
       i++;
     }
+    this.impuestos = this.envioReordenado.precio * 0.12;
+    this.total = this.envioReordenado.precio + this.impuestos;
   }
 
   select(contorno){
     contorno.elegido = !contorno.elegido;
     this.calcPrecio();
+  }
+
+  goToPagar(){
+    this.calcPrecio();
+    this.pagando = true;
+    this.addPaypalButton();
+    this.ordenando = false;
+  }
+
+  volverFromPago(){
+    this.pagando = false;
+    this.ordenando = true;
+    this.addScript = false;
+    this.paypalLoad = true;
+  }
+
+  pagarSimul(){
+    this.envioReordenado.owner_ref = "clientes/"+this.cliente.id;
+    this.envioReordenado.telefono = this.cliente.telefono;
+    this.envioReordenado.cedula = this.cliente.cedula;
+    this.envioReordenado.fecha = new Date();
+    this.envioReordenado.confirmada = false;
+    this.envios.splice(this.pos, 1);
+    const id = this.enviosService.addEnvio(this.envioReordenado);
+    this.cliente.envios.push(id);
+    this.clientesService.updateCliente(this.cliente);
+    this.envioReordenado = null;
+    this.pagando = false;
+    this.ordenando = false;
+    this.viendo = false;
   }
 
 }

@@ -20,7 +20,7 @@ h1{
     background: white;
 }
 
-p:hover{
+.eliminate:hover{
     cursor: pointer;
     color:white;
     background: black;

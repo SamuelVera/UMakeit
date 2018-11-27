@@ -19,15 +19,6 @@ export class CarouselImagesService {
 
   constructor(public afs: AngularFirestore,
     ) {
-      this.carouselCollection = afs.collection<Image>('carousel-images', ref => ref.orderBy('image','asc'));
-      this.carouselImages = this.carouselCollection.snapshotChanges().pipe(
-        map(actions => actions.map( ref => { 
-          const data = ref.payload.doc.data() as Image
-          const id = ref.payload.doc.id;
-          return {id, ...data};
-          }
-        ))
-      );
     }
 
   public addImage(carousel: Image){
@@ -35,7 +26,17 @@ export class CarouselImagesService {
     console.log("Image added to carousel");
   }
 
-  public getImages(): Observable<Image[]>{
+  public getImages(){
+    console.log('carousel fetch')
+    this.carouselCollection = this.afs.collection<Image>('carousel-images', ref => ref.orderBy('image','asc'));
+    this.carouselImages = this.carouselCollection.snapshotChanges().pipe(
+      map(actions => actions.map( ref => { 
+        const data = ref.payload.doc.data() as Image
+        const id = ref.payload.doc.id;
+        return {id, ...data};
+        }
+      ))
+    );
     return this.carouselImages;
   }
 

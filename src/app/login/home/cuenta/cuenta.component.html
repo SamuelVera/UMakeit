@@ -1,11 +1,11 @@
 <router-outlet></router-outlet>
 
 <div *ngIf="cliente" class="container">
-    <div class="card">
+    <div *ngIf="!viendo" class="card">
       <h2>{{cliente.displayName}}</h2>
       <div class="card-header">Número de contacto: {{cliente.telefono}}</div>
-      <div class="card-body">Correo: {{cliente.email}}</div> 
-      <div class="card-footer">Dirección: {{cliente.direccion}}</div>
+      <div class="card-body">Correo: {{cliente.email}}</div>
+      <div class="card-footer">Dirección: {{cliente.dir}}</div>
       <button (click)="setCambiarTrue()" class="btn btn-primary">Cambiar Clave</button>
       <div *ngIf=cambiandoClave>
         <label>Nueva contraseña:</label><br>
@@ -17,10 +17,13 @@
         <button (click)="cambiarClave()" class="btn btn-primary bt">Guardar</button>
       </div>
     </div>
+</div>
+<button *ngIf="!viendo" (click)="verOrdenes()">Ver Historial</button>
 
+<div *ngIf="viendo">
   <h2>Ordenes:</h2>
-  <div *ngIf="cliente.envios.length !== 0">
-    Previas:
+  <div *ngIf="cliente.envios.length !== 0 && !pagando && !ordenando">
+    Historial:
     <div *ngFor="let envio of envios; index as i">
         Orden:
         <div *ngFor="let plato of envio.platos">
@@ -47,38 +50,72 @@
           Esperando confirmación
         </div><br><br>
     </div>
-    <div *ngIf="envioReordenado">
-      <table class="table table-bordered">
-          <thead>
-          <tr>
-              <th>Imágen</th>
-              <th>Producto</th>
-              <th>Precio</th>
-              <th>Personalizar</th>
-          </tr>
-          </thead>
-          <tr *ngFor="let plato of envioReordenado.platos; index as i">
-              <td><img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"></td>
-              <td>{{plato.nombre}}</td>
-              <td>{{plato.precio}} Bs.</td>
-              <td>
-                <div *ngIf="plato.personal">
-                <div *ngFor="let contorno of plato.contornos" >
-                  <a>{{contorno.nombre}} ({{contorno.carga}} Bs.)<input (click)="select(contorno)" checked="contorno.elegido" type="checkbox"></a>
-                </div>
-                </div>
-                <div *ngIf="plato.personal == false">
-                  No personalizable
-                </div>
-              </td>
-          </tr>
-      </table>
-      <p>Total: {{envioReordenado.precio}} Bs.</p>
-      <div  class="row">
-        <div class="col-md-6"><button (click)="eliminarReorden()" class="btn btn-primary">Eliminar</button></div>
-      </div>
-    </div>
+    <button (click)="volverDeVer()">Volver</button>
   </div>
 </div>
-<p *ngIf="paypalLoad">Se está cargando el botón</p>
-<div id="paypal-button-container"></div>
+<div *ngIf="envioReordenado && !pagando && ordenando">
+  <table class="table table-bordered">
+      <thead>
+      <tr>
+          <th>Imágen</th>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Personalizar</th>
+      </tr>
+      </thead>
+      <tr *ngFor="let plato of envioReordenado.platos; index as i">
+          <td><img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"></td>
+          <td>{{plato.nombre}}</td>
+          <td>{{plato.precio}} Bs.</td>
+          <td>
+            <div *ngIf="plato.personal">
+            <div *ngFor="let contorno of plato.contornos" >
+              <a *ngIf="!contorno.elegido">{{contorno.nombre}} ({{contorno.carga}} Bs.)<input (click)="select(contorno)" checked="contorno.elegido" type="checkbox"></a>
+              <a *ngIf="contorno.elegido">{{contorno.nombre}} ({{contorno.carga}} Bs.)<input (click)="select(contorno)" checked="contorno.elegido" type="checkbox" checked></a>
+            </div>
+            </div>
+            <div *ngIf="plato.personal == false">
+              No personalizable
+            </div>
+          </td>
+      </tr>
+  </table>
+  <div  class="row">
+    <div class="col-md-6"><button (click)="eliminarReorden()" class="btn btn-primary">Volver</button></div>
+    <div class="col-md-6"><button class="btn btn-primary" (click)="goToPagar()">Ir a Pagar</button></div>
+  </div>
+</div>
+<div *ngIf="pagando">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Imágen</th>
+        <th>Producto</th>
+        <th>Precio</th>
+        <th>Personalizar</th>
+      </tr>
+    </thead>
+    <tr *ngFor="let plato of envioReordenado.platos; index as i">
+      <td><img class="rounded mx-auto d-block" width=100 src="{{plato.image}}"></td>
+      <td>{{plato.nombre}}</td>
+      <td>{{plato.precio}} Bs.</td>
+      <td>
+        <div *ngIf="plato.personal">
+          <div *ngFor="let contorno of plato.contornos" >
+            <p *ngIf="contorno.elegido">{{contorno.nombre}} ({{contorno.carga}} Bs.)</p>
+          </div>
+        </div>
+        <div *ngIf="plato.personal == false">
+          No personalizable
+        </div>
+      </td>
+    </tr>
+  </table>
+  <p>Subtotal: {{envioReordenado.precio}} Bs.</p>
+  <p>Impuestos: {{impuestos}} Bs.</p>
+  <p>Total: {{total}} Bs.</p>
+  <p *ngIf="paypalLoad">Se está cargando el botón</p>
+  <div id="paypal-button-container"></div>
+  <a class="btn btn-primary" (click)="pagarSimul()">Pago Simluado</a>
+  <a class="btn btn-primary" (click)="volverFromPago()">Volver</a>
+</div>
