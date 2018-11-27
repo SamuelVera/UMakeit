@@ -1,6 +1,6 @@
 .card{
     margin-top:2%;
-    margin-left:20%;
+    margin-left:30%;
     width: 50%;
 }
 h2{
@@ -10,7 +10,14 @@ button{
     width:30%;
     margin-top:2%;
     margin-bottom:2%;
-    margin-left:37.5%;
+    margin-left:34%;
+    text-align:center;
+}
+.button1{
+    width:30%;
+    margin-top:2%;
+    margin-bottom:2%;
+    margin-left:38%;
     text-align:center;
 }
 .card-header{
@@ -37,3 +44,5 @@ button{
 p{
     color: red;
 }
+
+
