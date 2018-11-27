@@ -29,7 +29,7 @@ export class ClientesService {
     //Add new cliente
   public addCliente(cliente: Cliente){
     this.clientesCollection.add(cliente);
-    console.log("Cliente added");
+    console.log('Cliente added');
   }
 
     //Update cliente

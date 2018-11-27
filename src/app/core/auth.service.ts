@@ -48,7 +48,7 @@ export class AuthService {
       console.log('User added');
       this.error = '';
       this.clientesService.addCliente(user);
-      this.router.navigate(['/home']);
+      this.router.navigate(['/login']);
     }).catch(err => {
       console.log('Error al añadir usuario: ', err.message);
       this.error = err.message;

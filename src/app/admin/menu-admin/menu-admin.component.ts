@@ -1,3 +1,4 @@
+import { ConfirmationDialogService } from './../../confirm-dialog/confirm-dialog.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { PlatoService } from '../../core/plato.service';
@@ -37,7 +38,8 @@ export class MenuAdminComponent implements OnInit {
 
   constructor(private platoService: PlatoService,
     private router: Router,
-    private afStorage: AngularFireStorage) { }
+    private afStorage: AngularFireStorage,
+    private confirmDialogService: ConfirmationDialogService) { }
 
   ngOnInit() {
     this.buscando = false;
@@ -47,8 +49,17 @@ export class MenuAdminComponent implements OnInit {
     })
   }
 
-  delete(event, plato: Plato){ //Borrar el plato
+  delete(plato: Plato){ //Borrar el plato
     this.platoService.deletePlato(plato);
+  }
+
+  confirmElminar(plato: Plato) {
+    this.confirmDialogService.confirm('¿Estas Seguro?', '¿Se va a elminar un plato?')
+    .then((confirmed) => {
+      if(confirmed){
+        this.delete(plato)
+      }})
+    .catch(() => {});
   }
 
   edit(event, plato: Plato){ //Activar edición del plato

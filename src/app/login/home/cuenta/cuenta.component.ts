@@ -1,4 +1,4 @@
-import { PlatoService } from './../../../core/plato.service';
+import { ConfirmationDialogService } from './../../../confirm-dialog/confirm-dialog.service';
 import { EnviosService } from './../../../core/envios.service';
 import { Envio } from 'src/app/clases/envio';
 import { Cliente } from '../../../clases/cliente';
@@ -71,7 +71,8 @@ export class CuentaComponent implements OnInit {
 
   constructor(public auth: AuthService,
     private clientesService: ClientesService,
-    private enviosService: EnviosService) { }
+    private enviosService: EnviosService,
+    private confirmDialogService: ConfirmationDialogService) { }
 
   ngOnInit() {
     this.viendo = false;
@@ -162,10 +163,15 @@ export class CuentaComponent implements OnInit {
 
   cambiarClave(){
     if(this.advance){
-      this.auth.changePassword(this.newPass);
-      if(this.auth.error == ''){
-        this.cambiandoClave = false;
-      }
+      this.confirmDialogService.confirm('¿Estas Seguro?', '¿Deseas cambiar tu contraseña?')
+      .then((confirmed) => {
+        if(confirmed){
+          this.auth.changePassword(this.newPass);
+          if(this.auth.error == ''){
+            this.cambiandoClave = false;
+          }
+        }})
+      .catch(() => {});
     }
   }
 
