@@ -8,6 +8,6 @@ import { NgModule } from '@angular/core';
     AngularFireAuthModule,
     AngularFirestoreModule
   ],
-  providers: [AuthService]
+  providers: [AuthService],
 })
 export class CoreModule { }

@@ -2,6 +2,7 @@ import { AuthService } from './../core/auth.service';
 import { Cliente } from '../clases/cliente';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form',
@@ -34,7 +35,8 @@ export class FormComponent implements OnInit {
   errMes4 = 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.';
 
 
-  constructor( public authService: AuthService) { }
+  constructor( public authService: AuthService,
+    private router: Router) { }
 
   ngOnInit() {
     this.authService.error = '';
@@ -68,6 +70,10 @@ export class FormComponent implements OnInit {
     }
     this.validarConfirPass(e);
     this.advance(e);
+  }
+
+  volver(){
+    this.router.navigate(['/login']);
   }
 
   register(e, f: NgForm){

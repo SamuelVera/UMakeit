@@ -1,4 +1,4 @@
-import { PlatoService } from './../../../core/plato.service';
+import { ConfirmationDialogService } from './../../../confirm-dialog/confirm-dialog.service';
 import { EnviosService } from './../../../core/envios.service';
 import { Envio } from 'src/app/clases/envio';
 import { Cliente } from '../../../clases/cliente';
@@ -36,6 +36,11 @@ export class CuentaComponent implements OnInit {
   total: number;
   dirPago: string;
 
+  passMsg: string = '';
+  msg1: string = 'Estamos actualizando tu contraseña...';
+  msg2: string = 'Contraseña actualizada exitosamente';
+  msg3: string = 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.';
+
   paypalConfig = {
     env:'sandbox',
     client:{
@@ -71,7 +76,8 @@ export class CuentaComponent implements OnInit {
 
   constructor(public auth: AuthService,
     private clientesService: ClientesService,
-    private enviosService: EnviosService) { }
+    private enviosService: EnviosService,
+    private confirmDialogService: ConfirmationDialogService) { }
 
   ngOnInit() {
     this.viendo = false;
@@ -156,16 +162,25 @@ export class CuentaComponent implements OnInit {
     this.advance(e);
   }
 
-  setCambiarTrue(){
-    this.cambiandoClave = true;
+  setCambiar(){
+    this.cambiandoClave = !this.cambiandoClave;
   }
 
   cambiarClave(){
     if(this.advance){
-      this.auth.changePassword(this.newPass);
-      if(this.auth.error == ''){
-        this.cambiandoClave = false;
-      }
+      this.passMsg = this.msg1;
+      this.confirmDialogService.confirm('¿Estas Seguro?', '¿Deseas cambiar tu contraseña?')
+      .then((confirmed) => {
+        if(confirmed){
+          this.auth.changePassword(this.newPass);
+          if(this.auth.error == ''){
+            this.cambiandoClave = false;
+            this.passMsg = '';
+          }else{
+            this.passMsg = this.auth.error;
+          }
+        }})
+      .catch(() => {});
     }
   }
 

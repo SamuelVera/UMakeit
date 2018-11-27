@@ -8,6 +8,7 @@ import { AngularFireModule } from 'angularfire2';
 import { environment } from './../environments/environment';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDialogModule } from 'ngx-modal-dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -24,9 +25,11 @@ import { NavbarAdminComponent } from './login/navigation/navbar-admin/navbar-adm
 import { MenuAdminComponent } from './admin/menu-admin/menu-admin.component';
 import { HomeAdminComponent } from './admin/home-admin/home-admin.component';
 import { EnviosComponent } from './admin/envios/envios.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
   //Servicios
 import { AddPlatoComponent } from './admin/menu-admin/add-plato/add-plato.component';
+import { ConfirmationDialogService } from './confirm-dialog/confirm-dialog.service';
 
 @NgModule({
   imports: [
@@ -40,6 +43,7 @@ import { AddPlatoComponent } from './admin/menu-admin/add-plato/add-plato.compon
     CoreModule,
     NgxPayPalModule,
     NgbModule,
+    ModalDialogModule.forRoot()
   ],
   declarations: [
     AppComponent,
@@ -56,8 +60,10 @@ import { AddPlatoComponent } from './admin/menu-admin/add-plato/add-plato.compon
     HomeAdminComponent,
     EnviosComponent,
     AddPlatoComponent,
+    ConfirmDialogComponent
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ConfirmationDialogService],
+  bootstrap: [AppComponent],
+  entryComponents: [ ConfirmDialogComponent ]
 })
 export class AppModule { }
