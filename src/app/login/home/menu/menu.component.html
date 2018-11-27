@@ -1,5 +1,6 @@
 
 <router-outlet></router-outlet>
+<input class="in" type="text" [(ngModel)]="campoText" #campo="ngModel" [ngModelOptions]="{standalone: true}" (keyup)="search($event)" placeholder="Busca un plato">
 <div *ngIf="platos.length !== 0 && !pagando">
     <table class="table table-bordered">
         <thead>
@@ -21,7 +22,7 @@
                     Ver Contornos</button>
                     <div class="dropdown-menu">
                         <div *ngFor="let contorno of plato.contornos" >
-                        <a class="dropdown-item">{{contorno.nombre}} ({{contorno.carga}} Bs.)</a>
+                        <b class="dropdown-item">{{contorno.nombre}} ({{contorno.carga}} Bs.)</b>
                         </div>
                     </div>
                 </div>
@@ -34,11 +35,11 @@
     </table>
 </div>
 <div *ngIf="platos.length === 0 && buscando && !pagando">
-    No hay platos por ese nombre!!
+        <p>¡No hay platos por ese nombre!</p>
 </div><br><br>
-<input type="text" [(ngModel)]="campoText" #campo="ngModel" [ngModelOptions]="{standalone: true}" (keyup)="search($event)" placeholder="Busca un plato">
+
 <div *ngIf="ordenando && !pagando">
-    Orden:
+<p>Orden:</p>
     <div>
         <table *ngIf="platos.length !== 0" class="table table-bordered">
             <thead>
@@ -57,8 +58,8 @@
                 <td>
                     <div *ngIf="plato.personal">
                     <div *ngFor="let contorno of plato.contornos" >
-                        <a *ngIf="!contorno.elegido">{{contorno.nombre}} ({{contorno.carga}} Bs.)<input (click)="select(contorno)" type="checkbox" ></a>
-                        <a *ngIf="contorno.elegido">{{contorno.nombre}} ({{contorno.carga}} Bs.)<input (click)="select(contorno)"  type="checkbox" checked></a>
+                        <b *ngIf="!contorno.elegido">{{contorno.nombre}} ({{contorno.carga}} Bs.)<input (click)="select(contorno)" type="checkbox" ></b>
+                        <b *ngIf="contorno.elegido">{{contorno.nombre}} ({{contorno.carga}} Bs.)<input (click)="select(contorno)"  type="checkbox" checked></b>
                     </div>
                     </div>
                     <div *ngIf="plato.personal == false">
@@ -69,11 +70,11 @@
             </tr>
         </table>
         <p>Total: {{envio.precio}} Bs.</p>
-        <a (click)="goToPagar()" class="btn btn-primary">Ir a Pagar</a>
+        <a (click)="goToPagar()" class="btn btn-primary in">Ir a Pagar</a>
     </div>
 </div>
 <div *ngIf="pagando">
-    Orden:
+    <p>Orden:</p>
     <div>
         <table *ngIf="platos.length !== 0" class="table table-bordered">
             <thead>
@@ -101,13 +102,13 @@
             </tr>
         </table>
         <p>De no colocar dirección se le enviará le pedido a su dirección por defecto</p>
-        <input type="text" [(ngModel)]="dirPagoText" #dirPago="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduce una dirección de envío">
+        <input class="in" type="text" [(ngModel)]="dirPagoText" #dirPago="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Introduce una dirección de envío">
         <p>SubTotal: {{envio.precio}} Bs.</p>
         <p>Impuestos: {{impuestos}} Bs.</p>
         <p>Total: {{total}} Bs.</p>
     </div>
-    <p *ngIf="paypalLoad">Se está cargando el botón</p>
-    <div id="paypal-button-container"></div>
-    <a (click)="pagarSimul()" class="btn btn-primary">Pago Simulado</a>
-    <a (click)="volverFromPago()" class="btn btn-primary">Volver</a>
+    
+                                   <div class= "in" id="paypal-button-container"><p  *ngIf="paypalLoad">Se está cargando el botón</p></div>
+    <a (click)="pagarSimul()" class="btn btn-primary in">Pago Simulado</a>
+    <a (click)="volverFromPago()" class="btn btn-primary in">Volver</a>
 </div>

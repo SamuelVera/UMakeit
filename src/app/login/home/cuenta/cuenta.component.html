@@ -8,11 +8,11 @@
       <div class="card-footer">Dirección: {{cliente.dir}}</div>
       <button (click)="setCambiar()" class="btn btn-primary">Cambiar Clave</button>
       <div *ngIf=cambiandoClave>
-        <label>Nueva contraseña:</label><br>
-        <input type="password" (keyup)="validarPass($event)" [(ngModel)]="newPass" #password="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Elija una contraseña"  maxlength="20"><br>
+        <label class= "lab">Nueva contraseña:</label><br>
+        <input  class= "lab1" type="password" (keyup)="validarPass($event)" [(ngModel)]="newPass" #password="ngModel" [ngModelOptions]="{standalone: true}" placeholder="Elija una contraseña"  maxlength="20"><br>
         <p *ngIf="validPass && newPass.length>0">La contraseña debe ser mayor a 8 caracteres</p><br>
-        <label>Confirmar Contraseña:</label><br>
-        <input type="password" (keyup)="validarConfirPass($event)" [(ngModel)]="passConfirm" [ngModelOptions]="{standalone: true}" placeholder="Confirma la contraseña" maxlength="20"><br>
+        <label class= "lab2">Confirmar Contraseña:</label><br>
+        <input  class= "lab1" type="password" (keyup)="validarConfirPass($event)" [(ngModel)]="passConfirm" [ngModelOptions]="{standalone: true}" placeholder="Confirma la contraseña" maxlength="20"><br>
         <p *ngIf="validConfirPass && passConfirm.length>0">Las contraseñas no coinciden</p><br>
         <div *ngIf="passMsg">
           <p *ngIf="passMsg == msg1">{{msg1}}</p>
@@ -24,7 +24,7 @@
 </div>
 <button *ngIf="!viendo" (click)="verOrdenes()" class="button1">Ver Historial</button>
 
-<div *ngIf="viendo">
+<div class="grid-container" *ngIf="viendo">
   <h2>Ordenes:</h2>
   <div *ngIf="cliente.envios.length !== 0 && !pagando && !ordenando">
     Historial:

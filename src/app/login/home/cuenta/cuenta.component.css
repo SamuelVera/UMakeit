@@ -4,7 +4,7 @@
     width: 50%;
 }
 h2{
-    margin-left:10%;
+    margin-left:5%;
 }
 button{
     width:30%;
@@ -43,6 +43,21 @@ button{
 }
 p{
     color: red;
+    text-align: center;
 }
 
+.lab{
+    margin-left: 38%;
+}
 
+.lab1{
+    margin-left: 33%;
+}
+
+.lab2{
+    margin-left: 36%;
+}
+
+.grid-container {
+    display: grid;
+  }
