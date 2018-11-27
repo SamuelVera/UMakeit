@@ -34,7 +34,7 @@ form{
     border-radius: 5%;
     width:30%;
     margin-left:35%;
-    padding: 4% 4% 1% 0;
+    padding: 2% 3% 1% 0;
     font-family:'Lucida Sans Unicode';
 }
 
@@ -48,11 +48,11 @@ button{
     font-size: 100%;
 }
 .log{
-    margin-left:43%;
+    margin-left:47%;
     margin-bottom: 4%;
 }
 .register{
-    margin-left:35%;
+    margin-left:42%;
 }
 a:link{
     color:black;
