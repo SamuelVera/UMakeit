@@ -1,4 +1,4 @@
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Cliente } from '../clases/cliente';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';

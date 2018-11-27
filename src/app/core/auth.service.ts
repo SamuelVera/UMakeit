@@ -1,6 +1,4 @@
-import { MenuAdminComponent } from './../admin/menu-admin/menu-admin.component';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
 import { ClientesService } from './clientes.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';

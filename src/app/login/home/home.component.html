@@ -1,9 +1,11 @@
 <router-outlet></router-outlet>
 
-<ngb-carousel *ngIf="images" [showNavigationIndicators]="showNavigationIndicators">
-    <div *ngFor="let image of images; index as i">
-        <ng-template ngbSlide>
-            <img src="{{image.image}}" alt="{{i}}">
-        </ng-template>
-    </div>
-</ngb-carousel>
+<div *ngIf="images">
+    <ngb-carousel [showNavigationIndicators]="showNavigationIndicators">
+        <div *ngFor="let image of images; index as i">
+            <ng-template ngbSlide>
+                <img src="{{image.image}}" alt="{{i}}">
+            </ng-template>
+        </div>
+    </ngb-carousel>
+</div>

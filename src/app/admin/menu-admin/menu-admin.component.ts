@@ -33,12 +33,14 @@ export class MenuAdminComponent implements OnInit {
   uploadProgress: Observable<number>;
   error: string = '';
   errorContorno: string = '';
+  buscando: boolean;
 
   constructor(private platoService: PlatoService,
     private router: Router,
     private afStorage: AngularFireStorage) { }
 
   ngOnInit() {
+    this.buscando = false;
     this.platoService.getPlatos()
     .subscribe(data => {
       this.platos = data;
@@ -122,12 +124,22 @@ export class MenuAdminComponent implements OnInit {
   }
 
   search(e){
-    var v = this.campoText.toLowerCase();
-    this.platoService.searchPlatos(v)
+    this.buscando = true;
+    var aux = this.campoText.toLowerCase();
+    this.platoService.searchPlatos(aux)
     .subscribe(data  => {
-      this.platos = data;
+      this.platos = [];
+      var i=0;
+      while(i<data.length){
+        if(data[i].activo){
+          this.platos.push(data[i]);
+        }
+        i++;
+      }
     });
-
+    if(aux.length == 0){
+      this.buscando = false;
+    }
   }
 
   uploadFoto(e: any){

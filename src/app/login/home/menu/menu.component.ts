@@ -4,7 +4,7 @@ import { AuthService } from './../../../core/auth.service';
 import { Plato } from 'src/app/clases/plato';
 import { Cliente } from './../../../clases/cliente';
 import { PlatoService } from '../../../core/plato.service';
-import { Component, OnInit, AfterViewChecked} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Envio } from 'src/app/clases/envio';
 import { PayPalConfig } from 'ngx-paypal';
 
@@ -15,7 +15,7 @@ declare let paypal: any;
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent implements OnInit, AfterViewChecked{
+export class MenuComponent implements OnInit{
 
   public platos = [];
   campoText: string = '';
@@ -26,6 +26,7 @@ export class MenuComponent implements OnInit, AfterViewChecked{
     owner_ref: '',
     precio: 0,
     fecha: new Date(),
+    refPlatos:[],
     platos:[],
     direccion: '',
     confirmada: false,
@@ -33,11 +34,15 @@ export class MenuComponent implements OnInit, AfterViewChecked{
     cedula: 0
   };
 
-  aux: string;
   ordena: Cliente;
-
+  ordenando: boolean;
+  pagando: boolean;
   addScript: boolean = false;
   paypalLoad: boolean = true;
+  impuestos: number;
+  total: number;
+  buscando: boolean;
+  dirPago: string;
 
   paypalConfig = {
     env:'sandbox',
@@ -57,14 +62,21 @@ export class MenuComponent implements OnInit, AfterViewChecked{
     },
     onAuthorize: (data, actions)=>{
       this.envio.owner_ref = "clientes/"+this.ordena.id;
-      this.envio.direccion = this.ordena.direccion;
       this.envio.telefono = this.ordena.telefono;
       this.envio.cedula = this.ordena.cedula;
+      if(this.dirPago.length == 0){
+        this.envio.direccion = this.ordena.dir;
+      }else{
+        this.envio.direccion = this.dirPago;
+      }
       this.envio.fecha = new Date();
       const id = this.enviosService.addEnvio(this.envio);
       this.ordena.envios.push(id);
       this.clientesService.updateCliente(this.ordena);
+      this.dirPago = '';
       this.envio.platos = [];
+      this.pagando = false;
+      this.ordenando = false;
     }
   };
 
@@ -74,15 +86,18 @@ export class MenuComponent implements OnInit, AfterViewChecked{
     private enviosService: EnviosService) { }
 
   ngOnInit() {
+    this.dirPago = '';
+    this.buscando = false;
+    this.pagando = false;
+    this.ordenando = false;
     this.getPlatos();
     this.clientesService.getCliente(this.authService.uid)
       .subscribe(data => {
       this.ordena = data[0];
-      console.log("Cliente fetched");
     });
   }
 
-  ngAfterViewChecked(){
+  addPaypalButton(){
     if(!this.addScript){
       this.addPaypalScript().then(()=>{
         paypal.Button.render(this.paypalConfig, '#paypal-button-container');
@@ -111,23 +126,54 @@ export class MenuComponent implements OnInit, AfterViewChecked{
   }
 
   search(e){
+    this.buscando = true;
     var aux = this.campoText.toLowerCase();
     this.platoService.searchPlatos(aux)
     .subscribe(data  => {
-      this.platos = data;
+      this.platos = [];
+      var i=0;
+      while(i<data.length){
+        if(data[i].activo){
+          this.platos.push(data[i]);
+        }
+        i++;
+      }
     });
+    if(aux.length == 0){
+      this.buscando = false;
+    }
   }
 
     //Agregar plato a la orden
   agregar(plato: Plato){
-    this.envio.platos.push(plato);
-    this.calcPrecio();
+    this.platoService.getPlato(plato.id).valueChanges()
+    .subscribe(data => {
+      this.envio.platos.push(data);
+      this.envio.refPlatos.push(data.id);
+      this.calcPrecio();
+      this.ordenando = true;
+    })
   }
 
     //Eliminar plato de la orden
   eliminar(i: number){
+    var j = 0;
+    while(j<this.envio.platos[i].contornos.length){
+      this.envio.platos[i].contornos[j].elegido = false;
+      j++;
+    }
     this.envio.platos.splice(i,1);
+    this.envio.refPlatos.splice(i,1);
     this.calcPrecio();
+    if(this.envio.platos.length == 0){
+      this.ordenando = false;
+    }
+  }
+
+  goToPagar(){
+    this.pagando = true;
+    this.calcPrecio();
+    this.addPaypalButton();
   }
 
   private calcPrecio(){
@@ -145,6 +191,8 @@ export class MenuComponent implements OnInit, AfterViewChecked{
       }
       i++;
     }
+    this.impuestos = this.envio.precio*0,12;
+    this.total = this.envio.precio + this.impuestos;
   }
 
   select(contorno){
@@ -152,4 +200,29 @@ export class MenuComponent implements OnInit, AfterViewChecked{
     this.calcPrecio();
   }
 
+  volverFromPago(){
+    this.pagando = false;
+    this.ordenando = true;
+    this.addScript = false;
+    this.paypalLoad = true;
+  }
+
+  pagarSimul(){
+    this.envio.owner_ref = "clientes/"+this.ordena.id;
+    this.envio.telefono = this.ordena.telefono;
+    this.envio.cedula = this.ordena.cedula;
+    if(this.dirPago.length == 0){
+      this.envio.direccion = this.ordena.dir;
+    }else{
+      this.envio.direccion = this.dirPago;
+    }
+    this.envio.fecha = new Date();
+    const id = this.enviosService.addEnvio(this.envio);
+    this.ordena.envios.push(id);
+    this.clientesService.updateCliente(this.ordena);
+    this.dirPago = '';
+    this.envio.platos = [];
+    this.pagando = false;
+    this.ordenando = false;
+  }
 }

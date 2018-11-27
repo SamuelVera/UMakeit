@@ -55,4 +55,7 @@
       <a (click)="clearEditing()" class="btn btn-primary">Volver</a>
 </div>
 <input type="text" [(ngModel)]="campoText" #campo="ngModel" [ngModelOptions]="{standalone: true}" (keyup)="search($event)" placeholder="Busca un plato">
+<div *ngIf="platos.length === 0 && buscando">
+    No hay platos por ese nombre!!
+</div><br><br>
 <td *ngIf="!editState"><a (click)="goAdd()" class="btn btn-primary add">Agregar</a></td>

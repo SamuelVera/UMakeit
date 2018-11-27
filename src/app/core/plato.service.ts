@@ -1,4 +1,4 @@
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Plato } from '../clases/plato';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
@@ -20,7 +20,7 @@ export class PlatoService {
 
     //Get platos from server
   public getPlatos(){
-    console.log("Platos fetched");
+    console.log('Platos fetched');
     this.platosCollection = this.afs.collection<Plato>('menu', ref => ref.orderBy('nombre', 'asc'));
       this.platos = this.platosCollection.snapshotChanges().pipe(
         map(actions => actions.map( a => { 
@@ -34,7 +34,7 @@ export class PlatoService {
   };
 
     //Get platos by searchterm
-  public searchPlatos(campo: string){
+  public searchPlatos(campo: string): Observable<Plato[]>{
     return this.afs.collection('menu', ref => 
     ref.orderBy('nombre').startAt(campo).endAt(campo+'\uf8ff')
     ).valueChanges();
@@ -64,4 +64,5 @@ export class PlatoService {
     this.platoDoc.update(plato);
     console.log("Plato updated");
   }
+  
 }

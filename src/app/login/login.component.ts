@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit{
     displayName:'',
     cedula: 0,
     telefono: 0,
-    direccion: '',
+    dir: '',
     envios: [''],
     admin: false
   };

@@ -16,7 +16,7 @@ export class FormComponent implements OnInit {
     displayName:'',
     cedula: 0,
     telefono: 0,
-    direccion:'',
+    dir:'',
     envios:[''],
     admin: false
   };
@@ -72,7 +72,7 @@ export class FormComponent implements OnInit {
 
   register(e, f: NgForm){
     if(this.canAdvance){
-      this.user.direccion = this.dir;
+      this.user.dir = this.dir;
       this.authService.signUp(this.user.email, this.pass, this.user);
     }else{
       this.authService.error = this.errMes3;

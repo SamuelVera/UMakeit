@@ -5,6 +5,7 @@ export interface Envio{
     owner_ref: string,
     fecha ?: Date,
     precio ?: number,
+    refPlatos: string[],
     platos: Plato[],
     direccion: string,
     confirmada: boolean,

@@ -19,8 +19,9 @@ export class HomeComponent implements OnInit {
   }
 
   private getImages(){
-    this.carouselImagesService.getImages().subscribe(data =>{
+    this.carouselImagesService.getImages()
+    .subscribe(data => {
       this.images = data;
-    })
+    });
   }
 }
