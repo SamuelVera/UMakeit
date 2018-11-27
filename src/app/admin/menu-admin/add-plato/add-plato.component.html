@@ -42,8 +42,8 @@
     </div>
     <p *ngIf="error.length>0">{{error}}</p>
     <button type="submit" class="btn btn-primary">Agregar</button>
+    <button (click)="goBack()" class="btn btn-primary">Volver</button>
   </div>
 </form>
 <div>
-  <a (click)="goBack()">Volver</a>
 </div>
