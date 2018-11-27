@@ -20,14 +20,13 @@ nav{
 
 ul{
     background: rgb(219, 20, 20);
-    color:rgb(85, 47, 47);
     width: 100%;
 }
 
 li{
     padding: 0;
     background: rgb(219, 20, 20);
-    color:white;
+    color:rgb(85, 47, 47);
 }
 
 .name{
@@ -38,6 +37,7 @@ li{
 
 li:hover{
     cursor: pointer;
+    color:white;
 }
 
 a:hover{

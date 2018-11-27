@@ -36,6 +36,11 @@ export class CuentaComponent implements OnInit {
   total: number;
   dirPago: string;
 
+  passMsg: string = '';
+  msg1: string = 'Estamos actualizando tu contraseña...';
+  msg2: string = 'Contraseña actualizada exitosamente';
+  msg3: string = 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.';
+
   paypalConfig = {
     env:'sandbox',
     client:{
@@ -157,18 +162,22 @@ export class CuentaComponent implements OnInit {
     this.advance(e);
   }
 
-  setCambiarTrue(){
-    this.cambiandoClave = true;
+  setCambiar(){
+    this.cambiandoClave = !this.cambiandoClave;
   }
 
   cambiarClave(){
     if(this.advance){
+      this.passMsg = this.msg1;
       this.confirmDialogService.confirm('¿Estas Seguro?', '¿Deseas cambiar tu contraseña?')
       .then((confirmed) => {
         if(confirmed){
           this.auth.changePassword(this.newPass);
           if(this.auth.error == ''){
             this.cambiandoClave = false;
+            this.passMsg = '';
+          }else{
+            this.passMsg = this.auth.error;
           }
         }})
       .catch(() => {});
