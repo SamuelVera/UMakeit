@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.3.
 
-The focus of this project is to have a web app in which clients and admins of a food delivery service can, respectively, make orders of food and manage those order, either accepting or declining them.
+The main focus of this project is to develop a web app in which clients and admins of a food delivery service can, respectively, make orders of food and manage those order, either accepting or declining them.
 
 The following npm packages are beign used in this project, alongside with the angular ones:
 - angularfire2.
